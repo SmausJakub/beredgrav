@@ -11,10 +11,24 @@ form > fieldset:first-child > legend {
     font-size: 28px;
 }
 
+p {
+	text-align: justify;	
+}
+
 hr {
 	height: 12px;
     border: 0;
     box-shadow: inset 0 12px 12px -12px rgba(0, 0, 0, 0.5);
+}
+
+.error {
+	font-weight: bold;
+	color: #b30000;
+}
+
+.success {
+	font-weight: bold;
+	color: #00e600;
 }
 
 a:hover {

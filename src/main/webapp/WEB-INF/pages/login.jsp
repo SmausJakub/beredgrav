@@ -3,10 +3,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
+ <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <title>KIVBOOK Hlavní stránka</title>
+      <title>Přihlášení</title>
       <!-- CSS -->
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
          integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ=="
@@ -14,13 +14,16 @@
       <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css" />
       <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/font-awesome.min.css" />
 </head>
- <body>
-      <div class="container">
+
+
+<body>
+<div class="container">
          <!-- Menu -->
          <nav class="navbar navbar-inverse">
             <div class="container-fluid">
+               <!-- Logo -->
                <div class="navbar-header">
-                  <a class="navbar-brand" href="#">
+                  <a class="navbar-brand" href="${pageContext.request.contextPath}/index">
                   <span><img alt="Logo" src="img/logo.png" width="40" height="25">
                   &nbsp;KIVBOOK - sociální síť</span>
                   </a>
@@ -30,6 +33,7 @@
                <span class="icon-bar"></span>
                <span class="icon-bar"></span> 
                </button>
+               <!-- Sign up & Sign in -->
                <div class="collapse navbar-collapse" id="menuNavbar">
                   <ul class="nav navbar-nav navbar-right">
                      <li><a href="${pageContext.request.contextPath}/register"><i class="fa fa-user-circle"></i>&nbsp;Registrovat</a></li>
@@ -39,14 +43,14 @@
             </div>
          </nav>
          <!-- Page content -->
-         <!-- Left panel -->
+         <!-- Left panel Menu -->
          <div class="col-sm-2">
             <ul class="nav nav-pills hidden-xl hidden-lg hidden-sm hidden-md">
                <li class="dropdown">
                   <a class="dropdown-toggle" data-toggle="dropdown" href="#">Zobrazit menu
                   <span class="caret"></span></a>
                   <ul class="dropdown-menu">
-                     <li role="presentation" class="active"><a href="#">Hlavní stránka</a></li>
+                     <li role="presentation"><a href="${pageContext.request.contextPath}/index">Hlavní stránka</a></li>
                      <li role="presentation"><a href="#">Informace</a></li>
                      <li role="presentation"><a href="#">Reakce uživatelů</a></li>
                      <li role="presentation"><a href="#">Prohlížení</a></li>
@@ -54,31 +58,61 @@
                </li>
             </ul>
             <ul class="nav nav-pills nav-stacked hidden-xs">
-               <li role="presentation" class="active"><a href="#">Hlavní stránka</a></li>
+               <li role="presentation"><a href="${pageContext.request.contextPath}/index">Hlavní stránka</a></li>
                <li role="presentation"><a href="#">Informace</a></li>
                <li role="presentation"><a href="#">Reakce uživatelů</a></li>
                <li role="presentation"><a href="#">Prohlížení</a></li>
             </ul>
          </div>
          <!-- Center panel -->
-         <div class="col-sm-8">
-            <h1>
-               Vítejte
-            </h1>
-            <hr />
-            <p>Vítejte v KIVBOOK. Tato sociální síť umožňuje sdílet zážitky lidem z různých částí světa v reálném čase.</p>
-            <p>
-               <a href="${pageContext.request.contextPath}/login">Přihlašte se</a> nebo pokud nemáte účet, tak se <a href="${pageContext.request.contextPath}/register">zaregistruje</a> a poznejte krásu KIVBOOK již dnes.
-            </p>
-            <h2>
-               Co by vás mohlo zajímat
-            </h2>
-            <hr />
-            <p>
-               Pokud potřebujete více informací, přečtěte si <a href="#">informace</a> o naší soicální síti. Pokud snad potřebujete znát názory našich uživatelů, 
-               neváhejte se na ně podívat na stránkách <a href="#">Reakce uživatelů!</a>. Pokud vás ani to nepřesvědčí, můžete si prohlédnout naše stránky i 
-               jako nepřihlášený uživatel na stránce <a href="#">Prohlížení</a>.
-            </p>
+         <div class="col-sm-10">
+         
+             <c:if test="${not empty requestScope.suc}">
+     				<p class="success">
+     				Registrace byla úspěšná! Nyní se můžete přihlásit.
+     				</p>
+			</c:if>
+         
+            <!-- Form -->
+            <form class="form-horizontal" action="${pageContext.request.contextPath}/login" method="post" >
+               <fieldset>
+                  <legend>Přihlášení</legend>
+                  <div class="form-group">
+                     <label class="control-label col-sm-2" for="username">Jméno:</label>
+                     <div class="col-sm-10">
+                        <input type="text" class="form-control" id="username" placeholder="Zadat přihlašovací jméno" name="username" required
+                        value="${usernameField}">
+                        	
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label class="control-label col-sm-2" for="pwd">Heslo:</label>
+                     <div class="col-sm-10">          
+                        <input type="password" class="form-control" id="password" placeholder="Zadat heslo" name="password" required >
+                        	
+                     </div>
+                  </div>
+               </fieldset>
+               <div class="form-group">
+                  <div class="col-sm-offset-2 col-sm-10">
+                     <div class="checkbox">
+                        <label><input type="checkbox" name="remember">Zůstat přihlášen</label>
+                     </div>
+                  </div>
+               </div>
+               <div class="form-group">
+                  <div class="col-sm-offset-2 col-sm-10">
+                     <button type="submit" class="btn btn-default">Přihlásit</button>
+                  </div>
+               </div>
+            </form>
+            
+        <c:if test="${not empty requestScope.err}">
+     				<p class="error">
+     				${requestScope.err}
+     				</p>
+		</c:if>
+            
          </div>
       </div>
       <!-- Footer -->
@@ -90,5 +124,5 @@
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"
          integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ=="
          crossorigin="anonymous"></script>
-   </body>
+</body>
 </html>
