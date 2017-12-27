@@ -21,7 +21,7 @@
             <div class="container-fluid">
                <div class="navbar-header">
                   <a class="navbar-brand" href="#">
-                  <span><img alt="Logo" src="img/logo.png" width="40" height="25">
+                  <span><img alt="Logo" src="${pageContext.request.contextPath}/img/logo.png" width="40" height="25">
                   &nbsp;KIVBOOK - sociální síť</span>
                   </a>
                </div>

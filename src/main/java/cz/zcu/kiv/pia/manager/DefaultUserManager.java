@@ -25,15 +25,11 @@ public class DefaultUserManager implements UserManager {
 
 	    @Override
 	    public void register(User newUser) throws UserValidationException {
-	        if(!newUser.isNew()) {
-	            throw new RuntimeException("User already exists, use save method for updates!");
-	        }
-
 	        newUser.validate();
 
 	        User existinCheck = userDao.findByUsername(newUser.getUsername());
 	        if(existinCheck != null) {
-	            throw new UserValidationException("Username already taken!");
+	            throw new UserValidationException("Vámi zadané pøihlašovací jméno je již zabrané, vyberte prosím jiné.");
 	        }
 
 	        newUser.setPassword(encoder.encode(newUser.getPassword()));

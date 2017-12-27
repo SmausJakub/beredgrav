@@ -21,7 +21,7 @@
                <!-- Logo -->
                <div class="navbar-header">
                   <a class="navbar-brand" href="${pageContext.request.contextPath}/index">
-                  <span><img alt="Logo" src="img/logo.png" width="40" height="25">
+                  <span><img alt="Logo" src="${pageContext.request.contextPath}/img/logo.png" width="40" height="25">
                   &nbsp;KIVBOOK - sociální síť</span>
                   </a>
                </div>

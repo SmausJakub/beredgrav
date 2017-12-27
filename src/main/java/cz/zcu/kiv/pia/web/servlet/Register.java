@@ -3,6 +3,7 @@ package cz.zcu.kiv.pia.web.servlet;
 
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Objects;
 
 import javax.servlet.ServletException;
@@ -49,12 +50,12 @@ public class Register extends HttpServlet {
         String confirmPwd = req.getParameter(CONFIRM_PWD_PARAMETER);
 
         if(!Objects.equals(password, confirmPwd)) {
-            errorDispatch("The password and confirm password fields do not match!", req, resp);
+            errorDispatch("Vámi zadaná hesla se neshodují!", req, resp);
             return;
         }
 
         try {
-            userManager.register(new User(username, password));
+            userManager.register(new User(username, password, Calendar.getInstance().getTime()));
             req.setAttribute(SUCCESS_ATTRIBUTE, true);
             req.getRequestDispatcher("WEB-INF/pages/login.jsp").forward(req, resp);
         } catch (UserValidationException e) {

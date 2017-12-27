@@ -1,10 +1,18 @@
 package cz.zcu.kiv.pia.domain;
 
-import javax.persistence.Column;
+import java.util.Date;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import org.apache.commons.lang3.StringUtils;
+
+
 
 /**
  * Entity representing application User.
@@ -15,28 +23,25 @@ import org.apache.commons.lang3.StringUtils;
  */
 @Entity
 @Table(name = "kruzej_user")
-public class User extends BaseObject {
-    /**
-     * Login, unique
-     */
+public class User extends BaseEntity {
+
     private String username;
-    /**
-     * Secret for signing-in
-     */
     private String password;
+    private Date dateOfBirth;
+    
+    private Set<Role> roles;
 
     public User() {
+        this.roles = new LinkedHashSet<>();
     }
 
-    public User(String username, String password) {
+    public User(String username, String password, Date dateOfBirth) {
+        this();
         this.username = username;
         this.password = password;
+        this.dateOfBirth = dateOfBirth;
     }
-
-    /*
-    ########### API ##################
-     */
-
+    
     /**
      * Validates that user instance is currently in a valid state.
      * @throws UserValidationException in case the instance is not in valid state.
@@ -46,11 +51,6 @@ public class User extends BaseObject {
         if(StringUtils.isBlank(password)) throw new UserValidationException("Password is a required field");
     }
 
-    /*
-    ########### MAPPINGS #####################
-     */
-
-    @Column(unique = true)
     public String getUsername() {
         return username;
     }
@@ -67,26 +67,72 @@ public class User extends BaseObject {
         this.password = password;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof User)) return false;
+   
 
-        User user = (User) o;
-
-        return !(username != null ? !username.equals(user.username) : user.username != null);
-
+    public void setRoles(Set<Role> roles) {
+       this.roles = roles;
     }
 
-    @Override
-    public int hashCode() {
-        return username != null ? username.hashCode() : 0;
+ 
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
     }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+   
+
+    @Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		if (dateOfBirth == null) {
+			if (other.dateOfBirth != null)
+				return false;
+		} else if (!dateOfBirth.equals(other.dateOfBirth))
+			return false;
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
+			return false;
+		if (roles == null) {
+			if (other.roles != null)
+				return false;
+		} else if (!roles.equals(other.roles))
+			return false;
+		if (username == null) {
+			if (other.username != null)
+				return false;
+		} else if (!username.equals(other.username))
+			return false;
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((dateOfBirth == null) ? 0 : dateOfBirth.hashCode());
+		result = prime * result + ((password == null) ? 0 : password.hashCode());
+		result = prime * result + ((roles == null) ? 0 : roles.hashCode());
+		result = prime * result + ((username == null) ? 0 : username.hashCode());
+		return result;
+	}
 
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("User{");
         sb.append("username='").append(username).append('\'');
+        sb.append(", password='").append(password).append('\'');
+        sb.append(", dateOfBirth=").append(dateOfBirth);
         sb.append('}');
         return sb.toString();
     }

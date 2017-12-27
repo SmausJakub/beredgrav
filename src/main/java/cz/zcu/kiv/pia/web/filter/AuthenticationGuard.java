@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import cz.zcu.kiv.pia.web.auth.AuthenticationService;
 
@@ -18,6 +19,8 @@ import cz.zcu.kiv.pia.web.auth.AuthenticationService;
  * @author Jakub Danek
  */
 public class AuthenticationGuard implements Filter {
+	
+	private static final String ERROR_ATRIBUTE = "err";
 
     private AuthenticationService authService;
 
@@ -33,12 +36,14 @@ public class AuthenticationGuard implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
+        HttpServletResponse res = (HttpServletResponse) response;
         boolean allowed = authService.isLoggedIn(req.getSession());
 
         if(allowed) {
             chain.doFilter(request, response);
         } else {
-            req.getRequestDispatcher("/").forward(request, response);
+        	req.setAttribute(ERROR_ATRIBUTE, "Je vyžadováno pøihlášení.");
+        	 req.getRequestDispatcher("WEB-INF/pages/login.jsp").forward(req, res);
         }
     }
 

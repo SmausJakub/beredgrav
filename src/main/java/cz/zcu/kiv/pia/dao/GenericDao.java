@@ -1,23 +1,50 @@
 package cz.zcu.kiv.pia.dao;
 
-import cz.zcu.kiv.pia.domain.BaseObject;
+import java.io.Serializable;
 
-public interface GenericDao <T extends BaseObject> {
-	
-		T save(T value);
+import cz.zcu.kiv.pia.domain.IEntity;
 
-	    T findOne(Long id);
 
-	    void remove(T toRemove);
+/**
+ * Base interface for DAOs, providing CRUD operations.
+ *
+ * Date: 26.9.15
+ *
+ * @author Jakub Danek
+ */
+public interface GenericDao<E extends IEntity<PK>, PK extends Serializable> {
 
-	    /*
-	        Transaction handling, very crude, there are better ways to do this.
-	     */
+    /**
+     * Either inserts new or updates existing instance.
+     *
+     * @param instance to be persisted
+     * @return persisted instance
+     */
+    E save(E instance);
 
-	    void startTransaction();
+    /**
+     *
+     * @param id
+     * @return instance with the given id or null if not found
+     */
+    E findOne(PK id);
 
-	    void commitTransaction();
+    /**
+     * Removes the given entity from persistence.
+     *
+     * @param id if of the entity instance
+     */
+    void delete(PK id);
+    
+    /*
+    Transaction handling, very crude, there are better ways to do this.
+     */
 
-	    void rollbackTransaction();
+    void startTransaction();
+
+    void commitTransaction();
+
+    void rollbackTransaction();
+
 
 }

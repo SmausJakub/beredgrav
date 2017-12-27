@@ -1,14 +1,19 @@
 package cz.zcu.kiv.pia.dao;
 
+
 import cz.zcu.kiv.pia.domain.User;
 
-public interface UserDao extends GenericDao<User> {
-	
-    /**
-    *
-    * @param username the requested username
-    * @return user with the given username or null
-    */
-   User findByUsername(String username);
+/**
+ * DAO interface for the User entity
+ *
+ * Date: 26.9.15
+ *
+ * @author Jakub Danek
+ */
+public interface UserDao extends GenericDao<User, Long> {
+
+    User create(User user);
+    
+    User findByUsername(String username);
 
 }
