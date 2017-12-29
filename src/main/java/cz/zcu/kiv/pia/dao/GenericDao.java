@@ -36,9 +36,7 @@ public interface GenericDao<E extends IEntity<PK>, PK extends Serializable> {
      */
     void delete(PK id);
     
-    /*
-    Transaction handling, very crude, there are better ways to do this.
-     */
+
 
     void startTransaction();
 

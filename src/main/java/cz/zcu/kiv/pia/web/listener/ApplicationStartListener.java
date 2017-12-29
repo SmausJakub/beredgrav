@@ -6,10 +6,10 @@ import javax.servlet.annotation.WebListener;
 
 import cz.zcu.kiv.pia.ApplicationContext;
 import cz.zcu.kiv.pia.web.filter.AuthenticationGuard;
-import cz.zcu.kiv.pia.web.servlet.Index;
 import cz.zcu.kiv.pia.web.servlet.Login;
+import cz.zcu.kiv.pia.web.servlet.Logout;
 import cz.zcu.kiv.pia.web.servlet.Register;
-import cz.zcu.kiv.pia.web.servlet.SecretServlet;
+import cz.zcu.kiv.pia.web.servlet.Wall;
 
 /**
  * Application startup listener. Handles registration of servlets
@@ -29,10 +29,11 @@ public class ApplicationStartListener implements ServletContextListener {
         ctx = new ApplicationContext();
 
         sce.getServletContext().addServlet("login", new Login(ctx.getAuthenticationService())).addMapping("/login");
+        sce.getServletContext().addServlet("logout", new Logout(ctx.getAuthenticationService())).addMapping("/logout");
         sce.getServletContext().addServlet("register", new Register(ctx.getUserManager())).addMapping("/register");
-        sce.getServletContext().addServlet("secret", new SecretServlet()).addMapping("/secret/vip");
+        sce.getServletContext().addServlet("wall", new Wall(ctx.getUserManager())).addMapping("/app/wall");
         
-        sce.getServletContext().addFilter("authFilter", new AuthenticationGuard(ctx.getAuthenticationService())).addMappingForUrlPatterns(null, false, "/secret/*");
+        sce.getServletContext().addFilter("authFilter", new AuthenticationGuard(ctx.getAuthenticationService())).addMappingForUrlPatterns(null, false, "/app/*");
     }
 
     @Override

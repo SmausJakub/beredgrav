@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page session="true" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,13 +34,24 @@
                <span class="icon-bar"></span>
                <span class="icon-bar"></span> 
                </button>
-               <!-- Sign up & Sign in -->
+              <c:choose>
+               <c:when test="${not empty sessionScope.user }">
+               <div class="collapse navbar-collapse" id="menuNavbar">
+                  <ul class="nav navbar-nav navbar-right">
+                     <li><a href="#"><i class="fa fa-user"></i>&nbsp;<%= request.getSession().getAttribute("user") %></a></li>
+                     <li><a href="${pageContext.request.contextPath}/logout"><i class="fa fa-sign-out"></i>&nbsp;Odhlásit</a></li>
+                  </ul>
+               </div>
+               </c:when>
+               <c:otherwise>
                <div class="collapse navbar-collapse" id="menuNavbar">
                   <ul class="nav navbar-nav navbar-right">
                      <li><a href="${pageContext.request.contextPath}/register"><i class="fa fa-user-circle"></i>&nbsp;Registrovat</a></li>
                      <li><a href="${pageContext.request.contextPath}/login"><i class="fa fa-sign-in"></i>&nbsp;Přihlásit</a></li>
                   </ul>
                </div>
+               </c:otherwise>
+               </c:choose>
             </div>
          </nav>
          <!-- Page content -->
@@ -67,11 +79,11 @@
          <!-- Center panel -->
          <div class="col-sm-10">
          
-             <c:if test="${not empty requestScope.suc}">
+            <c:if test="${not empty requestScope.suc}">
      				<p class="success">
-     				Registrace byla úspěšná! Nyní se můžete přihlásit.
+     				${requestScope.suc}
      				</p>
-			</c:if>
+		</c:if>
          
             <!-- Form -->
             <form class="form-horizontal" action="${pageContext.request.contextPath}/login" method="post" >

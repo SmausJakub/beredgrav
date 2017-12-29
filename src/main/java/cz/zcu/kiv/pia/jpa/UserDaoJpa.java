@@ -13,7 +13,7 @@ import cz.zcu.kiv.pia.domain.User;
  *
  * @author Jakub Danek
  */
-public class UserDaoJpa extends GenericDaoJpa<User, Long> implements UserDao {
+public abstract class UserDaoJpa extends GenericDaoJpa<User, Long> implements UserDao {
 
     /**
      *
@@ -28,9 +28,5 @@ public class UserDaoJpa extends GenericDaoJpa<User, Long> implements UserDao {
         entityManager.persist(user);
         return user;
     }
-    
-	public User findByUsername(String username) 
-	{
-		return null;
-	}    
+ 
 }

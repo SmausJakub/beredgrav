@@ -1,5 +1,6 @@
 package cz.zcu.kiv.pia.web.auth;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import cz.zcu.kiv.pia.manager.UserManager;
@@ -32,17 +33,24 @@ public class AuthenticationService {
      * @return true if success, false otherwise
      */
     public boolean authenticate(HttpSession session, String username, String password) {
-    	System.out.println(userManager.toString());
         boolean authenticated = userManager.authenticate(username, password);
 
         if(authenticated) {
             session.setAttribute(USER, username);
-            System.out.println("authenticat je true");
             return true;
         }
-        System.out.println("authenthicated je false");
         return false;
     }
+    
+    public void invalidate(HttpServletRequest request) {
+    	
+    	HttpSession session = request.getSession(false);
+    	
+    	if (session != null) {
+    		session.invalidate();
+    	}
+    }
+    
 
     /**
      *

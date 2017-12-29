@@ -44,9 +44,9 @@ public class Login extends HttpServlet {
 
         boolean authenticated = authService.authenticate(req.getSession(), username, password);
         if(authenticated) {
-            resp.sendRedirect(req.getContextPath() + "/secret/vip");
+        	req.getRequestDispatcher("WEB-INF/pages/wall.jsp").forward(req, resp);
         } else {
-            req.setAttribute(ERR_ATTRIBUTE, "Invalid credentials!");
+            req.setAttribute(ERR_ATTRIBUTE, "Špatnì zadané pøihlašovací údaje!");
             req.setAttribute(USERNAME_PARAMETER, username);
             req.getRequestDispatcher("WEB-INF/pages/login.jsp").forward(req, resp);
         }

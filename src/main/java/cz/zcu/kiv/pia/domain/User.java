@@ -28,18 +28,16 @@ public class User extends BaseEntity {
     private String username;
     private String password;
     private Date dateOfBirth;
-    
-    private Set<Role> roles;
+    private String email;
+    private String gender;
+    private String avatar;
 
-    public User() {
-        this.roles = new LinkedHashSet<>();
-    }
-
-    public User(String username, String password, Date dateOfBirth) {
-        this();
+    public User(String username, String password, Date dateOfBirth, String gender, String avatar) {
         this.username = username;
         this.password = password;
         this.dateOfBirth = dateOfBirth;
+        this.gender = gender;
+        this.avatar = avatar;
     }
     
     /**
@@ -67,14 +65,6 @@ public class User extends BaseEntity {
         this.password = password;
     }
 
-   
-
-    public void setRoles(Set<Role> roles) {
-       this.roles = roles;
-    }
-
- 
-
     public Date getDateOfBirth() {
         return dateOfBirth;
     }
@@ -83,8 +73,44 @@ public class User extends BaseEntity {
         this.dateOfBirth = dateOfBirth;
     }
    
+    
 
-    @Override
+    
+
+    public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public String getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((password == null) ? 0 : password.hashCode());
+		result = prime * result + ((username == null) ? 0 : username.hashCode());
+		return result;
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -93,20 +119,10 @@ public class User extends BaseEntity {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		if (dateOfBirth == null) {
-			if (other.dateOfBirth != null)
-				return false;
-		} else if (!dateOfBirth.equals(other.dateOfBirth))
-			return false;
 		if (password == null) {
 			if (other.password != null)
 				return false;
 		} else if (!password.equals(other.password))
-			return false;
-		if (roles == null) {
-			if (other.roles != null)
-				return false;
-		} else if (!roles.equals(other.roles))
 			return false;
 		if (username == null) {
 			if (other.username != null)
@@ -117,23 +133,10 @@ public class User extends BaseEntity {
 	}
 
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((dateOfBirth == null) ? 0 : dateOfBirth.hashCode());
-		result = prime * result + ((password == null) ? 0 : password.hashCode());
-		result = prime * result + ((roles == null) ? 0 : roles.hashCode());
-		result = prime * result + ((username == null) ? 0 : username.hashCode());
-		return result;
+	public String toString() {
+		return "User [username=" + username + ", password=" + password + ", dateOfBirth=" + dateOfBirth + ", email="
+				+ email + ", gender=" + gender + ", avatar=" + avatar + "]";
 	}
 
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("User{");
-        sb.append("username='").append(username).append('\'');
-        sb.append(", password='").append(password).append('\'');
-        sb.append(", dateOfBirth=").append(dateOfBirth);
-        sb.append('}');
-        return sb.toString();
-    }
+	
 }

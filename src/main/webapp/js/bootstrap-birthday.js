@@ -22,7 +22,7 @@
      * The opposite of maxAge. If current year is 2010 and minAge is set to 18,
      * the earliest year that can be picked is 1992.
      */
-    minAge: 0,
+    minAge: 12,
 
     /**
      * The futureDates setting determines whether birthdays in the future can be
@@ -52,7 +52,7 @@
      * - littleEndian: Day, Month, Year
      * - bigEndian: Year, Month, Day
      */
-    dateFormat: 'middleEndian',
+    dateFormat: 'littleEndian',
 
     /**
      * The monthFormat setting determines the text displayed in the month select
@@ -77,37 +77,37 @@
 
     // Localization.
     text: {
-      year: "Year",
-      month: "Month",
-      day: "Day",
-      months: {
-        short: [
-          "Jan",
-          "Feb",
-          "Mar",
-          "Apr",
-          "May",
-          "Jun",
-          "Jul",
-          "Aug",
-          "Sep",
-          "Oct",
-          "Nov",
-          "Dec"
-        ],
-        long: [
-          "January",
-          "February",
-          "March",
-          "April",
-          "May",
-          "June",
-          "July",
-          "August",
-          "September",
-          "October",
-          "November",
-          "December"
+    year: "Rok",
+    month: "Měsíc",
+    day: "Den",
+    months: {
+      short: [
+        "Leden",
+        "Únor",
+        "Březen",
+        "Duben",
+        "Květen",
+        "Červen",
+        "Červenec",
+        "Srpen",
+        "Září",
+        "Říjen",
+        "Listopad",
+        "Prosinec"
+      ],
+      long: [
+        "Leden",
+        "Únor",
+        "Březen",
+        "Duben",
+        "Květen",
+        "Červen",
+        "Červenec",
+        "Srpen",
+        "Září",
+        "Říjen",
+        "Listopad",
+        "Prosinec"
         ]
       }
     },

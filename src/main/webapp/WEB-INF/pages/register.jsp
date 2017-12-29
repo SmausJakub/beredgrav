@@ -1,5 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page session="true" %>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -30,13 +32,24 @@
                <span class="icon-bar"></span>
                <span class="icon-bar"></span> 
                </button>
-               <!-- Sign up & Sign in -->
+               <c:choose>
+               <c:when test="${not empty sessionScope.user }">
+               <div class="collapse navbar-collapse" id="menuNavbar">
+                  <ul class="nav navbar-nav navbar-right">
+                     <li><a href="#"><i class="fa fa-user"></i>&nbsp;<%= request.getSession().getAttribute("user") %></a></li>
+                     <li><a href="${pageContext.request.contextPath}/logout"><i class="fa fa-sign-out"></i>&nbsp;Odhlásit</a></li>
+                  </ul>
+               </div>
+               </c:when>
+               <c:otherwise>
                <div class="collapse navbar-collapse" id="menuNavbar">
                   <ul class="nav navbar-nav navbar-right">
                      <li><a href="${pageContext.request.contextPath}/register"><i class="fa fa-user-circle"></i>&nbsp;Registrovat</a></li>
                      <li><a href="${pageContext.request.contextPath}/login"><i class="fa fa-sign-in"></i>&nbsp;Přihlásit</a></li>
                   </ul>
                </div>
+               </c:otherwise>
+               </c:choose>
             </div>
          </nav>
          <!-- Page content -->
@@ -62,25 +75,23 @@
             </ul>
          </div>
          <!-- Center panel -->
-         
  
          <div class="col-sm-10">
-         
+        
                   <c:if test="${not empty requestScope.err}">
      					<p class="error">
      					${requestScope.err}
      					</p>
      					</c:if>
          
-         
             <!-- Sign up Form -->
-            <<form class="form-horizontal" action="${pageContext.request.contextPath}/register" method="post" >
+            <form class="form-horizontal" action="${pageContext.request.contextPath}/register" method="post" >
                <fieldset>
                   <legend>Registrace</legend>
                   <div class="form-group">
                      <label class="control-label col-sm-2" for="username">Jméno:*</label>
                      <div class="col-sm-10">
-                        <input type="text" class="form-control" id="username" placeholder="Zadat přihlašovací jméno" name="username" required>
+                        <input type="text" class="form-control" id="username" placeholder="Zadat přihlašovací jméno" name="username" required value="<c:if test="${not empty requestScope.usernameField}">${requestScope.usernameField}</c:if>">
                      </div>
                   </div>
                   <div class="form-group">
@@ -101,8 +112,8 @@
                   <div class="form-group">
                      <label class="control-label col-sm-2">Pohlaví:</label>
                      <div class="col-sm-10">
-                        <label class="radio-inline"><input type="radio" name="sex-m">Muž</label>
-                        <label class="radio-inline"><input type="radio" name="sex-w">Žena</label>
+                        <label class="radio-inline"><input type="radio" name="sex" value="male" <c:if test="${not empty requestScope.genderMaleField}">checked</c:if>>Muž</label>
+                        <label class="radio-inline"><input type="radio" name="sex" value="female" <c:if test="${not empty requestScope.genderFemaleField}">checked</c:if>>Žena</label>
                      </div>
                   </div>
                   <div class="form-group">
@@ -116,7 +127,7 @@
                <div class="form-group">
                   <div class="col-sm-offset-2 col-sm-10">
                      <div class="checkbox">
-                        <label><input type="checkbox" name="remember">Souhlasím s <a href="#">obchodními podmínkami</a></label>
+                        <label><input type="checkbox" name="agree" required <c:if test="${not empty requestScope.agreeField}">checked</c:if>>Souhlasím s <a href="#">obchodními podmínkami</a></label>
                      </div>
                   </div>
                </div>
@@ -134,8 +145,8 @@
       </footer>
       <!-- Scripts -->
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-      <script src="js/main.js" type="text/javascript"></script>
-      <script src="js/bootstrap-birthday.js" type="text/javascript"></script>
+      <script src="${pageContext.request.contextPath}/js/bootstrap-birthday.js" type="text/javascript"></script>
+       <script src="${pageContext.request.contextPath}/js/main.js" type="text/javascript"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"
          integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ=="
          crossorigin="anonymous"></script>

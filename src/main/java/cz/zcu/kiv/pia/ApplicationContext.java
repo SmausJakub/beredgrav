@@ -4,9 +4,7 @@ package cz.zcu.kiv.pia;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 
-import cz.zcu.kiv.pia.dao.RoleDao;
 import cz.zcu.kiv.pia.dao.UserDao;
-import cz.zcu.kiv.pia.jpa.RoleDaoCriteria;
 import cz.zcu.kiv.pia.jpa.UserDaoCriteria;
 import cz.zcu.kiv.pia.manager.DefaultUserManager;
 import cz.zcu.kiv.pia.manager.UserManager;
@@ -31,7 +29,6 @@ public class ApplicationContext {
     //persistence
     private EntityManager em;
     private UserDao userDao;
-    private RoleDao roleDao;
 
     //business
     private UserManager userManager;
@@ -44,7 +41,6 @@ public class ApplicationContext {
         //TODO persistence unit name should be taken from a property file, not hard-coded!
         em = Persistence.createEntityManagerFactory("dbs").createEntityManager();
         userDao = new UserDaoCriteria(em);
-        roleDao = new RoleDaoCriteria(em);
         encoder = new PasswordHashEncoder();
         userManager = new DefaultUserManager(userDao, encoder);
         authenticationService = new AuthenticationService(userManager);
