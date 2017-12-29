@@ -36,7 +36,7 @@
                <c:when test="${not empty sessionScope.user }">
                <div class="collapse navbar-collapse" id="menuNavbar">
                   <ul class="nav navbar-nav navbar-right">
-                     <li><a href="#"><i class="fa fa-user"></i>&nbsp;<%= request.getSession().getAttribute("user") %></a></li>
+                     <li><a href="${pageContext.request.contextPath}/profile"><i class="fa fa-user"></i>&nbsp;<%= request.getSession().getAttribute("user") %></a></li>
                      <li><a href="${pageContext.request.contextPath}/logout"><i class="fa fa-sign-out"></i>&nbsp;Odhlásit</a></li>
                   </ul>
                </div>
@@ -60,15 +60,15 @@
                   <a class="dropdown-toggle" data-toggle="dropdown" href="#">Zobrazit menu
                   <span class="caret"></span></a>
                   <ul class="dropdown-menu">
-                     <li role="presentation" class="active"><a href="#">Zeď</a></li>
-                     <li role="presentation"><a href="#">Profil</a></li>
+                     <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/wall">Zeď</a></li>
+                     <li role="presentation"><a href="${pageContext.request.contextPath}/app/profile">Profil</a></li>
                      <li role="presentation"><a href="#">Nastavení</a></li>
                   </ul>
                </li>
             </ul>
             <ul class="nav nav-pills nav-stacked hidden-xs">
-               <li role="presentation" class="active"><a href="#">Zeď</a></li>
-               <li role="presentation"><a href="#">Profil</a></li>
+               <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/wall">Zeď</a></li>
+               <li role="presentation"><a href="${pageContext.request.contextPath}/profile">Profil</a></li>
                <li role="presentation"><a href="#">Nastavení</a></li>
             </ul>
          </div>
@@ -82,19 +82,21 @@
                   <div class="panel-body">
                      <div class="col-md-2">
                         <div class="well status-avatar">
-                           <p><%= request.getSession().getAttribute("user") %></p>
-                           <img src="img/avatars/lubos.png" class="img-circle" height="55" width="55" alt="Avatar">
+                           <p class="status-name"><%= request.getSession().getAttribute("user") %></p>
+                           <img src="img/avatars/default.png" class="img-circle" height="55" width="55" alt="Avatar">
                         </div>
                      </div>
                      <div class="col-md-10">
-                        <div class="well status-status">
-                           <p contenteditable="true">Napište ostatním, jak se cítíte!</p>
-                        </div>
+                     	<form action="${pageContext.request.contextPath}/status" method="post">
+                        
+                        	<input type="text" name="text" placeholder="Napište ostatním, jak se cítíte!" class="well status-status">
+                        
                         <div class="well text-right status-buttons">
-                           <button type="button" class="btn btn-primary">
+                           <button type="submit" class="btn btn-primary">
                            <i class="fa fa-check-square-o"></i> Statusovat
-                           </button>  
+                          </button>
                         </div>
+                     </form>
                      </div>
                   </div>
                </div>

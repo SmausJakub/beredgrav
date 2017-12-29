@@ -63,7 +63,15 @@ a:link {
     background-color: #FFFFFF;
     border: none;
     box-shadow: none;
+    text-align: center;
 }
+
+.status-user {
+	text-weight: bold;
+	font-size: 14px;
+	text-align: center;
+}
+
 .status-buttons {
     background-color: #FFFFFF;
     border: none;
@@ -75,6 +83,8 @@ a:link {
     margin: 0px 0px 10px 0px;
     padding: 10px;
     background-color: #FAFAFA;
+    width: 100%;
+    height: 100%;
 }
 .lajk {
     color: #399E06;

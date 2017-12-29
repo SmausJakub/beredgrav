@@ -7,22 +7,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import cz.zcu.kiv.pia.manager.UserManager;
-
 /**
- * Servlet implementation class Wall
+ * Servlet implementation class Profile
  */
 
-public class Wall extends HttpServlet {
+public class Profile extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
-	private UserManager userManager;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Wall(UserManager userManager) {
-        this.userManager = userManager;
+    public Profile() {
+        super();
         // TODO Auto-generated constructor stub
     }
 
@@ -30,8 +26,8 @@ public class Wall extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		request.getRequestDispatcher("WEB-INF/pages/wall.jsp").forward(request, response);
+		// TODO Auto-generated method stub
+		request.getRequestDispatcher("WEB-INF/pages/profile.jsp").forward(request, response);
 	}
 
 	/**
