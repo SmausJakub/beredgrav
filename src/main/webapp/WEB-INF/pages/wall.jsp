@@ -76,17 +76,9 @@
             
          </div>
          
-          <div class="friends">
-            		<h2>Přátelé</h2>
-            	<ul>
-            		<li><a href="#"><img src="${pageContext.request.contextPath}/img/avatars/default.png" class="img-circle" height="25" width="25" alt="Avatar">Mirek</a></li>
-            		<li><a href="#"><img src="${pageContext.request.contextPath}/img/avatars/default.png" class="img-circle" height="25" width="25" alt="Avatar">Honza</a></li>
-            		<li><a href="#"><img src="${pageContext.request.contextPath}/img/avatars/default.png" class="img-circle" height="25" width="25" alt="Avatar">Libuše</a></li>
-            	</ul>
-            
-            </div>
+         
           <!-- Center panel -->
-         <div class="col-sm-10 text-center">
+         <div class="col-sm-8 text-center">
             <h1 class="text-left">Zeď</h1>
             <hr />
             <!-- Status -->
@@ -158,6 +150,17 @@
             
             
              </div>
+             
+             <div class="col-sm-2">
+          <div class="friends">
+            		<h2>Přátelé</h2>
+            	<ul>
+            		<li><a href="#"><img src="${pageContext.request.contextPath}/img/avatars/default.png" class="img-circle" height="25" width="25" alt="Avatar">Mirek</a></li>
+            		<li><a href="#"><img src="${pageContext.request.contextPath}/img/avatars/default.png" class="img-circle" height="25" width="25" alt="Avatar">Honza</a></li>
+            		<li><a href="#"><img src="${pageContext.request.contextPath}/img/avatars/default.png" class="img-circle" height="25" width="25" alt="Avatar">Libuše</a></li>
+            	</ul>
+            </div>
+            </div>
       </div>
       <!-- Footer -->
       <footer class="footer text-muted">

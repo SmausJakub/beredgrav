@@ -46,7 +46,8 @@ public class Login extends HttpServlet {
 
         boolean authenticated = authService.authenticate(req.getSession(), username, password);
         if(authenticated) {
-        	req.getRequestDispatcher("WEB-INF/pages/wall.jsp").forward(req, resp);
+        	req.getRequestDispatcher("WEB-INF/pages/welcome.jsp").forward(req, resp);
+        	
         } else {
             req.setAttribute(ERR_ATTRIBUTE, "Špatnì zadané pøihlašovací údaje!");
             req.setAttribute(USERNAME_PARAMETER, username);

@@ -59,6 +59,11 @@ public class Wall extends HttpServlet {
 		
 		String text = request.getParameter(STATUS_TEXT_PARAMETER);
 		
+		if (text == null) {
+			doGet(request, response);
+			return;
+		}
+		
 		if (text.isEmpty()) {
 			return;
 		}
