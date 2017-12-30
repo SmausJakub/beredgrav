@@ -1,11 +1,13 @@
 package cz.zcu.kiv.pia.domain;
 
 import java.util.Date;
-import java.util.LinkedHashSet;
 import java.util.Set;
 
-import javax.persistence.Entity;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.JoinColumn;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
@@ -31,6 +33,9 @@ public class User extends BaseEntity {
     private String email;
     private String gender;
     private String avatar;
+    
+    private Set<Status> likes;
+    private Set<Status> hates;
 
     public User(String username, String password, Date dateOfBirth, String gender, String avatar) {
         this.username = username;
@@ -48,8 +53,37 @@ public class User extends BaseEntity {
         if(StringUtils.isBlank(username)) throw new UserValidationException("Username is a required field");
         if(StringUtils.isBlank(password)) throw new UserValidationException("Password is a required field");
     }
+    
+    
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+    		name = "kruzej_user_likes",
+    		joinColumns = { @JoinColumn(name="username")},
+    		inverseJoinColumns = { @JoinColumn(name="status_id")}
+    		)
+    public Set<Status> getLikes() {
+		return likes;
+	}
 
-    public String getUsername() {
+	public void setLikes(Set<Status> likes) {
+		this.likes = likes;
+	}
+	
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+    		name = "kruzej_user_hates",
+    		joinColumns = { @JoinColumn(name="username")},
+    		inverseJoinColumns = { @JoinColumn(name="status_id")}
+    		)
+	public Set<Status> getHates() {
+		return hates;
+	}
+
+	public void setHates(Set<Status> hates) {
+		this.hates = hates;
+	}
+
+	public String getUsername() {
         return username;
     }
 
@@ -64,7 +98,7 @@ public class User extends BaseEntity {
     public void setPassword(String password) {
         this.password = password;
     }
-
+    
     public Date getDateOfBirth() {
         return dateOfBirth;
     }
@@ -72,10 +106,6 @@ public class User extends BaseEntity {
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
-   
-    
-
-    
 
     public String getEmail() {
 		return email;
@@ -119,17 +149,7 @@ public class User extends BaseEntity {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		if (password == null) {
-			if (other.password != null)
-				return false;
-		} else if (!password.equals(other.password))
-			return false;
-		if (username == null) {
-			if (other.username != null)
-				return false;
-		} else if (!username.equals(other.username))
-			return false;
-		return true;
+		return other.getId().equals(this.id);
 	}
 
 	@Override

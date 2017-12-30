@@ -21,7 +21,9 @@ import cz.zcu.kiv.pia.web.auth.AuthenticationService;
  */
 public class Login extends HttpServlet {
 
-    private static final String USERNAME_PARAMETER = "username";
+
+	private static final long serialVersionUID = 1L;
+	private static final String USERNAME_PARAMETER = "username";
     private static final String PASSWORD_PARAMETER = "password";
 
     private static final String ERR_ATTRIBUTE = "err";

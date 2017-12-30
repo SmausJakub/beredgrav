@@ -2,8 +2,10 @@ package cz.zcu.kiv.pia.domain;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -17,14 +19,25 @@ public class Comment extends BaseEntity {
 	private User owner;
 	
 	private Status status;
+	
 
-	public Comment(String text, Date dateOfComment, User owner, Status status) {
+	public Comment(String text, Date dateOfComment, User owner) {
 		this.text = text;
 		this.dateOfComment = dateOfComment;
 		this.owner = owner;
+	}
+	
+	
+	@ManyToOne
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
 		this.status = status;
 	}
 
+	@Lob
 	public String getText() {
 		return text;
 	}
@@ -32,7 +45,7 @@ public class Comment extends BaseEntity {
 	public void setText(String text) {
 		this.text = text;
 	}
-
+	
 	public Date getDateOfComment() {
 		return dateOfComment;
 	}
@@ -42,7 +55,6 @@ public class Comment extends BaseEntity {
 	}
 
 	@OneToOne
-	@JoinColumn(name="username")
 	public User getOwner() {
 		return owner;
 	}
@@ -51,14 +63,7 @@ public class Comment extends BaseEntity {
 		this.owner = owner;
 	}
 
-	@OneToOne
-	public Status getStatus() {
-		return status;
-	}
 
-	public void setStatus(Status status) {
-		this.status = status;
-	}
 
 	@Override
 	public int hashCode() {
@@ -66,7 +71,6 @@ public class Comment extends BaseEntity {
 		int result = 1;
 		result = prime * result + ((dateOfComment == null) ? 0 : dateOfComment.hashCode());
 		result = prime * result + ((owner == null) ? 0 : owner.hashCode());
-		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		result = prime * result + ((text == null) ? 0 : text.hashCode());
 		return result;
 	}
@@ -80,32 +84,12 @@ public class Comment extends BaseEntity {
 		if (getClass() != obj.getClass())
 			return false;
 		Comment other = (Comment) obj;
-		if (dateOfComment == null) {
-			if (other.dateOfComment != null)
-				return false;
-		} else if (!dateOfComment.equals(other.dateOfComment))
-			return false;
-		if (owner == null) {
-			if (other.owner != null)
-				return false;
-		} else if (!owner.equals(other.owner))
-			return false;
-		if (status == null) {
-			if (other.status != null)
-				return false;
-		} else if (!status.equals(other.status))
-			return false;
-		if (text == null) {
-			if (other.text != null)
-				return false;
-		} else if (!text.equals(other.text))
-			return false;
-		return true;
+		return other.getId().equals(this.id);
 	}
 
 	@Override
 	public String toString() {
-		return "Comment [text=" + text + ", dateOfComment=" + dateOfComment + ", owner=" + owner + ", status=" + status
+		return "Comment [text=" + text + ", dateOfComment=" + dateOfComment + ", owner=" + owner + ","
 				+ "]";
 	}
 	

@@ -1,6 +1,8 @@
 package cz.zcu.kiv.pia.manager;
 
 
+import java.util.List;
+
 import cz.zcu.kiv.pia.dao.UserDao;
 import cz.zcu.kiv.pia.domain.User;
 import cz.zcu.kiv.pia.domain.UserValidationException;
@@ -42,4 +44,16 @@ public class DefaultUserManager implements UserManager {
 	        }
 	        userDao.commitTransaction();
 	    }
+
+		@Override
+		public User findUserByUsername(String username) {
+				
+			return userDao.findByUsername(username);
+			
+		}
+
+		@Override
+		public List<User> findAllRegisteredUsers() {
+			return userDao.findAll();
+		}
 }

@@ -1,33 +1,66 @@
 package cz.zcu.kiv.pia.domain;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
+import javax.persistence.FetchType;
+import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "kruzej_status")
-public class Status extends BaseEntity {
+public class Status extends BaseEntity implements Comparable<Status> {
 
 	
 	private String text;
 	private Date dateOfStatus;
 	
-	private int lajk = 0;
-	private int hate = 0;
+	private List<Comment> comments;
 	
-	private int commentNumber = 0;
-
+	private Set<User> likes;
+	private Set<User> hates;
+	
 	private User owner;
 	
-	public Status(String text, Date dateOfStatus)  {
+	public Status(User owner, String text, Date dateOfStatus)  {
 		this.text = text;
 		this.dateOfStatus = dateOfStatus;
+		this.owner = owner;
 	}
 	
+	
+	@ManyToMany(mappedBy = "likes", fetch = FetchType.EAGER)
+	public Set<User> getLikes() {
+		return likes;
+	}
 
+
+
+	public void setLikes(Set<User> likes) {
+		this.likes = likes;
+	}
+
+
+	@ManyToMany(mappedBy = "hates", fetch = FetchType.EAGER)
+	public Set<User> getHates() {
+		return hates;
+	}
+
+
+
+	public void setHates(Set<User> hates) {
+		this.hates = hates;
+	}
+
+
+
+	@Lob
 	public String getText() {
 		return text;
 	}
@@ -45,8 +78,18 @@ public class Status extends BaseEntity {
 	}
 	
 	
+	@OneToMany(mappedBy = "status", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}
+
+
 	@OneToOne
-	@JoinColumn(name="username")
 	public User getOwner() {
 		return owner;
 	}
@@ -55,7 +98,6 @@ public class Status extends BaseEntity {
 	public void setOwner(User owner) {
 		this.owner = owner;
 	}
-
 
 	@Override
 	public int hashCode() {
@@ -75,22 +117,19 @@ public class Status extends BaseEntity {
 		if (getClass() != obj.getClass())
 			return false;
 		Status other = (Status) obj;
-		if (dateOfStatus == null) {
-			if (other.dateOfStatus != null)
-				return false;
-		} else if (!dateOfStatus.equals(other.dateOfStatus))
-			return false;
-		if (text == null) {
-			if (other.text != null)
-				return false;
-		} else if (!text.equals(other.text))
-			return false;
-		return true;
+		
+		return other.getId().equals(this.id);
 	}
 
 	@Override
 	public String toString() {
 		return "Status [text=" + text + ", dateOfStatus=" + dateOfStatus + "]";
+	}
+
+
+	@Override
+	public int compareTo(Status o) {
+		return o.getDateOfStatus().compareTo(this.dateOfStatus);
 	}
 	
 	

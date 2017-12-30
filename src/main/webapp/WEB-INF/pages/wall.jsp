@@ -61,7 +61,7 @@
                   <span class="caret"></span></a>
                   <ul class="dropdown-menu">
                      <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/wall">Zeď</a></li>
-                     <li role="presentation"><a href="${pageContext.request.contextPath}/app/profile">Profil</a></li>
+                     <li role="presentation"><a href="${pageContext.request.contextPath}/profile">Profil</a></li>
                      <li role="presentation"><a href="#">Nastavení</a></li>
                   </ul>
                </li>
@@ -71,7 +71,20 @@
                <li role="presentation"><a href="${pageContext.request.contextPath}/profile">Profil</a></li>
                <li role="presentation"><a href="#">Nastavení</a></li>
             </ul>
+            
+           
+            
          </div>
+         
+          <div class="friends">
+            		<h2>Přátelé</h2>
+            	<ul>
+            		<li><a href="#"><img src="${pageContext.request.contextPath}/img/avatars/default.png" class="img-circle" height="25" width="25" alt="Avatar">Mirek</a></li>
+            		<li><a href="#"><img src="${pageContext.request.contextPath}/img/avatars/default.png" class="img-circle" height="25" width="25" alt="Avatar">Honza</a></li>
+            		<li><a href="#"><img src="${pageContext.request.contextPath}/img/avatars/default.png" class="img-circle" height="25" width="25" alt="Avatar">Libuše</a></li>
+            	</ul>
+            
+            </div>
           <!-- Center panel -->
          <div class="col-sm-10 text-center">
             <h1 class="text-left">Zeď</h1>
@@ -82,15 +95,15 @@
                   <div class="panel-body">
                      <div class="col-md-2">
                         <div class="well status-avatar">
-                           <p class="status-name"><%= request.getSession().getAttribute("user") %></p>
-                           <img src="img/avatars/default.png" class="img-circle" height="55" width="55" alt="Avatar">
+                           <div class="status-name"><%= request.getSession().getAttribute("user") %></div>
+                           <img src="${pageContext.request.contextPath}/img/avatars/default.png" class="img-circle" height="55" width="55" alt="Avatar">
                         </div>
                      </div>
                      <div class="col-md-10">
-                     	<form action="${pageContext.request.contextPath}/status" method="post">
-                        
-                        	<input type="text" name="text" placeholder="Napište ostatním, jak se cítíte!" class="well status-status">
-                        
+                     	<form action="${pageContext.request.contextPath}/wall" method="post">
+                        <div class="form-group">
+                        	<textarea class="form-control" rows="5" id="text" name="text" placeholder="Napište ostatním, jak se cítíte!"></textarea>
+                        </div>
                         <div class="well text-right status-buttons">
                            <button type="submit" class="btn btn-primary">
                            <i class="fa fa-check-square-o"></i> Statusovat
@@ -102,6 +115,45 @@
                </div>
             </div>
             
+            <c:if test="${not empty requestScope.statusList}">
+            
+            <c:forEach items="${requestScope.statusList }" var="item">
+           	 <div class="row">
+               <div class="panel panel-default">
+                  <div class="panel-body">
+                     <div class="col-md-2">
+                        <div class="well status-avatar">
+           					<div class="status-name"><a href="#">${item.owner.username}</a></div>
+           				<img src="${pageContext.request.contextPath}${item.owner.avatar}" class="img-circle" height="55" width="55" alt="Avatar">	
+             			</div>
+                     </div>
+           <div class="col-md-10">
+                        <div class="well status-status">
+                        <p>${item.text}</p>
+                           <div class="status-date">${item.dateOfStatus}</div>
+           				 </div>
+                        <div class="well text-right status-buttons">
+                           <button class="btn btn-success">
+                           <i class="fa fa-thumbs-up"></i>
+                           Lajkovat</button>
+                           <button class="btn btn-danger">
+                           <i class="fa fa-thumbs-down"></i>
+                           Hejtovat</button>
+                           <button class="btn btn-default">
+                           <i class="fa fa-comment-o"></i>
+                           Komentovat</button>
+                        </div>
+                         <div class="status-info">
+                           <strong>
+                           <span class="lajk">0</span> | <span class="hejt">0</span> | <a href="#">0 komentářů</a>
+                           </strong>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+           </c:forEach>
+            </c:if>
             
             
             

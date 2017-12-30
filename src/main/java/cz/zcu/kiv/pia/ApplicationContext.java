@@ -4,9 +4,13 @@ package cz.zcu.kiv.pia;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 
+import cz.zcu.kiv.pia.dao.StatusDao;
 import cz.zcu.kiv.pia.dao.UserDao;
+import cz.zcu.kiv.pia.jpa.StatusDaoCriteria;
 import cz.zcu.kiv.pia.jpa.UserDaoCriteria;
+import cz.zcu.kiv.pia.manager.DefaultStatusManager;
 import cz.zcu.kiv.pia.manager.DefaultUserManager;
+import cz.zcu.kiv.pia.manager.StatusManager;
 import cz.zcu.kiv.pia.manager.UserManager;
 import cz.zcu.kiv.pia.utils.Encoder;
 import cz.zcu.kiv.pia.utils.PasswordHashEncoder;
@@ -29,9 +33,11 @@ public class ApplicationContext {
     //persistence
     private EntityManager em;
     private UserDao userDao;
+    private StatusDao statusDao;
 
     //business
     private UserManager userManager;
+    private StatusManager statusManager;
     private Encoder encoder;
 
     //web
@@ -41,16 +47,33 @@ public class ApplicationContext {
         //TODO persistence unit name should be taken from a property file, not hard-coded!
         em = Persistence.createEntityManagerFactory("dbs").createEntityManager();
         userDao = new UserDaoCriteria(em);
+        statusDao = new StatusDaoCriteria(em);
         encoder = new PasswordHashEncoder();
         userManager = new DefaultUserManager(userDao, encoder);
+        statusManager = new DefaultStatusManager(statusDao);
+        
         authenticationService = new AuthenticationService(userManager);
     }
+    
 
     public void destroy() {
         em.close();
     }
+    
+    
 
-    public EntityManager getEm() {
+
+
+	public StatusDao getStatusDao() {
+		return statusDao;
+	}
+
+
+	public StatusManager getStatusManager() {
+		return statusManager;
+	}
+
+	public EntityManager getEm() {
         return em;
     }
 

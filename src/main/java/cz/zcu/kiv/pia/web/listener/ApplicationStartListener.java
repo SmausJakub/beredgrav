@@ -33,7 +33,7 @@ public class ApplicationStartListener implements ServletContextListener {
         sce.getServletContext().addServlet("login", new Login(ctx.getAuthenticationService())).addMapping("/login");
         sce.getServletContext().addServlet("logout", new Logout(ctx.getAuthenticationService())).addMapping("/logout");
         sce.getServletContext().addServlet("register", new Register(ctx.getUserManager())).addMapping("/register");
-        sce.getServletContext().addServlet("wall", new Wall(ctx.getUserManager())).addMapping("/wall");
+        sce.getServletContext().addServlet("wall", new Wall(ctx.getUserManager(), ctx.getStatusManager())).addMapping("/wall");
         sce.getServletContext().addServlet("profile", new Profile()).addMapping("/profile");
         
         sce.getServletContext().addFilter("authFilter", new AuthenticationGuard(ctx.getAuthenticationService())).addMappingForUrlPatterns(null, false, "/wall/*", "/profile/*");

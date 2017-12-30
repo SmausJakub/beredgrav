@@ -1,5 +1,7 @@
 package cz.zcu.kiv.pia.manager;
 
+import java.util.List;
+
 import cz.zcu.kiv.pia.domain.User;
 import cz.zcu.kiv.pia.domain.UserValidationException;
 
@@ -21,5 +23,10 @@ public interface UserManager {
      *                                 e.g. required fields are missing
      */
     void register(User newUser) throws UserValidationException;
-
+    
+    User findUserByUsername(String username);
+    
+    List<User> findAllRegisteredUsers();
+    
+    
 }

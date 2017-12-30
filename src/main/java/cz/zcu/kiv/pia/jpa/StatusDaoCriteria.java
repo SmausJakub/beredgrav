@@ -36,4 +36,21 @@ public class StatusDaoCriteria extends StatusDaoJpa {
 		
 	}
 
+	@Override
+	public List<Status> findAll() {
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Status> criteria = cb.createQuery(Status.class);
+		Root<Status> root = criteria.from(Status.class);
+		criteria.select(root);
+		TypedQuery<Status> q = entityManager.createQuery(criteria);
+		
+		try {
+			return q.getResultList();
+		} catch (NoResultException e) {
+			return null;
+		}
+		
+		
+	}
+
 }

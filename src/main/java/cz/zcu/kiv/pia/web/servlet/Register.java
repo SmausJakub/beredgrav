@@ -4,9 +4,7 @@ package cz.zcu.kiv.pia.web.servlet;
 
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
-import java.util.Enumeration;
 import java.util.Objects;
 
 import javax.servlet.ServletException;
@@ -28,7 +26,11 @@ import cz.zcu.kiv.pia.manager.UserManager;
  */
 public class Register extends HttpServlet {
 
-    private static final String USERNAME_PARAMETER = "username";
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private static final String USERNAME_PARAMETER = "username";
     private static final String PASSWORD_PARAMETER = "password";
     private static final String CONFIRM_PWD_PARAMETER = "password-check";
     private static final String SEX = "sex";
@@ -65,6 +67,10 @@ public class Register extends HttpServlet {
         String password = req.getParameter(PASSWORD_PARAMETER);
         String confirmPwd = req.getParameter(CONFIRM_PWD_PARAMETER);
         String gender = req.getParameter(SEX);
+        
+        System.out.println(req.getParameter(MONTH));
+        System.out.println(req.getParameter(DAY));
+        System.out.println(req.getParameter(YEAR));
         
         int month = Integer.parseInt(req.getParameter(MONTH));
         int day = Integer.parseInt(req.getParameter(DAY));

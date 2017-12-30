@@ -1,5 +1,7 @@
 package cz.zcu.kiv.pia.jpa;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
@@ -27,6 +29,21 @@ public class UserDaoCriteria extends UserDaoJpa {
 
 		try {
 			return q.getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
+
+	@Override
+	public List<User> findAll() {
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<User> criteria = cb.createQuery(User.class);
+		Root<User> root = criteria.from(User.class);
+		criteria.select(root);
+		TypedQuery<User> q = entityManager.createQuery(criteria);
+		
+		try {
+			return q.getResultList();
 		} catch (NoResultException e) {
 			return null;
 		}

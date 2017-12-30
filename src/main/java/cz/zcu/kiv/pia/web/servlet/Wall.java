@@ -1,12 +1,18 @@
 package cz.zcu.kiv.pia.web.servlet;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import cz.zcu.kiv.pia.domain.Status;
+import cz.zcu.kiv.pia.domain.User;
+import cz.zcu.kiv.pia.manager.StatusManager;
 import cz.zcu.kiv.pia.manager.UserManager;
 
 /**
@@ -15,21 +21,33 @@ import cz.zcu.kiv.pia.manager.UserManager;
 
 public class Wall extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+
+       
+	private StatusManager statusManager;
 	
 	private UserManager userManager;
-       
+	
+	private static final String STATUS_TEXT_PARAMETER = "text";
+	private static final String STATUS_PARAMETER = "statusList";
+	
+	private static final String USER = "user";
+	
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Wall(UserManager userManager) {
-        this.userManager = userManager;
-        // TODO Auto-generated constructor stub
+    public Wall(UserManager userManager, StatusManager statusManager) {
+    	this.statusManager = statusManager;
+    	this.userManager = userManager;
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		List<Status> statusList = statusManager.findAllStatuses();
+		Collections.sort(statusList);
+		request.setAttribute(STATUS_PARAMETER, statusList);
 		
 		request.getRequestDispatcher("WEB-INF/pages/wall.jsp").forward(request, response);
 	}
@@ -38,8 +56,23 @@ public class Wall extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
+		String text = request.getParameter(STATUS_TEXT_PARAMETER);
+		
+		if (text.isEmpty()) {
+			return;
+		}
+		
+		// kontrola
+		
+		String username = (String) request.getSession().getAttribute(USER);
+		
+		User user = userManager.findUserByUsername(username);
+		
+		statusManager.publishStatus(new Status(user, text, new Date()));
+		
 		doGet(request, response);
+		
 	}
 
 }
