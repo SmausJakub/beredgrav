@@ -36,7 +36,7 @@
                <c:when test="${not empty sessionScope.user }">
                <div class="collapse navbar-collapse" id="menuNavbar">
                   <ul class="nav navbar-nav navbar-right">
-                     <li><a href="${pageContext.request.contextPath}/profile"><i class="fa fa-user"></i>&nbsp;<%= request.getSession().getAttribute("user") %></a></li>
+                     <li><a href="${pageContext.request.contextPath}/profile?username=${sessionScope.user}"><i class="fa fa-user"></i>&nbsp;<c:out value="${sessionScope.user }" /></a></li>
                      <li><a href="${pageContext.request.contextPath}/logout"><i class="fa fa-sign-out"></i>&nbsp;Odhlásit</a></li>
                   </ul>
                </div>
@@ -61,19 +61,16 @@
                   <span class="caret"></span></a>
                   <ul class="dropdown-menu">
                      <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/wall">Zeď</a></li>
-                     <li role="presentation"><a href="${pageContext.request.contextPath}/profile">Profil</a></li>
-                     <li role="presentation"><a href="#">Nastavení</a></li>
+                     <li role="presentation"><a href="${pageContext.request.contextPath}/profile?username=${sessionScope.user }">Profil</a></li>
+                     <li role="presentation"><a href="${pageContext.request.contextPath}/users">Uživatelé</a></li>
                   </ul>
                </li>
             </ul>
             <ul class="nav nav-pills nav-stacked hidden-xs">
                <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/wall">Zeď</a></li>
-               <li role="presentation"><a href="${pageContext.request.contextPath}/profile">Profil</a></li>
-               <li role="presentation"><a href="#">Nastavení</a></li>
+               <li role="presentation"><a href="${pageContext.request.contextPath}/profile?username=${sessionScope.user}">Profil</a></li>
+               <li role="presentation"><a href="${pageContext.request.contextPath}/users">Uživatelé</a></li>
             </ul>
-            
-           
-            
          </div>
          
          
@@ -87,7 +84,7 @@
                   <div class="panel-body">
                      <div class="col-md-2">
                         <div class="well status-avatar">
-                           <div class="status-name"><%= request.getSession().getAttribute("user") %></div>
+                           <div class="status-name"><c:out value="${sessionScope.user }" /></div>
                            <img src="${pageContext.request.contextPath}/img/avatars/default.png" class="img-circle" height="55" width="55" alt="Avatar">
                         </div>
                      </div>
@@ -151,15 +148,33 @@
             
              </div>
              
+             
+             
              <div class="col-sm-2">
-          <div class="friends">
-            		<h2>Přátelé</h2>
-            	<ul>
-            		<li><a href="#"><img src="${pageContext.request.contextPath}/img/avatars/default.png" class="img-circle" height="25" width="25" alt="Avatar">Mirek</a></li>
-            		<li><a href="#"><img src="${pageContext.request.contextPath}/img/avatars/default.png" class="img-circle" height="25" width="25" alt="Avatar">Honza</a></li>
-            		<li><a href="#"><img src="${pageContext.request.contextPath}/img/avatars/default.png" class="img-circle" height="25" width="25" alt="Avatar">Libuše</a></li>
-            	</ul>
-            </div>
+             
+             <h3>Notifikace</h3>
+          			
+          				<c:if test="${not empty requestScope.friendshipList }">
+          				
+          				<c:forEach items="${requestScope.friendshipList}" var="item">
+          				
+          				<div class="row">
+          				
+          				<div class="well">
+          					
+          					${item.initator.username }
+          					${item.target.username }
+          					${item.approved }
+          				</div>
+          				
+          				</div>
+          				
+          				</c:forEach>
+          				
+          				
+          				</c:if>
+          			
+          
             </div>
       </div>
       <!-- Footer -->

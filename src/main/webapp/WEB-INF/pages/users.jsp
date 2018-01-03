@@ -4,10 +4,10 @@
 <!DOCTYPE html>
 <html>
 <head>
- <meta charset="utf-8">
+    <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <title>Přihlášení</title>
+      <title>Uživatelé</title>
       <!-- CSS -->
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
          integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ=="
@@ -15,9 +15,8 @@
       <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css" />
       <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/font-awesome.min.css" />
 </head>
-
-
 <body>
+
 <div class="container">
          <!-- Menu -->
          <nav class="navbar navbar-inverse">
@@ -56,77 +55,63 @@
          </nav>
          <!-- Page content -->
          <!-- Left panel Menu -->
-         <div class="col-sm-2">
+           <div class="col-sm-2">
             <ul class="nav nav-pills hidden-xl hidden-lg hidden-sm hidden-md">
                <li class="dropdown">
                   <a class="dropdown-toggle" data-toggle="dropdown" href="#">Zobrazit menu
                   <span class="caret"></span></a>
                   <ul class="dropdown-menu">
-                     <li role="presentation"><a href="${pageContext.request.contextPath}/index">Hlavní stránka</a></li>
-                     <li role="presentation"><a href="#">Informace</a></li>
-                     <li role="presentation"><a href="#">Reakce uživatelů</a></li>
-                     <li role="presentation"><a href="#">Prohlížení</a></li>
+                     <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/wall">Zeď</a></li>
+                     <li role="presentation"><a href="${pageContext.request.contextPath}/profile?username=${sessionScope.user }">Profil</a></li>
+                     <li role="presentation"><a href="${pageContext.request.contextPath}/users">Uživatelé</a></li>
                   </ul>
                </li>
             </ul>
             <ul class="nav nav-pills nav-stacked hidden-xs">
-               <li role="presentation"><a href="${pageContext.request.contextPath}/index">Hlavní stránka</a></li>
-               <li role="presentation"><a href="#">Informace</a></li>
-               <li role="presentation"><a href="#">Reakce uživatelů</a></li>
-               <li role="presentation"><a href="#">Prohlížení</a></li>
+               <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/wall">Zeď</a></li>
+               <li role="presentation"><a href="${pageContext.request.contextPath}/profile?username=${sessionScope.user}">Profil</a></li>
+               <li role="presentation"><a href="${pageContext.request.contextPath}/users">Uživatelé</a></li>
             </ul>
          </div>
          <!-- Center panel -->
          <div class="col-sm-10">
          
-            <c:if test="${not empty requestScope.suc}">
-     				<p class="success">
-     				${requestScope.suc}
-     				</p>
-		</c:if>
+         <h1>Uživatelé KIVBOOK</h1>
+         <hr />
          
-            <!-- Form -->
-            <form class="form-horizontal" action="${pageContext.request.contextPath}/login" method="post" >
-               <fieldset>
-                  <legend>Přihlášení</legend>
-                  <div class="form-group">
-                     <label class="control-label col-sm-2" for="username">Jméno:</label>
-                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="username" placeholder="Zadat přihlašovací jméno" name="username" required
-                        value="${usernameField}">
-                        	
-                     </div>
-                  </div>
-                  <div class="form-group">
-                     <label class="control-label col-sm-2" for="pwd">Heslo:</label>
-                     <div class="col-sm-10">          
-                        <input type="password" class="form-control" id="password" placeholder="Zadat heslo" name="password" required >
-                        	
-                     </div>
-                  </div>
-               </fieldset>
-               <div class="form-group">
-                  <div class="col-sm-offset-2 col-sm-10">
-                     <div class="checkbox">
-                        <label><input type="checkbox" name="remember">Zůstat přihlášen</label>
-                     </div>
-                  </div>
-               </div>
-               <div class="form-group">
-                  <div class="col-sm-offset-2 col-sm-10">
-                     <button type="submit" class="btn btn-default">Přihlásit</button>
-                  </div>
-               </div>
-            </form>
-            
-        <c:if test="${not empty requestScope.err}">
-     				<p class="error">
-     				${requestScope.err}
-     				</p>
-		</c:if>
-            
+         <c:if test="${empty requestScope.userList }" > <p>Žádní uživatelé nejsou zaregistrováni! :( <br> Buďte<a href="${pageContext.request.contextPath}/login">první!</a> </p> </c:if>
+         
+         <c:if test="${not empty requestScope.userList }" >
+         
+         <c:forEach items="${requestScope.userList }" var="item" >
+         
+         	<c:choose>
+         	<c:when test="${empty item.gender }" >
+         		<c:set var="pan" value="panel panel-info" />
+         		<c:set var="fav" value="fa fa-user-circle" />
+         	</c:when>
+         	<c:when test="${item.gender == 'male' }" >
+         		<c:set var="pan" value="panel panel-success" />
+         		<c:set var="fav" value="fa fa-male" />
+         	</c:when>
+         	<c:when test="${item.gender == 'female' }" >
+         		<c:set var="pan" value="panel panel-warning" />
+         		<c:set var="fav" value="fa fa-female" />
+         	</c:when>
+         	</c:choose>
+         
+        	<div class="${pan }">
+        	<div class="panel-heading">Uživatel <i class="${fav}" aria-hidden="true"></i></div>
+        	<div class="panel-body"> <img src="${pageContext.request.contextPath}${item.avatar}" class="img-circle" height="30" width="30" alt="Avatar"> <a href="${pageContext.request.contextPath}/profile?username=${item.username}" ><c:out value="${item.username }" /></a>  </div>
+        	
+        	</div>
+         
+         </c:forEach>
+         
+         </c:if>
+         
          </div>
-      </div>
+         </div>
       <!-- Footer -->
       <footer class="footer text-muted">
          KIVBOOK 2017

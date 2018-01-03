@@ -68,10 +68,6 @@ public class Register extends HttpServlet {
         String confirmPwd = req.getParameter(CONFIRM_PWD_PARAMETER);
         String gender = req.getParameter(SEX);
         
-        System.out.println(req.getParameter(MONTH));
-        System.out.println(req.getParameter(DAY));
-        System.out.println(req.getParameter(YEAR));
-        
         int month = Integer.parseInt(req.getParameter(MONTH));
         int day = Integer.parseInt(req.getParameter(DAY));
         int year = Integer.parseInt(req.getParameter(YEAR));
@@ -107,7 +103,7 @@ public class Register extends HttpServlet {
         }
 
         try {
-            userManager.register(new User(username, password, birthday, gender, DEFAULT_AVATAR));
+            userManager.register(new User(username, password, birthday, gender, DEFAULT_AVATAR, new Date()));
             req.setAttribute(SUCCESS_ATTRIBUTE, "Registrace probìhla úspìšnì! Nyní se mùžete pøihlásit.");
             req.getRequestDispatcher("WEB-INF/pages/login.jsp").forward(req, resp);
         } catch (UserValidationException e) {
@@ -124,7 +120,7 @@ public class Register extends HttpServlet {
         	if (Objects.equals(gender, MALE)) {
         		req.setAttribute(GENDER_MALE_FIELD, true);
         	}
-        	else {
+        	else if (Objects.equals(gender, FEMALE)){
         		req.setAttribute(GENDER_FEMALE_FIELD, true);
         	}
         }

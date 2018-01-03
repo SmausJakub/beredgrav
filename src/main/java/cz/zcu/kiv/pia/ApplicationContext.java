@@ -4,12 +4,16 @@ package cz.zcu.kiv.pia;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 
+import cz.zcu.kiv.pia.dao.FriendshipDao;
 import cz.zcu.kiv.pia.dao.StatusDao;
 import cz.zcu.kiv.pia.dao.UserDao;
+import cz.zcu.kiv.pia.jpa.FriendshipDaoCriteria;
 import cz.zcu.kiv.pia.jpa.StatusDaoCriteria;
 import cz.zcu.kiv.pia.jpa.UserDaoCriteria;
+import cz.zcu.kiv.pia.manager.DefaultFriendshipManager;
 import cz.zcu.kiv.pia.manager.DefaultStatusManager;
 import cz.zcu.kiv.pia.manager.DefaultUserManager;
+import cz.zcu.kiv.pia.manager.FriendshipManager;
 import cz.zcu.kiv.pia.manager.StatusManager;
 import cz.zcu.kiv.pia.manager.UserManager;
 import cz.zcu.kiv.pia.utils.Encoder;
@@ -34,10 +38,12 @@ public class ApplicationContext {
     private EntityManager em;
     private UserDao userDao;
     private StatusDao statusDao;
+    private FriendshipDao frDao;
 
     //business
     private UserManager userManager;
     private StatusManager statusManager;
+    private FriendshipManager frManager;
     private Encoder encoder;
 
     //web
@@ -48,9 +54,11 @@ public class ApplicationContext {
         em = Persistence.createEntityManagerFactory("dbs").createEntityManager();
         userDao = new UserDaoCriteria(em);
         statusDao = new StatusDaoCriteria(em);
+        frDao = new FriendshipDaoCriteria(em);
         encoder = new PasswordHashEncoder();
         userManager = new DefaultUserManager(userDao, encoder);
         statusManager = new DefaultStatusManager(statusDao);
+        frManager = new DefaultFriendshipManager(frDao);
         
         authenticationService = new AuthenticationService(userManager);
     }
@@ -92,4 +100,16 @@ public class ApplicationContext {
     public AuthenticationService getAuthenticationService() {
         return authenticationService;
     }
+
+
+	public FriendshipDao getFrDao() {
+		return frDao;
+	}
+
+	public FriendshipManager getFrManager() {
+		return frManager;
+	}
+    
+    
+    
 }

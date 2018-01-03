@@ -10,8 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import cz.zcu.kiv.pia.domain.Friendship;
 import cz.zcu.kiv.pia.domain.Status;
 import cz.zcu.kiv.pia.domain.User;
+import cz.zcu.kiv.pia.manager.FriendshipManager;
 import cz.zcu.kiv.pia.manager.StatusManager;
 import cz.zcu.kiv.pia.manager.UserManager;
 
@@ -24,20 +26,22 @@ public class Wall extends HttpServlet {
 
        
 	private StatusManager statusManager;
-	
+	private FriendshipManager frManager;
 	private UserManager userManager;
 	
 	private static final String STATUS_TEXT_PARAMETER = "text";
 	private static final String STATUS_PARAMETER = "statusList";
+	private static final String FRIENDSHIP_PARAMETER = "friendshipList";
 	
 	private static final String USER = "user";
 	
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Wall(UserManager userManager, StatusManager statusManager) {
+    public Wall(UserManager userManager, StatusManager statusManager, FriendshipManager frManager) {
     	this.statusManager = statusManager;
     	this.userManager = userManager;
+    	this.frManager = frManager;
     }
 
 	/**
@@ -49,6 +53,13 @@ public class Wall extends HttpServlet {
 		Collections.sort(statusList);
 		request.setAttribute(STATUS_PARAMETER, statusList);
 		
+		String username = (String) request.getSession().getAttribute(USER);
+		
+		User loggedUser = userManager.findUserByUsername(username);
+		
+		List<Friendship> friendshipList = frManager.findInvolvedFriendships(loggedUser.getId());
+		
+		request.setAttribute(FRIENDSHIP_PARAMETER, friendshipList);
 		request.getRequestDispatcher("WEB-INF/pages/wall.jsp").forward(request, response);
 	}
 
@@ -67,8 +78,6 @@ public class Wall extends HttpServlet {
 		if (text.isEmpty()) {
 			return;
 		}
-		
-		// kontrola
 		
 		String username = (String) request.getSession().getAttribute(USER);
 		

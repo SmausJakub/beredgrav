@@ -47,13 +47,43 @@ public class DefaultUserManager implements UserManager {
 
 		@Override
 		public User findUserByUsername(String username) {
-				
-			return userDao.findByUsername(username);
+			
+			return  userDao.findByUsername(username);
 			
 		}
 
 		@Override
 		public List<User> findAllRegisteredUsers() {
-			return userDao.findAll();
+			 return userDao.findAll();
+			
 		}
+
+		@Override
+		public void updateUser(String username, String password, String email, String gender) {
+			
+			User user = userDao.findByUsername(username);
+			
+			if (!password.isEmpty()) {
+				user.setPassword(encoder.encode(password));
+			}
+			
+			if (!email.isEmpty()) {
+				user.setEmail(email);
+			}
+			
+			if (gender != null) {
+				user.setGender(gender);
+			}
+	
+			 userDao.startTransaction();
+		        try {
+		            userDao.save(user);
+		        } catch (Exception e) {
+		            userDao.rollbackTransaction();
+		        }
+		        userDao.commitTransaction();
+				
+			
+			}
+			
 }

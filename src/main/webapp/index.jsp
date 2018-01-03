@@ -30,11 +30,11 @@
                <span class="icon-bar"></span>
                <span class="icon-bar"></span> 
                </button>
-             <c:choose>
+            <c:choose>
                <c:when test="${not empty sessionScope.user }">
                <div class="collapse navbar-collapse" id="menuNavbar">
                   <ul class="nav navbar-nav navbar-right">
-                     <li><a href="${pageContext.request.contextPath}/profile"><i class="fa fa-user"></i>&nbsp;<%= request.getSession().getAttribute("user") %></a></li>
+                     <li><a href="${pageContext.request.contextPath}/profile"><i class="fa fa-user"></i>&nbsp;<c:out value="${sessionScope.user }" /></a></li>
                      <li><a href="${pageContext.request.contextPath}/logout"><i class="fa fa-sign-out"></i>&nbsp;Odhlásit</a></li>
                   </ul>
                </div>

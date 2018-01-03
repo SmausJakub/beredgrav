@@ -28,5 +28,8 @@ public interface UserManager {
     
     List<User> findAllRegisteredUsers();
     
+
+	void updateUser(String username, String password, String email, String gender);
+    
     
 }

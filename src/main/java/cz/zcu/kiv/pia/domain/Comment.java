@@ -2,7 +2,6 @@ package cz.zcu.kiv.pia.domain;
 
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;

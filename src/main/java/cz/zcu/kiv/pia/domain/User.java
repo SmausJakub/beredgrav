@@ -4,10 +4,9 @@ import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
@@ -30,6 +29,7 @@ public class User extends BaseEntity {
     private String username;
     private String password;
     private Date dateOfBirth;
+    private Date dateOfRegistration;
     private String email;
     private String gender;
     private String avatar;
@@ -37,12 +37,13 @@ public class User extends BaseEntity {
     private Set<Status> likes;
     private Set<Status> hates;
 
-    public User(String username, String password, Date dateOfBirth, String gender, String avatar) {
+    public User(String username, String password, Date dateOfBirth, String gender, String avatar, Date dateOfRegistration) {
         this.username = username;
         this.password = password;
         this.dateOfBirth = dateOfBirth;
         this.gender = gender;
         this.avatar = avatar;
+        this.dateOfRegistration = dateOfRegistration;
     }
     
     /**
@@ -129,6 +130,16 @@ public class User extends BaseEntity {
 
 	public void setAvatar(String avatar) {
 		this.avatar = avatar;
+	}
+	
+	
+
+	public Date getDateOfRegistration() {
+		return dateOfRegistration;
+	}
+
+	public void setDateOfRegistration(Date dateOfRegistration) {
+		this.dateOfRegistration = dateOfRegistration;
 	}
 
 	@Override
