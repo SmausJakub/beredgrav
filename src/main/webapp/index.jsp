@@ -34,7 +34,7 @@
                <c:when test="${not empty sessionScope.user }">
                <div class="collapse navbar-collapse" id="menuNavbar">
                   <ul class="nav navbar-nav navbar-right">
-                     <li><a href="${pageContext.request.contextPath}/profile"><i class="fa fa-user"></i>&nbsp;<c:out value="${sessionScope.user }" /></a></li>
+                       <li><a href="${pageContext.request.contextPath}/profile?username=${sessionScope.user}"><i class="fa fa-user"></i>&nbsp;<c:out value="${sessionScope.user }" /></a></li>
                      <li><a href="${pageContext.request.contextPath}/logout"><i class="fa fa-sign-out"></i>&nbsp;Odhlásit</a></li>
                   </ul>
                </div>
@@ -61,7 +61,8 @@
                      <li role="presentation" class="active"><a href="#">Hlavní stránka</a></li>
                      <li role="presentation"><a href="#">Informace</a></li>
                      <li role="presentation"><a href="#">Reakce uživatelů</a></li>
-                     <li role="presentation"><a href="#">Prohlížení</a></li>
+                     <li role="presentation"><a href="#">Uživatelé</a></li>
+                     <li role="presentation"><a href="#">Statusy</a></li>
                   </ul>
                </li>
             </ul>
@@ -69,7 +70,8 @@
                <li role="presentation" class="active"><a href="#">Hlavní stránka</a></li>
                <li role="presentation"><a href="#">Informace</a></li>
                <li role="presentation"><a href="#">Reakce uživatelů</a></li>
-               <li role="presentation"><a href="#">Prohlížení</a></li>
+               <li role="presentation"><a href="#">Uživatelé</a></li>
+               <li role="presentation"><a href="#">Statusy</a></li>
             </ul>
          </div>
          <!-- Center panel -->

@@ -63,7 +63,6 @@ public class Profile extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String viewUsername = request.getParameter(USER_PARAMETER);
-		System.out.println("Dostal jsem " + viewUsername);
 		User viewedUser = userManager.findUserByUsername(viewUsername);
 		if (viewedUser == null) {
 			errorDispatch("Zadaný uživatel nebyl nalezen!", request, response);
@@ -95,10 +94,8 @@ public class Profile extends HttpServlet {
 			
 				if (frManager.areInvolved(loggedUser.getId(), viewedUser.getId())) {
 					// they are involved
-					System.out.println("profile 1");
 					request.setAttribute(PROFILE_MODE, 1);
 				} else {
-					System.out.println("profile 2");
 					request.setAttribute(PROFILE_MODE, 2);
 				}
 			}

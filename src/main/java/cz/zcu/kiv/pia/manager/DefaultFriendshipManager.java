@@ -34,18 +34,63 @@ public class DefaultFriendshipManager implements FriendshipManager {
 	}
 
 	@Override
-	public List<Friendship> findInvolvedFriendships(Long id) {
-		return frDao.findByUserId(id);
+	public List<Friendship> findUnapproved(Long id) {
+		return frDao.findUnapprovedById(id);
 	}
 
 	@Override
 	public boolean areInvolved(Long id1, Long id2) {
-		Friendship fr = frDao.findFriendshipByIds(id1, id2);
+		Friendship fr = frDao.findFriendshipsAnyApproveByIds(id1, id2);
 		if (fr != null) {
 			return true;
 		} else {
 			return false;
 		}
+	}
+
+	@Override
+	public void deleteFriendship(Long id) {
+		System.out.println("delete friendship " + id);
+		
+		frDao.startTransaction();
+		
+		try {
+
+			frDao.delete(id);	
+		} catch (Exception e) {
+			frDao.rollbackTransaction();
+		}
+		
+		frDao.commitTransaction();
+		
+		
+	}
+
+	@Override
+	public void approveFriendship(Long id) {
+		Friendship fr = frDao.findOne(id);
+		
+		if (fr == null) {
+			return;
+		}
+		
+		fr.setApproved(1);
+		
+		frDao.startTransaction();
+		
+		try {
+			frDao.save(fr);
+		} catch (Exception e) {
+			frDao.rollbackTransaction();
+		}
+		
+		frDao.commitTransaction();
+		
+	}
+
+	@Override
+	public List<Friendship> findApproved(Long id) {
+		return frDao.findApprovedById(id);
 	}
 
 	

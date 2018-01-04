@@ -34,7 +34,7 @@ public class FriendshipDaoCriteria extends FriendshipDaoJpa {
 	}
 
 	@Override
-	public List<Friendship> findByUserId(Long id) {
+	public List<Friendship> findUnapprovedById(Long id) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Friendship> criteria = cb.createQuery(Friendship.class);
 		Root<Friendship> root = criteria.from(Friendship.class);
@@ -56,18 +56,47 @@ public class FriendshipDaoCriteria extends FriendshipDaoJpa {
 	}
 
 	@Override
-	public Friendship findFriendshipByIds(Long id1, Long id2) {
+	public List<Friendship> findApprovedById(Long id) {
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Friendship> criteria = cb.createQuery(Friendship.class);
+		Root<Friendship> root = criteria.from(Friendship.class);
+		Predicate byInitiator = cb.equal(root.get("initiator"), id);
+		Predicate byTarget = cb.equal(root.get("target"), id);
+		Predicate approved = cb.equal(root.get("approved"), 1);
+		Predicate both = cb.or(byInitiator, byTarget);
+		Predicate allP = cb.and(both, approved);
+		
+		criteria.select(root).where(allP);
+		
+		TypedQuery<Friendship> q = entityManager.createQuery(criteria);
+		
+		try {
+			return q.getResultList();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
+
+	
+	@Override
+	public Friendship findFriendshipsAnyApproveByIds(Long id1, Long id2) {
 		
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Friendship> criteria = cb.createQuery(Friendship.class);
 		Root<Friendship> root = criteria.from(Friendship.class);
-		Predicate byInitiator = cb.equal(root.get("initiator"), id1);
-		Predicate byTarget = cb.equal(root.get("target"), id2);
-		Predicate involved = cb.and(byInitiator, byTarget);
+		Predicate byInitiator1 = cb.equal(root.get("initiator"), id1);
+		Predicate byInitiator2 = cb.equal(root.get("initiator"), id2);
+		Predicate byTarget1 = cb.equal(root.get("target"), id1);
+		Predicate byTarget2 = cb.equal(root.get("target"), id2);
+		
+		Predicate byInitiatorOr = cb.or(byInitiator1, byInitiator2);
+		Predicate byTargetOr = cb.or(byTarget1, byTarget2);
+		Predicate involved = cb.and(byInitiatorOr, byTargetOr);
 		
 		criteria.select(root).where(involved);
 		
 		TypedQuery<Friendship> q = entityManager.createQuery(criteria);
+		
 		
 		try {
 			return q.getSingleResult();
@@ -77,6 +106,37 @@ public class FriendshipDaoCriteria extends FriendshipDaoJpa {
 		
 	}
 
+	@Override
+	public Friendship findApprovedByIds(Long id1, Long id2) {
+		
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Friendship> criteria = cb.createQuery(Friendship.class);
+		Root<Friendship> root = criteria.from(Friendship.class);
+		Predicate byInitiator1 = cb.equal(root.get("initiator"), id1);
+		Predicate byInitiator2 = cb.equal(root.get("initiator"), id2);
+		Predicate byTarget1 = cb.equal(root.get("target"), id1);
+		Predicate byTarget2 = cb.equal(root.get("target"), id2);
+		
+		Predicate approved = cb.equal(root.get("approved"), 1);
+		
+		Predicate byInitiatorOr = cb.or(byInitiator1, byInitiator2);
+		Predicate byTargetOr = cb.or(byTarget1, byTarget2);
+		Predicate involved = cb.and(byInitiatorOr, byTargetOr);
+		Predicate involvedAndApproved = cb.and(involved, approved);
+		
+		criteria.select(root).where(involvedAndApproved);
+		
+		TypedQuery<Friendship> q = entityManager.createQuery(criteria);
+		
+		
+		try {
+			return q.getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
+
+	
 
 
 }

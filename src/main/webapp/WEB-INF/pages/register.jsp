@@ -85,6 +85,9 @@
      					</c:if>
          
             <!-- Sign up Form -->
+            <c:choose>
+            <c:when test="${empty sessionScope.user }" >
+            
             <form class="form-horizontal" action="${pageContext.request.contextPath}/register" method="post" >
                <fieldset>
                   <legend>Registrace</legend>
@@ -137,6 +140,16 @@
                   </div>
                </div>
             </form>
+            
+            </c:when>
+            <c:when test="${not empty sessionScope.user }">
+            <h2>Registrace</h2>
+            <hr />
+            
+            <p>Nemůžete registrovat uživatele, dokud jste přihlášen. </p>
+            
+            </c:when>
+            </c:choose>
          </div>
       </div>
       <!-- Footer -->

@@ -10,8 +10,15 @@ public interface FriendshipManager {
 	
 	List<Friendship> findAll();
 	
-	List<Friendship> findInvolvedFriendships(Long id);
+	List<Friendship> findUnapproved(Long id);
+	
+	List<Friendship> findApproved(Long id);
 	
 	boolean areInvolved(Long id1, Long id2);
+	
+	void deleteFriendship(Long id);
+	
+	void approveFriendship(Long id);
+	
 	
 }

@@ -85,6 +85,9 @@
      				</p>
 		</c:if>
          
+         
+         <c:choose>
+         <c:when test="${empty sessionScope.user }">
             <!-- Form -->
             <form class="form-horizontal" action="${pageContext.request.contextPath}/login" method="post" >
                <fieldset>
@@ -124,7 +127,14 @@
      				${requestScope.err}
      				</p>
 		</c:if>
-            
+		
+		</c:when>
+		<c:when test="${not empty sessionScope.user }" >
+		<h2>Přihlášení</h2>
+		<hr />
+		<p> Již jste přihlášen! </p>
+		</c:when>
+            </c:choose>
          </div>
       </div>
       <!-- Footer -->

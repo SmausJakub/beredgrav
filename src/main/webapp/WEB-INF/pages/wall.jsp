@@ -62,6 +62,7 @@
                   <ul class="dropdown-menu">
                      <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/wall">Zeď</a></li>
                      <li role="presentation"><a href="${pageContext.request.contextPath}/profile?username=${sessionScope.user }">Profil</a></li>
+                     <li role="presentation"><a href="${pageContext.request.contextPath}/friends">Přátelé</a></li>
                      <li role="presentation"><a href="${pageContext.request.contextPath}/users">Uživatelé</a></li>
                   </ul>
                </li>
@@ -69,10 +70,10 @@
             <ul class="nav nav-pills nav-stacked hidden-xs">
                <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/wall">Zeď</a></li>
                <li role="presentation"><a href="${pageContext.request.contextPath}/profile?username=${sessionScope.user}">Profil</a></li>
+               <li role="presentation"><a href="${pageContext.request.contextPath}/friends">Přátelé</a></li>
                <li role="presentation"><a href="${pageContext.request.contextPath}/users">Uživatelé</a></li>
             </ul>
-         </div>
-         
+            </div>
          
           <!-- Center panel -->
          <div class="col-sm-8 text-center">
@@ -153,21 +154,43 @@
              <div class="col-sm-2">
              
              <h3>Notifikace</h3>
-          			
+          			<hr />
           				<c:if test="${not empty requestScope.friendshipList }">
           				
           				<c:forEach items="${requestScope.friendshipList}" var="item">
           				
+          				<c:choose>
+          				<c:when test="${item.initiator.username == sessionScope.user }">
+          				
           				<div class="row">
           				
-          				<div class="well">
-          					
-          					${item.initator.username }
-          					${item.target.username }
-          					${item.approved }
+          				<div class="panel panel-info">
+          				<div class="panel panel-heading">Odeslaná žádost</div>
+          				<div class="panel panel-body">Uživatel: <a href="${pageContext.request.contextPath}/profile?username=${item.target.username}" ><c:out value="${item.target.username }" /> </a>
+          				<br><a class="btn btn-danger" href="${pageContext.request.contextPath}/friendDelete?id=${item.id}">Stáhnout</a> </div>
           				</div>
           				
           				</div>
+          				
+          			
+          				</c:when>
+          				
+          				<c:otherwise>
+          				<div class="row">
+          				<div class="panel panel-warning">
+          				<div class="panel panel-heading">Přijatá žádost</div>
+          				<div class="panel panel-body">Uživatel: <a href="${pageContext.request.contextPath}/profile?username=${item.initiator.username}" ><c:out value="${item.initiator.username }" /></a>
+          				<br> <a class="btn btn-success" href="${pageContext.request.contextPath}/friendApprove?id=${item.id}">Přijmout</a><a class="btn btn-danger" href="${pageContext.request.contextPath}/friendDelete?id=${item.id}">Ignorovat</a>
+          				</div>
+          				
+          				</div>
+          				
+          				</div>
+          				
+          				</c:otherwise>
+          				
+          				</c:choose>
+          				
           				
           				</c:forEach>
           				

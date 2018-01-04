@@ -2,7 +2,6 @@ package cz.zcu.kiv.pia.dao;
 
 
 import java.util.List;
-import java.util.Map;
 
 import cz.zcu.kiv.pia.domain.User;
 
@@ -18,7 +17,6 @@ public interface UserDao extends GenericDao<User, Long> {
     User create(User user);
     
     User findByUsername(String username);
-    
     
     List<User> findAll();
 

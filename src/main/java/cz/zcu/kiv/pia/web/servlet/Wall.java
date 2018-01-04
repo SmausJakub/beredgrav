@@ -57,7 +57,7 @@ public class Wall extends HttpServlet {
 		
 		User loggedUser = userManager.findUserByUsername(username);
 		
-		List<Friendship> friendshipList = frManager.findInvolvedFriendships(loggedUser.getId());
+		List<Friendship> friendshipList = frManager.findUnapproved(loggedUser.getId());
 		
 		request.setAttribute(FRIENDSHIP_PARAMETER, friendshipList);
 		request.getRequestDispatcher("WEB-INF/pages/wall.jsp").forward(request, response);

@@ -43,15 +43,19 @@ public class GenericDaoJpa<E extends IEntity<PK>, PK extends Serializable> imple
 
     @Override
     public E findOne(PK id) {
+    	System.out.println("finding by id " + id);
         return entityManager.find(persistedClass, id);
 
     }
 
     @Override
     public void delete(PK id) {
+    	System.out.println("deleting id " + id);
         E en = entityManager.find(persistedClass, id);
+        System.out.println("Found en " + en.toString());
         if(en != null) {
-            entityManager.remove(en);
+        	System.out.println("removing");
+        	entityManager.remove(en);
         }
 
     }

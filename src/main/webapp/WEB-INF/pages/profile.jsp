@@ -54,24 +54,26 @@
          </nav>
           <!-- Page content -->
          <!-- Left panel menu -->
-         <div class="col-sm-2">
+ 		<div class="col-sm-2">
             <ul class="nav nav-pills hidden-xl hidden-lg hidden-sm hidden-md">
                <li class="dropdown">
                   <a class="dropdown-toggle" data-toggle="dropdown" href="#">Zobrazit menu
                   <span class="caret"></span></a>
                   <ul class="dropdown-menu">
-                     <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/wall">Zeď</a></li>
-                     <li role="presentation"><a href="${pageContext.request.contextPath}/profile?username=${sessionScope.user }">Profil</a></li>
+                     <li role="presentation"><a href="${pageContext.request.contextPath}/wall">Zeď</a></li>
+                     <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/profile?username=${sessionScope.user }">Profil</a></li>
+                     <li role="presentation"><a href="${pageContext.request.contextPath}/friends">Přátelé</a></li>
                      <li role="presentation"><a href="${pageContext.request.contextPath}/users">Uživatelé</a></li>
                   </ul>
                </li>
             </ul>
             <ul class="nav nav-pills nav-stacked hidden-xs">
-               <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/wall">Zeď</a></li>
-               <li role="presentation"><a href="${pageContext.request.contextPath}/profile?username=${sessionScope.user}">Profil</a></li>
+               <li role="presentation"><a href="${pageContext.request.contextPath}/wall">Zeď</a></li>
+               <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/profile?username=${sessionScope.user}">Profil</a></li>
+               <li role="presentation"><a href="${pageContext.request.contextPath}/friends">Přátelé</a></li>
                <li role="presentation"><a href="${pageContext.request.contextPath}/users">Uživatelé</a></li>
             </ul>
-         </div>
+            </div>
          
          
          <div class="col-sm-10">
@@ -91,14 +93,14 @@
         			<div class="form-group">
                      <label class="control-label col-sm-2" for="password">Změnit heslo:</label>
                      <div class="col-sm-10">
-                        <input type="text" class="form-control" id="password" placeholder="Změna hesla" name="password">
+                        <input type="password" class="form-control" id="password" placeholder="Změna hesla" name="password">
                      </div>
                   </div>
                   
                   <div class="form-group">
                      <label class="control-label col-sm-2" for="email">E-mail:</label>
                      <div class="col-sm-10">          
-                        <input type="text" class="form-control" id="email" placeholder="Emailová adresa" name="email" <c:if test="${not empty requestScope.editEmail }" >value="${requestScope.editEmail}" </c:if>>
+                        <input type="email" class="form-control" id="email" placeholder="Emailová adresa" name="email" <c:if test="${not empty requestScope.editEmail }" >value="${requestScope.editEmail}" </c:if>>
                      </div>
                   </div>
                   <div class="form-group">
@@ -146,7 +148,7 @@
         		
         		
         		<c:if test="${requestScope.profileMode == 2 }" >
-        				<a class="btn btn-default">Poslat žádost o přátelství</a>
+        				<a class="btn btn-default" href="${pageContext.request.contextPath}/friend?username=${requestScope.profileUser}">Poslat žádost o přátelství</a>
         		</c:if>
         		</c:otherwise>
         		</c:choose>

@@ -36,7 +36,7 @@
                <c:when test="${not empty sessionScope.user }">
                <div class="collapse navbar-collapse" id="menuNavbar">
                   <ul class="nav navbar-nav navbar-right">
-                     <li><a href="${pageContext.request.contextPath}/profile?username=${sessionScope.user}"><i class="fa fa-user"></i>&nbsp; <c:out value="${sessionScope.user}" />></a></li>
+                     <li><a href="${pageContext.request.contextPath}/profile?username=${sessionScope.user}"><i class="fa fa-user"></i>&nbsp; <c:out value="${sessionScope.user}" /></a></li>
                      <li><a href="${pageContext.request.contextPath}/logout"><i class="fa fa-sign-out"></i>&nbsp;Odhlásit</a></li>
                   </ul>
                </div>
@@ -60,14 +60,14 @@
                   <a class="dropdown-toggle" data-toggle="dropdown" href="#">Zobrazit menu
                   <span class="caret"></span></a>
                   <ul class="dropdown-menu">
-                     <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/wall">Zeď</a></li>
+                     <li role="presentation"><a href="${pageContext.request.contextPath}/wall">Zeď</a></li>
                      <li role="presentation"><a href="${pageContext.request.contextPath}/profile?username=${sessionScope.user }">Profil</a></li>
                      <li role="presentation"><a href="${pageContext.request.contextPath}/users">Uživatelé</a></li>
                   </ul>
                </li>
             </ul>
             <ul class="nav nav-pills nav-stacked hidden-xs">
-               <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/wall">Zeď</a></li>
+               <li role="presentation"><a href="${pageContext.request.contextPath}/wall">Zeď</a></li>
                <li role="presentation"><a href="${pageContext.request.contextPath}/profile?username=${sessionScope.user}">Profil</a></li>
                <li role="presentation"><a href="${pageContext.request.contextPath}/users">Uživatelé</a></li>
             </ul>

@@ -2,6 +2,7 @@ package cz.zcu.kiv.pia.manager;
 
 import java.util.List;
 
+import cz.zcu.kiv.pia.domain.Friendship;
 import cz.zcu.kiv.pia.domain.User;
 import cz.zcu.kiv.pia.domain.UserValidationException;
 
@@ -30,6 +31,7 @@ public interface UserManager {
     
 
 	void updateUser(String username, String password, String email, String gender);
+	
     
     
 }

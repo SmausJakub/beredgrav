@@ -6,6 +6,10 @@ import javax.servlet.annotation.WebListener;
 
 import cz.zcu.kiv.pia.ApplicationContext;
 import cz.zcu.kiv.pia.web.filter.AuthenticationGuard;
+import cz.zcu.kiv.pia.web.servlet.Friend;
+import cz.zcu.kiv.pia.web.servlet.FriendApprove;
+import cz.zcu.kiv.pia.web.servlet.FriendDelete;
+import cz.zcu.kiv.pia.web.servlet.Friends;
 import cz.zcu.kiv.pia.web.servlet.Login;
 import cz.zcu.kiv.pia.web.servlet.Logout;
 import cz.zcu.kiv.pia.web.servlet.Profile;
@@ -36,8 +40,12 @@ public class ApplicationStartListener implements ServletContextListener {
         sce.getServletContext().addServlet("wall", new Wall(ctx.getUserManager(), ctx.getStatusManager(), ctx.getFrManager())).addMapping("/wall");
         sce.getServletContext().addServlet("profile", new Profile(ctx.getUserManager(), ctx.getFrManager())).addMapping("/profile");
         sce.getServletContext().addServlet("users", new Users(ctx.getUserManager())).addMapping("/users");
+        sce.getServletContext().addServlet("friend", new Friend(ctx.getUserManager(), ctx.getFrManager())).addMapping("/friend");
+        sce.getServletContext().addServlet("friendDelete", new FriendDelete(ctx.getFrManager())).addMapping("/friendDelete");
+        sce.getServletContext().addServlet("friendApprove", new FriendApprove(ctx.getFrManager())).addMapping("/friendApprove");
+        sce.getServletContext().addServlet("friends", new Friends(ctx.getUserManager(), ctx.getFrManager())).addMapping("/friends");
         
-        sce.getServletContext().addFilter("authFilter", new AuthenticationGuard(ctx.getAuthenticationService())).addMappingForUrlPatterns(null, false, "/wall/*", "/profile/*", "/welcome/*");
+        sce.getServletContext().addFilter("authFilter", new AuthenticationGuard(ctx.getAuthenticationService())).addMappingForUrlPatterns(null, false, "/wall/*", "/profile/*", "/welcome/*", "/friend/*", "/friendDelete/*", "/friendApprove/*", "/friends/*");
         
     }
 
