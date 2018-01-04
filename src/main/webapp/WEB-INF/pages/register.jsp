@@ -54,6 +54,30 @@
          </nav>
          <!-- Page content -->
          <!-- Left panel Menu -->
+                 <c:choose>
+         <c:when test="${not empty sessionScope.user }" >
+          <div class="col-sm-2">
+            <ul class="nav nav-pills hidden-xl hidden-lg hidden-sm hidden-md">
+               <li class="dropdown">
+                  <a class="dropdown-toggle" data-toggle="dropdown" href="#">Zobrazit menu
+                  <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                     <li role="presentation"><a href="${pageContext.request.contextPath}/wall">Zeď</a></li>
+                     <li role="presentation"><a href="${pageContext.request.contextPath}/profile?username=${sessionScope.user }">Profil</a></li>
+                     <li role="presentation"><a href="${pageContext.request.contextPath}/friends">Přátelé</a></li>
+                     <li role="presentation"><a href="${pageContext.request.contextPath}/users">Uživatelé</a></li>
+                  </ul>
+               </li>
+            </ul>
+            <ul class="nav nav-pills nav-stacked hidden-xs">
+               <li role="presentation"><a href="${pageContext.request.contextPath}/wall">Zeď</a></li>
+               <li role="presentation"><a href="${pageContext.request.contextPath}/profile?username=${sessionScope.user}">Profil</a></li>
+               <li role="presentation"><a href="${pageContext.request.contextPath}/friends">Přátelé</a></li>
+               <li role="presentation"><a href="${pageContext.request.contextPath}/users">Uživatelé</a></li>
+            </ul>
+            </div>
+         </c:when>
+         <c:otherwise>
          <div class="col-sm-2">
             <ul class="nav nav-pills hidden-xl hidden-lg hidden-sm hidden-md">
                <li class="dropdown">
@@ -61,19 +85,21 @@
                   <span class="caret"></span></a>
                   <ul class="dropdown-menu">
                      <li role="presentation"><a href="${pageContext.request.contextPath}/index">Hlavní stránka</a></li>
-                     <li role="presentation"><a href="#">Informace</a></li>
-                     <li role="presentation"><a href="#">Reakce uživatelů</a></li>
-                     <li role="presentation"><a href="#">Prohlížení</a></li>
+                     <li role="presentation"><a href="${pageContext.request.contextPath}/information">Informace</a></li>
+                     <li role="presentation"><a href="${pageContext.request.contextPath}/reaction">Reakce uživatelů</a></li>
+                     <li role="presentation"><a href="${pageContext.request.contextPath}/users">Prohlížení</a></li>
                   </ul>
                </li>
             </ul>
             <ul class="nav nav-pills nav-stacked hidden-xs">
-               <li role="presentation"><a href="${pageContext.request.contextPath}/index">Hlavní stránka</a></li>
-               <li role="presentation"><a href="#">Informace</a></li>
-               <li role="presentation"><a href="#">Reakce uživatelů</a></li>
-               <li role="presentation"><a href="#">Prohlížení</a></li>
+              <li role="presentation"><a href="${pageContext.request.contextPath}/index">Hlavní stránka</a></li>
+                     <li role="presentation"><a href="${pageContext.request.contextPath}/information">Informace</a></li>
+                     <li role="presentation"><a href="${pageContext.request.contextPath}/reaction">Reakce uživatelů</a></li>
+                     <li role="presentation"><a href="${pageContext.request.contextPath}/users">Prohlížení</a></li>
             </ul>
          </div>
+         </c:otherwise>
+         </c:choose>
          <!-- Center panel -->
  
          <div class="col-sm-10">
@@ -94,7 +120,7 @@
                   <div class="form-group">
                      <label class="control-label col-sm-2" for="username">Jméno:*</label>
                      <div class="col-sm-10">
-                        <input type="text" class="form-control" id="username" placeholder="Zadat přihlašovací jméno" name="username" required value="<c:if test="${not empty requestScope.usernameField}">${requestScope.usernameField}</c:if>">
+                        <input type="text" class="form-control" id="username" placeholder="Zadat přihlašovací jméno" name="username" required value="<c:if test="${not empty requestScope.usernameField}">${requestScope.usernameField}</c:if>" autofocus>
                      </div>
                   </div>
                   <div class="form-group">

@@ -54,7 +54,9 @@
          </nav>
           <!-- Page content -->
          <!-- Left panel menu -->
- 		<div class="col-sm-2">
+ 		         <c:choose>
+         <c:when test="${not empty sessionScope.user }" >
+          <div class="col-sm-2">
             <ul class="nav nav-pills hidden-xl hidden-lg hidden-sm hidden-md">
                <li class="dropdown">
                   <a class="dropdown-toggle" data-toggle="dropdown" href="#">Zobrazit menu
@@ -69,11 +71,35 @@
             </ul>
             <ul class="nav nav-pills nav-stacked hidden-xs">
                <li role="presentation"><a href="${pageContext.request.contextPath}/wall">Zeď</a></li>
-               <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/profile?username=${sessionScope.user}">Profil</a></li>
+               <li role="presentation"  class="active"><a href="${pageContext.request.contextPath}/profile?username=${sessionScope.user}">Profil</a></li>
                <li role="presentation"><a href="${pageContext.request.contextPath}/friends">Přátelé</a></li>
                <li role="presentation"><a href="${pageContext.request.contextPath}/users">Uživatelé</a></li>
             </ul>
             </div>
+         </c:when>
+         <c:otherwise>
+         <div class="col-sm-2">
+            <ul class="nav nav-pills hidden-xl hidden-lg hidden-sm hidden-md">
+               <li class="dropdown">
+                  <a class="dropdown-toggle" data-toggle="dropdown" href="#">Zobrazit menu
+                  <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                     <li role="presentation"><a href="${pageContext.request.contextPath}/index">Hlavní stránka</a></li>
+                     <li role="presentation"><a href="${pageContext.request.contextPath}/information">Informace</a></li>
+                     <li role="presentation"><a href="${pageContext.request.contextPath}/reaction">Reakce uživatelů</a></li>
+                     <li role="presentation"><a href="${pageContext.request.contextPath}/users">Prohlížení</a></li>
+                  </ul>
+               </li>
+            </ul>
+            <ul class="nav nav-pills nav-stacked hidden-xs">
+              		<li role="presentation"><a href="${pageContext.request.contextPath}/index">Hlavní stránka</a></li>
+                     <li role="presentation"><a href="${pageContext.request.contextPath}/information">Informace</a></li>
+                     <li role="presentation"><a href="${pageContext.request.contextPath}/reaction">Reakce uživatelů</a></li>
+                     <li role="presentation"><a href="${pageContext.request.contextPath}/users">Prohlížení</a></li>
+            </ul>
+         </div>
+         </c:otherwise>
+         </c:choose>
          
          
          <div class="col-sm-10">
@@ -85,10 +111,32 @@
         			
         			<h1>Úprava profilu</h1>
         			<hr />
-        						
-        			<img src="${pageContext.request.contextPath}${requestScope.editAvatar}" alt="avatar" class="img-circle" height="55" width="55">
+        			
+        			<div class="panel panel-info">
+        			<div class="panel panel-heading">Profilový obrázek</div>
+        			<div class="panel panel-body"><img src="${pageContext.request.contextPath}${requestScope.editAvatar}" alt="avatar" class="img-circle" height="45" width="45"></div>
+        			</div>		
+        			
+        			<form class="form-horizontal" action="${pageContext.request.contextPath}/upload" method="post" enctype="multipart/form-data">
+        			
+        			<div class="form-group">
+        			<label class="control-label col-sm-2" for="avatar">Nahrát nový profilový obrázek:</label>
+        				<div class="col-sm-10">
+        				<input type="file" class="form-control" id="avatar" name="avatar">
+        				</div>
+        			</div>
+        			
+        				<div class="form-group">
+                  <div class="col-sm-offset-2 col-sm-10">
+                     <button type="submit" class="btn btn-default">Nahrát</button>
+                  </div>
+               </div>
+        			
+        			
+        			</form>
         			
         			<form class="form-horizontal" action="${pageContext.request.contextPath}/profile" method="post">
+        			
         			
         			<div class="form-group">
                      <label class="control-label col-sm-2" for="password">Změnit heslo:</label>
@@ -114,6 +162,7 @@
         			<div class="form-group">
                   <div class="col-sm-offset-2 col-sm-10">
                      <button type="submit" class="btn btn-default">Uložit změny</button>
+                     <a class="btn btn-danger">Opustit sociální síť</a>
                   </div>
                </div>
         			</form>
@@ -147,9 +196,14 @@
         			</div>
         		
         		
-        		<c:if test="${requestScope.profileMode == 2 }" >
-        				<a class="btn btn-default" href="${pageContext.request.contextPath}/friend?username=${requestScope.profileUser}">Poslat žádost o přátelství</a>
+        		<c:if test="${requestScope.profileMode == 3 }" >
+        				<a class="btn btn-success" href="${pageContext.request.contextPath}/friend?username=${requestScope.profileUser}">Poslat žádost o přátelství</a>
         		</c:if>
+        		<c:if test="${requestScope.profileMode == 2 }" >
+        				<a class="btn btn-danger" href="${pageContext.request.contextPath}/friendDelete?id=${requestScope.profileId}">Zrušit přátelství</a>
+        		</c:if>
+        		
+        		
         		</c:otherwise>
         		</c:choose>
         		

@@ -77,34 +77,6 @@ public class FriendshipDaoCriteria extends FriendshipDaoJpa {
 		}
 	}
 
-	
-	@Override
-	public Friendship findFriendshipsAnyApproveByIds(Long id1, Long id2) {
-		
-		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-		CriteriaQuery<Friendship> criteria = cb.createQuery(Friendship.class);
-		Root<Friendship> root = criteria.from(Friendship.class);
-		Predicate byInitiator1 = cb.equal(root.get("initiator"), id1);
-		Predicate byInitiator2 = cb.equal(root.get("initiator"), id2);
-		Predicate byTarget1 = cb.equal(root.get("target"), id1);
-		Predicate byTarget2 = cb.equal(root.get("target"), id2);
-		
-		Predicate byInitiatorOr = cb.or(byInitiator1, byInitiator2);
-		Predicate byTargetOr = cb.or(byTarget1, byTarget2);
-		Predicate involved = cb.and(byInitiatorOr, byTargetOr);
-		
-		criteria.select(root).where(involved);
-		
-		TypedQuery<Friendship> q = entityManager.createQuery(criteria);
-		
-		
-		try {
-			return q.getSingleResult();
-		} catch (NoResultException e) {
-			return null;
-		}
-		
-	}
 
 	@Override
 	public Friendship findApprovedByIds(Long id1, Long id2) {
@@ -136,6 +108,32 @@ public class FriendshipDaoCriteria extends FriendshipDaoJpa {
 		}
 	}
 
+	
+	@Override
+	public Friendship findAnyByIds(Long id1, Long id2) {
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Friendship> criteria = cb.createQuery(Friendship.class);
+		Root<Friendship> root = criteria.from(Friendship.class);
+		Predicate byInitiator1 = cb.equal(root.get("initiator"), id1);
+		Predicate byInitiator2 = cb.equal(root.get("initiator"), id2);
+		Predicate byTarget1 = cb.equal(root.get("target"), id1);
+		Predicate byTarget2 = cb.equal(root.get("target"), id2);
+		
+		Predicate byInitiatorOr = cb.or(byInitiator1, byInitiator2);
+		Predicate byTargetOr = cb.or(byTarget1, byTarget2);
+		Predicate involved = cb.and(byInitiatorOr, byTargetOr);
+		
+		criteria.select(root).where(involved);
+		
+		TypedQuery<Friendship> q = entityManager.createQuery(criteria);
+		
+		
+		try {
+			return q.getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
 	
 
 

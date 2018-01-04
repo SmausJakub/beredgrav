@@ -32,6 +32,8 @@ public interface UserManager {
 
 	void updateUser(String username, String password, String email, String gender);
 	
+	void updateAvatar(String username, String avatarUrl);
+	
     
     
 }

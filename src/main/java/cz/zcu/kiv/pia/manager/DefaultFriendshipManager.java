@@ -39,13 +39,13 @@ public class DefaultFriendshipManager implements FriendshipManager {
 	}
 
 	@Override
-	public boolean areInvolved(Long id1, Long id2) {
-		Friendship fr = frDao.findFriendshipsAnyApproveByIds(id1, id2);
-		if (fr != null) {
-			return true;
-		} else {
-			return false;
-		}
+	public Friendship areInvolved(Long id1, Long id2) {
+		return frDao.findAnyByIds(id1, id2);
+	}
+	
+	@Override
+	public Friendship areFriends(Long id1, Long id2) {
+		return frDao.findApprovedByIds(id1, id2);
 	}
 
 	@Override
@@ -92,6 +92,8 @@ public class DefaultFriendshipManager implements FriendshipManager {
 	public List<Friendship> findApproved(Long id) {
 		return frDao.findApprovedById(id);
 	}
+
+	
 
 	
 

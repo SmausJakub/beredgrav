@@ -14,6 +14,7 @@ import cz.zcu.kiv.pia.web.servlet.Login;
 import cz.zcu.kiv.pia.web.servlet.Logout;
 import cz.zcu.kiv.pia.web.servlet.Profile;
 import cz.zcu.kiv.pia.web.servlet.Register;
+import cz.zcu.kiv.pia.web.servlet.Upload;
 import cz.zcu.kiv.pia.web.servlet.Users;
 import cz.zcu.kiv.pia.web.servlet.Wall;
 
@@ -44,8 +45,9 @@ public class ApplicationStartListener implements ServletContextListener {
         sce.getServletContext().addServlet("friendDelete", new FriendDelete(ctx.getFrManager())).addMapping("/friendDelete");
         sce.getServletContext().addServlet("friendApprove", new FriendApprove(ctx.getFrManager())).addMapping("/friendApprove");
         sce.getServletContext().addServlet("friends", new Friends(ctx.getUserManager(), ctx.getFrManager())).addMapping("/friends");
+        sce.getServletContext().addServlet("upload", new Upload(ctx.getUserManager())).addMapping("/upload");
         
-        sce.getServletContext().addFilter("authFilter", new AuthenticationGuard(ctx.getAuthenticationService())).addMappingForUrlPatterns(null, false, "/wall/*", "/profile/*", "/welcome/*", "/friend/*", "/friendDelete/*", "/friendApprove/*", "/friends/*");
+        sce.getServletContext().addFilter("authFilter", new AuthenticationGuard(ctx.getAuthenticationService())).addMappingForUrlPatterns(null, false, "/wall/*", "/welcome/*", "/friend/*", "/friendDelete/*", "/friendApprove/*", "/friends/*", "/upload/*");
         
     }
 

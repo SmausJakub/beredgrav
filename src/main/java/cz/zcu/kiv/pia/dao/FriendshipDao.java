@@ -15,8 +15,8 @@ public interface FriendshipDao extends GenericDao<Friendship, Long> {
 	
 	List<Friendship> findApprovedById(Long id);
 	
-	Friendship findFriendshipsAnyApproveByIds(Long id1, Long id2);
-	
 	Friendship findApprovedByIds(Long id1, Long id2);
+	
+	Friendship findAnyByIds(Long id1, Long id2);
 	
 }

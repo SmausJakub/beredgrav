@@ -54,7 +54,9 @@
          </nav>
           <!-- Page content -->
          <!-- Left panel menu -->
-                  <div class="col-sm-2">
+                  <c:choose>
+         <c:when test="${not empty sessionScope.user }" >
+          <div class="col-sm-2">
             <ul class="nav nav-pills hidden-xl hidden-lg hidden-sm hidden-md">
                <li class="dropdown">
                   <a class="dropdown-toggle" data-toggle="dropdown" href="#">Zobrazit menu
@@ -62,6 +64,7 @@
                   <ul class="dropdown-menu">
                      <li role="presentation"><a href="${pageContext.request.contextPath}/wall">Zeď</a></li>
                      <li role="presentation"><a href="${pageContext.request.contextPath}/profile?username=${sessionScope.user }">Profil</a></li>
+                     <li role="presentation"><a href="${pageContext.request.contextPath}/friends">Přátelé</a></li>
                      <li role="presentation"><a href="${pageContext.request.contextPath}/users">Uživatelé</a></li>
                   </ul>
                </li>
@@ -69,23 +72,48 @@
             <ul class="nav nav-pills nav-stacked hidden-xs">
                <li role="presentation"><a href="${pageContext.request.contextPath}/wall">Zeď</a></li>
                <li role="presentation"><a href="${pageContext.request.contextPath}/profile?username=${sessionScope.user}">Profil</a></li>
+               <li role="presentation"><a href="${pageContext.request.contextPath}/friends">Přátelé</a></li>
                <li role="presentation"><a href="${pageContext.request.contextPath}/users">Uživatelé</a></li>
             </ul>
+            </div>
+         </c:when>
+         <c:otherwise>
+         <div class="col-sm-2">
+            <ul class="nav nav-pills hidden-xl hidden-lg hidden-sm hidden-md">
+               <li class="dropdown">
+                  <a class="dropdown-toggle" data-toggle="dropdown" href="#">Zobrazit menu
+                  <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                     <li role="presentation"><a href="${pageContext.request.contextPath}/index">Hlavní stránka</a></li>
+                     <li role="presentation"><a href="${pageContext.request.contextPath}/information">Informace</a></li>
+                     <li role="presentation"><a href="${pageContext.request.contextPath}/reaction">Reakce uživatelů</a></li>
+                     <li role="presentation"><a href="${pageContext.request.contextPath}/users">Prohlížení</a></li>
+                  </ul>
+               </li>
+            </ul>
+            <ul class="nav nav-pills nav-stacked hidden-xs">
+              <li role="presentation"><a href="${pageContext.request.contextPath}/index">Hlavní stránka</a></li>
+                     <li role="presentation"><a href="${pageContext.request.contextPath}/information">Informace</a></li>
+                     <li role="presentation"><a href="${pageContext.request.contextPath}/reaction">Reakce uživatelů</a></li>
+                     <li role="presentation"><a href="${pageContext.request.contextPath}/users">Prohlížení</a></li>
+            </ul>
          </div>
+         </c:otherwise>
+         </c:choose>
           
           <!-- Center panel -->
          <div class="col-sm-10">
          
          <c:choose>
          <c:when test="${empty requestScope.suc }" >
-         <h2>Vítejte zpět, <c:out value="${sessionScope.user}" /></h2>
+         <h1>Vítejte zpět, <c:out value="${sessionScope.user}" />!</h1>
          
          <hr />
          <p> Jsme rádi, že jste tu. </p>
          
          </c:when>
         <c:otherwise>
-        <h2>Úspěch</h2>
+        <h1>Úspěch</h1>
         <hr />
         <p class="success">   <c:out value="${requestScope.suc }" /> </p>
         </c:otherwise> 

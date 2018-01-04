@@ -60,6 +60,11 @@ public class Wall extends HttpServlet {
 		List<Friendship> friendshipList = frManager.findUnapproved(loggedUser.getId());
 		
 		request.setAttribute(FRIENDSHIP_PARAMETER, friendshipList);
+		
+		
+		
+		List<Friendship> statusFrindshipList = frManager.findApproved(loggedUser.getId());
+		
 		request.getRequestDispatcher("WEB-INF/pages/wall.jsp").forward(request, response);
 	}
 

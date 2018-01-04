@@ -64,11 +64,11 @@ public class DefaultUserManager implements UserManager {
 			
 			User user = userDao.findByUsername(username);
 			
-			if (!password.isEmpty()) {
+			if (password != null) {
 				user.setPassword(encoder.encode(password));
 			}
 			
-			if (!email.isEmpty()) {
+			if (email != null) {
 				user.setEmail(email);
 			}
 			
@@ -86,6 +86,27 @@ public class DefaultUserManager implements UserManager {
 				
 			
 			}
+
+		@Override
+		public void updateAvatar(String username, String avatarUrl) {
+			User user = userDao.findByUsername(username);
+			
+			if (avatarUrl != null) {
+				user.setAvatar(avatarUrl);
+			}
+			
+			userDao.startTransaction();
+			try {
+				userDao.save(user);
+			} catch (Exception e) {
+				userDao.rollbackTransaction();
+			}
+			
+			userDao.commitTransaction();
+			
+		}
+		
+		
 
 		
 			

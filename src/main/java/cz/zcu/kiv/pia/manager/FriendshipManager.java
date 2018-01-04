@@ -14,7 +14,9 @@ public interface FriendshipManager {
 	
 	List<Friendship> findApproved(Long id);
 	
-	boolean areInvolved(Long id1, Long id2);
+	Friendship areFriends(Long id1, Long id2);
+	
+	Friendship areInvolved(Long id1, Long id2);
 	
 	void deleteFriendship(Long id);
 	

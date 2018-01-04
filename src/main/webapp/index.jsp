@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page session="true" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -52,28 +53,52 @@
          </nav>
          <!-- Page content -->
          <!-- Left panel -->
+                  <c:choose>
+         <c:when test="${not empty sessionScope.user }" >
+          <div class="col-sm-2">
+            <ul class="nav nav-pills hidden-xl hidden-lg hidden-sm hidden-md">
+               <li class="dropdown">
+                  <a class="dropdown-toggle" data-toggle="dropdown" href="#">Zobrazit menu
+                  <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                     <li role="presentation"><a href="${pageContext.request.contextPath}/wall">Zeď</a></li>
+                     <li role="presentation"><a href="${pageContext.request.contextPath}/profile?username=${sessionScope.user }">Profil</a></li>
+                     <li role="presentation"><a href="${pageContext.request.contextPath}/friends">Přátelé</a></li>
+                     <li role="presentation"><a href="${pageContext.request.contextPath}/users">Uživatelé</a></li>
+                  </ul>
+               </li>
+            </ul>
+            <ul class="nav nav-pills nav-stacked hidden-xs">
+               <li role="presentation"><a href="${pageContext.request.contextPath}/wall">Zeď</a></li>
+               <li role="presentation"><a href="${pageContext.request.contextPath}/profile?username=${sessionScope.user}">Profil</a></li>
+               <li role="presentation"><a href="${pageContext.request.contextPath}/friends">Přátelé</a></li>
+               <li role="presentation"><a href="${pageContext.request.contextPath}/users">Uživatelé</a></li>
+            </ul>
+            </div>
+         </c:when>
+         <c:otherwise>
          <div class="col-sm-2">
             <ul class="nav nav-pills hidden-xl hidden-lg hidden-sm hidden-md">
                <li class="dropdown">
                   <a class="dropdown-toggle" data-toggle="dropdown" href="#">Zobrazit menu
                   <span class="caret"></span></a>
                   <ul class="dropdown-menu">
-                     <li role="presentation" class="active"><a href="#">Hlavní stránka</a></li>
-                     <li role="presentation"><a href="#">Informace</a></li>
-                     <li role="presentation"><a href="#">Reakce uživatelů</a></li>
-                     <li role="presentation"><a href="#">Uživatelé</a></li>
-                     <li role="presentation"><a href="#">Statusy</a></li>
+                     <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/index">Hlavní stránka</a></li>
+                     <li role="presentation"><a href="${pageContext.request.contextPath}/information">Informace</a></li>
+                     <li role="presentation"><a href="${pageContext.request.contextPath}/reaction">Reakce uživatelů</a></li>
+                     <li role="presentation"><a href="${pageContext.request.contextPath}/users">Prohlížení</a></li>
                   </ul>
                </li>
             </ul>
             <ul class="nav nav-pills nav-stacked hidden-xs">
-               <li role="presentation" class="active"><a href="#">Hlavní stránka</a></li>
-               <li role="presentation"><a href="#">Informace</a></li>
-               <li role="presentation"><a href="#">Reakce uživatelů</a></li>
-               <li role="presentation"><a href="#">Uživatelé</a></li>
-               <li role="presentation"><a href="#">Statusy</a></li>
+              <li role="presentation" class="active"><a href="${pageContext.request.contextPath}/index">Hlavní stránka</a></li>
+                     <li role="presentation"><a href="${pageContext.request.contextPath}/information">Informace</a></li>
+                     <li role="presentation"><a href="${pageContext.request.contextPath}/reaction">Reakce uživatelů</a></li>
+                     <li role="presentation"><a href="${pageContext.request.contextPath}/users">Prohlížení</a></li>
             </ul>
          </div>
+         </c:otherwise>
+         </c:choose>
          <!-- Center panel -->
          <div class="col-sm-8">
             <h1>

@@ -51,7 +51,7 @@ public class Friend extends HttpServlet {
 			return;
 		}
 		
-		if (frManager.areInvolved(loggedUser.getId(), viewedUser.getId())) {
+		if (frManager.areInvolved(loggedUser.getId(), viewedUser.getId()) != null) {
 			// they are already involved somehow - so error
 			errorDispatch("Urèitý vztah byl již navázán!", request, response);
 			return;

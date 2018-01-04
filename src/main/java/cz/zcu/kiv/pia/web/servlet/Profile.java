@@ -5,10 +5,12 @@ import java.util.Calendar;
 import java.util.Date;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import cz.zcu.kiv.pia.domain.Friendship;
 import cz.zcu.kiv.pia.domain.User;
 import cz.zcu.kiv.pia.manager.FriendshipManager;
 import cz.zcu.kiv.pia.manager.UserManager;
@@ -16,7 +18,7 @@ import cz.zcu.kiv.pia.manager.UserManager;
 /**
  * Servlet implementation class Profile
  */
-
+@MultipartConfig
 public class Profile extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
@@ -31,6 +33,7 @@ public class Profile extends HttpServlet {
 	 public static final String PROFILE_AVATAR = "profileAvatar";
 	 public static final String PROFILE_AGE = "profileAge";
 	 public static final String PROFILE_REG = "profileReg";
+	 public static final String PROFILE_ID = "profileId";
 	 
 	 public static final String EDIT_EMAIL = "editEmail";
 	 public static final String EDIT_GENDER = "editGender";
@@ -40,10 +43,12 @@ public class Profile extends HttpServlet {
 	 public static final String PASSWORD = "password";
 	 public static final String EMAIL = "email";
 	 public static final String GENDER = "sex";
-	 
+	 public static final String FILE = "file";
 	 
 	 private static final String ERROR_ATRIBUTE = "err";
 	 private static final String SUCCESS_ATTRIBUTE = "suc";
+	 
+	 public static final String AVATAR_DIR = "/img/avatars/";
 	
 	
 	private UserManager userManager;
@@ -92,11 +97,20 @@ public class Profile extends HttpServlet {
 			
 			if (loggedUser != null) {
 			
-				if (frManager.areInvolved(loggedUser.getId(), viewedUser.getId())) {
+				if (frManager.areInvolved(loggedUser.getId(), viewedUser.getId()) != null) {
 					// they are involved
-					request.setAttribute(PROFILE_MODE, 1);
+					// lest find out how - are they friends ?
+
+					Friendship fr = frManager.areFriends(loggedUser.getId(), viewedUser.getId());
+					if (fr != null) {
+						// friends
+						request.setAttribute(PROFILE_ID, fr.getId());
+						request.setAttribute(PROFILE_MODE, 2);
+					}
+					
+					
 				} else {
-					request.setAttribute(PROFILE_MODE, 2);
+					request.setAttribute(PROFILE_MODE, 3);
 				}
 			}
 			
@@ -114,6 +128,7 @@ public class Profile extends HttpServlet {
 			else request.setAttribute(PROFILE_GENDER, "Neuvedeno");
 			request.setAttribute(PROFILE_REG, viewedUser.getDateOfRegistration());
 			
+			
 			request.getRequestDispatcher("WEB-INF/pages/profile.jsp").forward(request, response);
 		
 			
@@ -125,11 +140,17 @@ public class Profile extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String email = request.getParameter(EMAIL).trim();
+		String email = request.getParameter(EMAIL);
 		String gender = request.getParameter(GENDER);
-		String password = request.getParameter(PASSWORD).trim();
+		String password = request.getParameter(PASSWORD);
 		
-		userManager.updateUser((String) request.getSession().getAttribute(USER), password, email, gender);
+		System.out.println(email);
+		System.out.println(gender);
+		System.out.println(password);
+		
+		String username = ((String) request.getSession().getAttribute(USER));
+		
+		userManager.updateUser(username, password, email, gender);
 		
 		request.setAttribute(USER_PARAMETER, request.getSession().getAttribute(USER));
 		
