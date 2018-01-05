@@ -4,6 +4,7 @@ package cz.zcu.kiv.pia.manager;
 import java.util.List;
 
 import cz.zcu.kiv.pia.dao.UserDao;
+import cz.zcu.kiv.pia.domain.Status;
 import cz.zcu.kiv.pia.domain.User;
 import cz.zcu.kiv.pia.domain.UserValidationException;
 import cz.zcu.kiv.pia.utils.Encoder;
@@ -38,10 +39,10 @@ public class DefaultUserManager implements UserManager {
 	        userDao.startTransaction();
 	        try {
 	            userDao.save(newUser);
+		        userDao.commitTransaction();
 	        } catch (Exception e) {
 	            userDao.rollbackTransaction();
 	        }
-	        userDao.commitTransaction();
 	    }
 
 		@Override
@@ -77,10 +78,10 @@ public class DefaultUserManager implements UserManager {
 			 userDao.startTransaction();
 		        try {
 		            userDao.save(user);
+			        userDao.commitTransaction();
 		        } catch (Exception e) {
 		            userDao.rollbackTransaction();
 		        }
-		        userDao.commitTransaction();
 				
 			
 			}
@@ -96,13 +97,76 @@ public class DefaultUserManager implements UserManager {
 			userDao.startTransaction();
 			try {
 				userDao.save(user);
+				userDao.commitTransaction();
 			} catch (Exception e) {
 				userDao.rollbackTransaction();
 			}
 			
-			userDao.commitTransaction();
 			
 		}
+
+		@Override
+		public void removeLike(User user, Status status) {
+			
+			user.getLikes().remove(status);
+			
+			userDao.startTransaction();
+			try {
+				userDao.save(user);
+				userDao.commitTransaction();
+			} catch (Exception e) {
+				userDao.rollbackTransaction();
+			}
+			
+			
+		}
+
+		@Override
+		public void removeHate(User user, Status status) {
+			user.getHates().remove(status);
+			
+			userDao.startTransaction();
+			try {
+				userDao.save(user);
+				userDao.commitTransaction();
+			} catch (Exception e) {
+				userDao.rollbackTransaction();
+			}
+			
+			
+		}
+
+		@Override
+		public void addLike(User user, Status status) {
+			user.getLikes().add(status);
+			
+			userDao.startTransaction();
+			try {
+				userDao.save(user);
+				userDao.commitTransaction();
+			} catch (Exception e) {
+				userDao.rollbackTransaction();
+			}
+			
+			
+		}
+
+		@Override
+		public void addHate(User user, Status status) {
+			user.getHates().add(status);
+			
+			userDao.startTransaction();
+			try {
+				userDao.save(user);
+				userDao.commitTransaction();
+			} catch (Exception e) {
+				userDao.rollbackTransaction();
+			}
+			
+			
+		}
+
+
 		
 		
 

@@ -30,6 +30,9 @@ public class Logout extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		// logout
+		
+		// invalidate the session
 		authService.invalidate(request);
 		request.getRequestDispatcher("index.jsp").forward(request, response);
 		

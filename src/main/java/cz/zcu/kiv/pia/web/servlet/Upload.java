@@ -22,6 +22,9 @@ import cz.zcu.kiv.pia.manager.UserManager;
  */
 
 public class Upload extends HttpServlet {
+	
+	// uploads a file to a server
+	
 	private static final long serialVersionUID = 1L;
        
 	private UserManager userManager;
@@ -32,6 +35,7 @@ public class Upload extends HttpServlet {
 	    
 	    private static final String USER = "user";
 	    private static final String SUCCESS_ATTRIBUTE = "suc";
+	    private static final String ERROR_ATRIBUTE = "err";
 	    
     /**
      * @see HttpServlet#HttpServlet()
@@ -44,12 +48,14 @@ public class Upload extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// should never be called as GET - show index in that case
 		request.getRequestDispatcher("index.jsp").forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@SuppressWarnings("rawtypes")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Check that we have a file upload request
         boolean isMultipart = ServletFileUpload.isMultipartContent(request);
@@ -90,8 +96,11 @@ public class Upload extends HttpServlet {
 
                 if (!item.isFormField()) {
                 	
+                	// no file given
                 	if (item.getName().trim().isEmpty()) {
-                		break;
+                		request.setAttribute(ERROR_ATRIBUTE, "Obrázek nevybrán.");
+                		request.getRequestDispatcher("WEB-INF/pages/welcome.jsp").forward(request, response);
+                		return;
                 	}
                 	
                     String fileName = new File(item.getName()).getName();
@@ -101,6 +110,7 @@ public class Upload extends HttpServlet {
                     // saves the file to upload directory
                     item.write(uploadedFile);
                     
+                    // update the avatar
                     userManager.updateAvatar((String) request.getSession().getAttribute(USER), File.separator +  DATA_DIRECTORY + File.separator + fileName);
                     
                 }

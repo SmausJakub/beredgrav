@@ -35,9 +35,11 @@ public class FriendApprove extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		// approval of a friend request - the target agrees
+		
 		String id = request.getParameter(FR_ID);
 
-		
+		// try to approve it
 		try {
 			frManager.approveFriendship(id);
 		} catch (FriendshipValidationException e) {
@@ -54,7 +56,6 @@ public class FriendApprove extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

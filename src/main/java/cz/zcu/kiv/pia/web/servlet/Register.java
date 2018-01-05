@@ -65,6 +65,11 @@ public class Register extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    	
+    	// register servlet handles the registration of a new user
+    	
+    	// get all params
+    	
         String username = req.getParameter(USERNAME_PARAMETER);
         String password = req.getParameter(PASSWORD_PARAMETER);
         String confirmPwd = req.getParameter(CONFIRM_PWD_PARAMETER);
@@ -75,26 +80,29 @@ public class Register extends HttpServlet {
         int day = Integer.parseInt(req.getParameter(DAY));
         int year = Integer.parseInt(req.getParameter(YEAR));
         
+        // check that the passwords match above all else
         if(!Objects.equals(password, confirmPwd)) {
             errorDispatch("Vámi zadaná hesla se neshodují!", req, resp);
             return;
         }
 
+        // captcha equals or not?
             if (!captcha.equalsIgnoreCase(String.valueOf(4))) {
             	errorDispatch("Nesprávné vyplnìní kontrolního testu! Nejste náhodou robot?", req, resp);
             	return;
             }
         
         
-        
+        // birthday starts as null
         Date birthday;
         Calendar cal = Calendar.getInstance();
 
-        
+        // the form sends zeros if it wasnt set - thus 3 zeroes means user did not set them
         if (month == 0 && day == 0 & year == 0) {
-        	// user did not specify the date
+        	// user did not specify the date - let it be null
         	birthday = null;
         } else {
+        	//otherwise user set at least some dates (preferrably all)
         	if (month == 0) {
         		errorDispatch("Nezadal jste mìsíc svého narození!", req, resp);
         		return;
@@ -111,6 +119,7 @@ public class Register extends HttpServlet {
         	}
         }
 
+        // now try to register
         try {
             userManager.register(new User(username, password, birthday, gender, DEFAULT_AVATAR, new Date()));
             req.setAttribute(SUCCESS_ATTRIBUTE, "Registrace probìhla úspìšnì! Nyní se mùžete pøihlásit.");

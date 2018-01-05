@@ -67,6 +67,8 @@ public class Profile extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		// profile get 
+		
 		String viewUsername = request.getParameter(USER_PARAMETER);
 		User viewedUser = userManager.findUserByUsername(viewUsername);
 		if (viewedUser == null) {
@@ -103,13 +105,14 @@ public class Profile extends HttpServlet {
 
 					Friendship fr = frManager.areFriends(loggedUser.getId(), viewedUser.getId());
 					if (fr != null) {
-						// friends
+						// friends - show the friendship cancel button
 						request.setAttribute(PROFILE_ID, fr.getId());
 						request.setAttribute(PROFILE_MODE, 2);
 					}
 					
 					
 				} else {
+					// show the request to become friends button
 					request.setAttribute(PROFILE_MODE, 3);
 				}
 			}
@@ -144,12 +147,9 @@ public class Profile extends HttpServlet {
 		String gender = request.getParameter(GENDER);
 		String password = request.getParameter(PASSWORD);
 		
-		System.out.println(email);
-		System.out.println(gender);
-		System.out.println(password);
+		String username = (String) request.getSession().getAttribute(USER);
 		
-		String username = ((String) request.getSession().getAttribute(USER));
-		
+		// let user manager handle the update
 		userManager.updateUser(username, password, email, gender);
 		
 		request.setAttribute(USER_PARAMETER, request.getSession().getAttribute(USER));
@@ -160,6 +160,11 @@ public class Profile extends HttpServlet {
 		
 	}
 	
+	/**
+	 * gets age from a date of birth
+	 * @param dateOfBirth the date of birth
+	 * @return age
+	 */
 	private int getAge(Date dateOfBirth) {
 	    Calendar today = Calendar.getInstance();
 	    Calendar birthDate = Calendar.getInstance();

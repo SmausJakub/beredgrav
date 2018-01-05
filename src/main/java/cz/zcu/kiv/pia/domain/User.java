@@ -2,8 +2,6 @@ package cz.zcu.kiv.pia.domain;
 
 import java.util.Date;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -38,6 +36,9 @@ public class User extends BaseEntity {
     
     private Set<Status> likes;
     private Set<Status> hates;
+    
+    public User() {
+    }
 
     public User(String username, String password, Date dateOfBirth, String gender, String avatar, Date dateOfRegistration) {
         this.username = username;

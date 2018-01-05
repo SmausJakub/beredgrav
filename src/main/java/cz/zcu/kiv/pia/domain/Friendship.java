@@ -14,6 +14,9 @@ public class Friendship extends BaseEntity {
 	
 	private User target;
 	
+	public Friendship() {
+		
+	}
 	
 	public Friendship(User initiator, User target) {
 		this.initiator = initiator;

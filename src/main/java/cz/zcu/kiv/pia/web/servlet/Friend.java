@@ -40,17 +40,23 @@ public class Friend extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		// make a friendship !
+		
 		String loggedUsername = (String) request.getSession().getAttribute(USER);
 		User loggedUser = userManager.findUserByUsername(loggedUsername);
 		
 		String viewedUsername = (String) request.getParameter(USER_PARAMETER);
 		User viewedUser = userManager.findUserByUsername(viewedUsername);
 		
+		// get both users who are involved
+		
+		// can be null if the id given is wrong
 		if (viewedUser == null) {
 			errorDispatch("Hledaný uživatel neexistuje!", request, response);
 			return;
 		}
 		
+		// lets see if they are already involved
 		if (frManager.areInvolved(loggedUser.getId(), viewedUser.getId()) != null) {
 			// they are already involved somehow - so error
 			errorDispatch("Urèitý vztah byl již navázán!", request, response);
@@ -69,7 +75,6 @@ public class Friend extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 	

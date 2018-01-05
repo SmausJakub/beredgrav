@@ -35,6 +35,8 @@ public class FriendDelete extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		// deletion of friend request - either the initiator cancelled the request or the target ignored it
+		
 		String id = request.getParameter(FR_ID);
 		
 		try {
@@ -54,7 +56,6 @@ public class FriendDelete extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

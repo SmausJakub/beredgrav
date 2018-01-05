@@ -57,7 +57,7 @@ public class ApplicationContext {
         frDao = new FriendshipDaoCriteria(em);
         encoder = new PasswordHashEncoder();
         userManager = new DefaultUserManager(userDao, encoder);
-        statusManager = new DefaultStatusManager(statusDao);
+        statusManager = new DefaultStatusManager(statusDao, userManager);
         frManager = new DefaultFriendshipManager(frDao);
         
         authenticationService = new AuthenticationService(userManager);

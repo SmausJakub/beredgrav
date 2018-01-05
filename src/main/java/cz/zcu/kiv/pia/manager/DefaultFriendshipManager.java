@@ -21,11 +21,12 @@ public class DefaultFriendshipManager implements FriendshipManager {
 		
 		try {
 			frDao.createFriendship(fr);
+
+			frDao.commitTransaction();
 		} catch (Exception e) {
 			frDao.rollbackTransaction();
 		}
 		
-		frDao.commitTransaction();
 		
 	}
 
@@ -69,11 +70,13 @@ public class DefaultFriendshipManager implements FriendshipManager {
 		try {
 
 			frDao.delete(idL);	
+
+			frDao.commitTransaction();
 		} catch (Exception e) {
 			frDao.rollbackTransaction();
+			
 		}
 		
-		frDao.commitTransaction();
 		
 		
 	}
@@ -104,11 +107,12 @@ public class DefaultFriendshipManager implements FriendshipManager {
 		
 		try {
 			frDao.save(fr);
+			
+			frDao.commitTransaction();
 		} catch (Exception e) {
 			frDao.rollbackTransaction();
 		}
 		
-		frDao.commitTransaction();
 		
 	}
 

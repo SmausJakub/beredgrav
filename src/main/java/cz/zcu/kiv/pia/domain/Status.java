@@ -24,6 +24,10 @@ public class Status extends BaseEntity implements Comparable<Status> {
 	
 	private User owner;
 	
+	public Status() {
+		
+	}
+	
 	public Status(User owner, String text, Date dateOfStatus)  {
 		this.text = text;
 		this.dateOfStatus = dateOfStatus;

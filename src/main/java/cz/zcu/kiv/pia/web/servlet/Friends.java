@@ -39,6 +39,8 @@ public class Friends extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		// servlet lists all friends of a user
+		
 		String username = (String) request.getSession().getAttribute(USER);
 		User user = userManager.findUserByUsername(username);
 				
@@ -65,7 +67,6 @@ public class Friends extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

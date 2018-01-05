@@ -37,6 +37,7 @@ public class ApplicationStartListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
         ctx = new ApplicationContext();
 
+        // assign servlets with managers and add mappings
         sce.getServletContext().addServlet("login", new Login(ctx.getAuthenticationService())).addMapping("/login");
         sce.getServletContext().addServlet("logout", new Logout(ctx.getAuthenticationService())).addMapping("/logout");
         sce.getServletContext().addServlet("register", new Register(ctx.getUserManager())).addMapping("/register");
@@ -51,6 +52,7 @@ public class ApplicationStartListener implements ServletContextListener {
         sce.getServletContext().addServlet("like", new Like(ctx.getUserManager(), ctx.getStatusManager())).addMapping("/like");
         sce.getServletContext().addServlet("hate", new Hate(ctx.getUserManager(), ctx.getStatusManager())).addMapping("/hate");
         
+        //  users need to be logged in to view these
         sce.getServletContext().addFilter("authFilter", new AuthenticationGuard(ctx.getAuthenticationService())).addMappingForUrlPatterns(null, false, "/wall/*", "/welcome/*", "/friend/*", "/friendDelete/*", "/friendApprove/*", "/friends/*", "/upload/*", "/hate/*", "/like/*");
         
         

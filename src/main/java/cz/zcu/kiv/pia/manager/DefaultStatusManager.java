@@ -1,7 +1,6 @@
 package cz.zcu.kiv.pia.manager;
 
 import java.util.List;
-import java.util.Set;
 
 import cz.zcu.kiv.pia.dao.StatusDao;
 import cz.zcu.kiv.pia.domain.Status;
@@ -12,8 +11,11 @@ public class DefaultStatusManager implements StatusManager {
 
 	private StatusDao statusDao;
 	
-	public DefaultStatusManager(StatusDao statusDao) {
+	private UserManager userManager;
+	
+	public DefaultStatusManager(StatusDao statusDao, UserManager userManager) {
 		this.statusDao = statusDao;
+		this.userManager = userManager;
 	}
 	
 	@Override
@@ -23,11 +25,11 @@ public class DefaultStatusManager implements StatusManager {
 		
 		try {
 			statusDao.save(status);
+			statusDao.commitTransaction();
 		} catch (Exception e) {
 			statusDao.rollbackTransaction();
 		}
 		
-		statusDao.commitTransaction();
 		
 		
 		
@@ -69,26 +71,30 @@ public class DefaultStatusManager implements StatusManager {
 			throw new StatusValidationException("Status nenalezen!");
 		}
 		
-		if (status.getHates().contains(user)) {
+		if (user.getHates().contains(status)) {
 			throw new StatusValidationException("Tento status jste již hatoval!");
 		}
 		
-		// if he liked it already, remove the like?
-		if (status.getLikes().contains(user)) {
-
+		// if he liked it already, remove the like
+		if (user.getLikes().contains(status)) {
+			
+			userManager.removeLike(user, status);
+			
 			status.getLikes().remove(user);
 			
 			statusDao.startTransaction();
 			
 			try {
 				statusDao.save(status);
+				statusDao.commitTransaction();
 			} catch (Exception e) {
 				statusDao.rollbackTransaction();
 			}
-			
-			statusDao.commitTransaction();
+
 		} else {
 			// now he simply likes it
+			
+			userManager.addLike(user, status);
 			
 			status.getLikes().add(user);
 			
@@ -96,11 +102,10 @@ public class DefaultStatusManager implements StatusManager {
 			
 			try {
 				statusDao.save(status);
+				statusDao.commitTransaction();
 			} catch (Exception e) {
 				statusDao.rollbackTransaction();
 			}
-			
-			statusDao.commitTransaction();
 		}
 		
 		
@@ -127,11 +132,13 @@ public class DefaultStatusManager implements StatusManager {
 		}
 		
 		
-		if (status.getLikes().contains(user)) {
+		if (user.getLikes().contains(status)) {
 			throw new StatusValidationException("Tento status jste již likoval!");
 		}
 		
-				if (status.getHates().contains(user)) {
+				if (user.getHates().contains(status)) {
+					
+					userManager.removeHate(user, status);
 
 					status.getHates().remove(user);
 					
@@ -139,13 +146,15 @@ public class DefaultStatusManager implements StatusManager {
 					
 					try {
 						statusDao.save(status);
+						statusDao.commitTransaction();
 					} catch (Exception e) {
 						statusDao.rollbackTransaction();
 					}
 					
-					statusDao.commitTransaction();
 				} else {
-					// now he simply hate it
+					// now he simply hates it
+					
+					userManager.addHate(user, status);
 					
 					status.getHates().add(user);
 					
@@ -153,11 +162,11 @@ public class DefaultStatusManager implements StatusManager {
 					
 					try {
 						statusDao.save(status);
+						statusDao.commitTransaction();
 					} catch (Exception e) {
 						statusDao.rollbackTransaction();
 					}
 					
-					statusDao.commitTransaction();
 				}
 		
 		

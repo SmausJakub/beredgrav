@@ -41,9 +41,13 @@ public class Login extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    	
+    	// login
+    	
         String username = req.getParameter(USERNAME_PARAMETER);
         String password = req.getParameter(PASSWORD_PARAMETER);
 
+        // authentication process
         boolean authenticated = authService.authenticate(req.getSession(), username, password);
         if(authenticated) {
         	req.getRequestDispatcher("WEB-INF/pages/welcome.jsp").forward(req, resp);

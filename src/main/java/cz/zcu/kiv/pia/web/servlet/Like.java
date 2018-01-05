@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import cz.zcu.kiv.pia.domain.Status;
 import cz.zcu.kiv.pia.domain.StatusValidationException;
 import cz.zcu.kiv.pia.domain.User;
 import cz.zcu.kiv.pia.manager.StatusManager;
@@ -44,6 +43,7 @@ public class Like extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		// like a status
 		
 		String statusId = (String) request.getParameter(STATUS_ID);
 		
@@ -54,7 +54,6 @@ public class Like extends HttpServlet {
 		try {
 			statusManager.likeStatus(loggedUser, statusId);
 		} catch (StatusValidationException e) {
-			System.out.println("Like zachytilo výjimku: " + e.getMessage());
 			errorDispatch(e.getMessage(), request, response);
 			return;
 		}

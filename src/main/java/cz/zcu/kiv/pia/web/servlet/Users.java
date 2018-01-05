@@ -35,6 +35,8 @@ public class Users extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		// lists all users registered
+		
 		List<User> userList = userManager.findAllRegisteredUsers();
 		
 		request.setAttribute(USER_LIST, userList);
