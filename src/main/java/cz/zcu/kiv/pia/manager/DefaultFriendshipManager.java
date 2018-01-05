@@ -4,6 +4,7 @@ import java.util.List;
 
 import cz.zcu.kiv.pia.dao.FriendshipDao;
 import cz.zcu.kiv.pia.domain.Friendship;
+import cz.zcu.kiv.pia.domain.FriendshipValidationException;
 
 public class DefaultFriendshipManager implements FriendshipManager {
 	
@@ -49,14 +50,25 @@ public class DefaultFriendshipManager implements FriendshipManager {
 	}
 
 	@Override
-	public void deleteFriendship(Long id) {
-		System.out.println("delete friendship " + id);
+	public void deleteFriendship(String id) throws FriendshipValidationException {
+		
+		if (id == null) {
+			throw new FriendshipValidationException("Nesprávné id!");
+		}
+		
+		Long idL;
+		
+		try {
+			idL = Long.parseLong(id);
+		} catch (Exception e) {
+			throw new FriendshipValidationException("Nesprávné id!");
+		}
 		
 		frDao.startTransaction();
 		
 		try {
 
-			frDao.delete(id);	
+			frDao.delete(idL);	
 		} catch (Exception e) {
 			frDao.rollbackTransaction();
 		}
@@ -67,11 +79,23 @@ public class DefaultFriendshipManager implements FriendshipManager {
 	}
 
 	@Override
-	public void approveFriendship(Long id) {
-		Friendship fr = frDao.findOne(id);
+	public void approveFriendship(String id) throws FriendshipValidationException {
+		if (id == null) {
+			throw new FriendshipValidationException("Nesprávné id!");
+		}
+		
+		Long idL;
+		
+		try {
+			idL = Long.parseLong(id);
+		} catch (Exception e) {
+			throw new FriendshipValidationException("Nesprávné id!");
+		}
+		
+		Friendship fr = frDao.findOne(idL);
 		
 		if (fr == null) {
-			return;
+			throw new FriendshipValidationException("Zadané id nebylo nalezeno!");
 		}
 		
 		fr.setApproved(1);
@@ -92,6 +116,7 @@ public class DefaultFriendshipManager implements FriendshipManager {
 	public List<Friendship> findApproved(Long id) {
 		return frDao.findApprovedById(id);
 	}
+
 
 	
 

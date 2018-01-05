@@ -11,5 +11,8 @@ public interface StatusDao extends GenericDao<Status, Long> {
 	List<Status> findByUsername(String username);
 
 	List<Status> findAll();
+	
+	List<Status> findByIds(List<Long> ids);
+	
 
 }

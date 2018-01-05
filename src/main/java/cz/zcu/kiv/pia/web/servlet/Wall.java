@@ -1,6 +1,7 @@
 package cz.zcu.kiv.pia.web.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -33,6 +34,8 @@ public class Wall extends HttpServlet {
 	private static final String STATUS_PARAMETER = "statusList";
 	private static final String FRIENDSHIP_PARAMETER = "friendshipList";
 	
+	private static final String USER_AVATAR = "userAvatar";
+	
 	private static final String USER = "user";
 	
     /**
@@ -49,22 +52,44 @@ public class Wall extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		List<Status> statusList = statusManager.findAllStatuses();
-		Collections.sort(statusList);
-		request.setAttribute(STATUS_PARAMETER, statusList);
 		
 		String username = (String) request.getSession().getAttribute(USER);
 		
 		User loggedUser = userManager.findUserByUsername(username);
 		
+		// notifications
 		List<Friendship> friendshipList = frManager.findUnapproved(loggedUser.getId());
 		
 		request.setAttribute(FRIENDSHIP_PARAMETER, friendshipList);
 		
 		
-		
+		// states
 		List<Friendship> statusFrindshipList = frManager.findApproved(loggedUser.getId());
+		System.out.println(statusFrindshipList);
+		List<Long> userIds = new ArrayList<>();
+		userIds.add(loggedUser.getId());
 		
+		for (Friendship fr : statusFrindshipList) {
+			
+			if (!userIds.contains(fr.getInitiator().getId())) {
+				userIds.add(fr.getInitiator().getId());
+			}
+			if (!userIds.contains(fr.getTarget().getId())) {
+				userIds.add(fr.getTarget().getId());
+			}
+			
+		}
+
+		System.out.println(userIds);
+		List<Status> statusList = statusManager.findByIds(userIds);
+		
+		if (statusList != null) {
+			Collections.sort(statusList);
+			System.out.println(statusList);
+			request.setAttribute(STATUS_PARAMETER, statusList);
+		}
+		
+		request.setAttribute(USER_AVATAR, loggedUser.getAvatar());
 		request.getRequestDispatcher("WEB-INF/pages/wall.jsp").forward(request, response);
 	}
 
@@ -80,7 +105,8 @@ public class Wall extends HttpServlet {
 			return;
 		}
 		
-		if (text.isEmpty()) {
+		if (text.trim().isEmpty()) {
+			doGet(request, response);
 			return;
 		}
 		

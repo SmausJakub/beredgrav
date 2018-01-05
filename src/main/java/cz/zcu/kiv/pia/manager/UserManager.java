@@ -2,7 +2,6 @@ package cz.zcu.kiv.pia.manager;
 
 import java.util.List;
 
-import cz.zcu.kiv.pia.domain.Friendship;
 import cz.zcu.kiv.pia.domain.User;
 import cz.zcu.kiv.pia.domain.UserValidationException;
 

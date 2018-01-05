@@ -4,7 +4,6 @@ package cz.zcu.kiv.pia.manager;
 import java.util.List;
 
 import cz.zcu.kiv.pia.dao.UserDao;
-import cz.zcu.kiv.pia.domain.Friendship;
 import cz.zcu.kiv.pia.domain.User;
 import cz.zcu.kiv.pia.domain.UserValidationException;
 import cz.zcu.kiv.pia.utils.Encoder;
@@ -22,7 +21,6 @@ public class DefaultUserManager implements UserManager {
 	    @Override
 	    public boolean authenticate(String username, String password) {
 	        User u = userDao.findByUsername(username);
-	        System.out.println(u);
 	        return u != null && encoder.validate(password, u.getPassword());
 	    }
 
@@ -64,11 +62,11 @@ public class DefaultUserManager implements UserManager {
 			
 			User user = userDao.findByUsername(username);
 			
-			if (password != null) {
+			if (!password.trim().isEmpty()) {
 				user.setPassword(encoder.encode(password));
 			}
 			
-			if (email != null) {
+			if (!email.trim().isEmpty()) {
 				user.setEmail(email);
 			}
 			

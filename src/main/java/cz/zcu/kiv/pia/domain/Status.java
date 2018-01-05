@@ -1,15 +1,13 @@
 package cz.zcu.kiv.pia.domain;
 
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -21,8 +19,6 @@ public class Status extends BaseEntity implements Comparable<Status> {
 	private String text;
 	private Date dateOfStatus;
 	
-	private List<Comment> comments;
-	
 	private Set<User> likes;
 	private Set<User> hates;
 	
@@ -32,6 +28,8 @@ public class Status extends BaseEntity implements Comparable<Status> {
 		this.text = text;
 		this.dateOfStatus = dateOfStatus;
 		this.owner = owner;
+		this.likes = new HashSet<>();
+		this.hates = new HashSet<>();
 	}
 	
 	
@@ -77,17 +75,6 @@ public class Status extends BaseEntity implements Comparable<Status> {
 		this.dateOfStatus = dateOfStatus;
 	}
 	
-	
-	@OneToMany(mappedBy = "status", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-	public List<Comment> getComments() {
-		return comments;
-	}
-
-
-	public void setComments(List<Comment> comments) {
-		this.comments = comments;
-	}
-
 
 	@OneToOne
 	public User getOwner() {

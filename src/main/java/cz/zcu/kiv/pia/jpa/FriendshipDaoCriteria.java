@@ -69,7 +69,7 @@ public class FriendshipDaoCriteria extends FriendshipDaoJpa {
 		criteria.select(root).where(allP);
 		
 		TypedQuery<Friendship> q = entityManager.createQuery(criteria);
-		
+
 		try {
 			return q.getResultList();
 		} catch (NoResultException e) {

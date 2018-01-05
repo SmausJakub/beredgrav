@@ -151,12 +151,18 @@
                         <input type="text" name="birthday" value="" id="birthdayPicker"/>
                      </div>
                   </div>
-                
+                <div class="form-group">
+                     <label class="control-label col-sm-2" for="captcha">Napište číslici 4:*</label>
+                     <div class="col-sm-10">
+                        <input type="text" class="form-control" id="captcha" placeholder="Dokažte, že nejste robot" name="captcha" required 
+                       <c:if test="${not empty requestScope.captchaField}">value="${requestScope.captchaField}"</c:if> >
+                     </div>
+                  </div>
                </fieldset>
                <div class="form-group">
                   <div class="col-sm-offset-2 col-sm-10">
                      <div class="checkbox">
-                        <label><input type="checkbox" name="agree" required <c:if test="${not empty requestScope.agreeField}">checked</c:if>>Souhlasím s <a href="#">obchodními podmínkami</a></label>
+                        <label><input type="checkbox" name="agree" required <c:if test="${not empty requestScope.agreeField}">checked</c:if>>Souhlasím s obchodními podmínkami</label>
                      </div>
                   </div>
                </div>

@@ -39,6 +39,7 @@ public class Register extends HttpServlet {
     private static final String MONTH = "birthday[month]";
     private static final String DAY = "birthday[day]";
     private static final String YEAR = "birthday[year]";
+    private static final String CAPTCHA = "captcha";
     
     private static final String DEFAULT_AVATAR = "/img/avatars/default.png";
     
@@ -46,6 +47,7 @@ public class Register extends HttpServlet {
     private static final String GENDER_MALE_FIELD = "genderMaleField";
     private static final String GENDER_FEMALE_FIELD = "genderFemaleField";
     private static final String AGREE_FIELD = "agreeField";
+    private static final String CAPTCHA_FIELD = "captchaField";
 
     private static final String ERROR_ATTRIBUTE = "err";
     private static final String SUCCESS_ATTRIBUTE = "suc";
@@ -67,6 +69,7 @@ public class Register extends HttpServlet {
         String password = req.getParameter(PASSWORD_PARAMETER);
         String confirmPwd = req.getParameter(CONFIRM_PWD_PARAMETER);
         String gender = req.getParameter(SEX);
+        String captcha = req.getParameter(CAPTCHA);
         
         int month = Integer.parseInt(req.getParameter(MONTH));
         int day = Integer.parseInt(req.getParameter(DAY));
@@ -76,6 +79,12 @@ public class Register extends HttpServlet {
             errorDispatch("Vámi zadaná hesla se neshodují!", req, resp);
             return;
         }
+
+            if (!captcha.equalsIgnoreCase(String.valueOf(4))) {
+            	errorDispatch("Nesprávné vyplnìní kontrolního testu! Nejste náhodou robot?", req, resp);
+            	return;
+            }
+        
         
         
         Date birthday;
@@ -108,6 +117,7 @@ public class Register extends HttpServlet {
             req.getRequestDispatcher("WEB-INF/pages/login.jsp").forward(req, resp);
         } catch (UserValidationException e) {
             errorDispatch(e.getMessage(), req, resp);
+            return;
         }
     }
 
@@ -115,6 +125,7 @@ public class Register extends HttpServlet {
         req.setAttribute(ERROR_ATTRIBUTE, err);
         req.setAttribute(USERNAME_FIELD, req.getParameter(USERNAME_PARAMETER));
         req.setAttribute(AGREE_FIELD, true);
+        req.setAttribute(CAPTCHA_FIELD, req.getParameter(CAPTCHA));
         String gender = req.getParameter(SEX);
         if (gender != null) {
         	if (Objects.equals(gender, MALE)) {

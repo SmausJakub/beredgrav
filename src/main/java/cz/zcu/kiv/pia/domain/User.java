@@ -2,6 +2,8 @@ package cz.zcu.kiv.pia.domain;
 
 import java.util.Date;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -52,7 +54,9 @@ public class User extends BaseEntity {
      */
     public void validate() throws UserValidationException {
         if(StringUtils.isBlank(username)) throw new UserValidationException("Username is a required field");
-        if(StringUtils.isBlank(password)) throw new UserValidationException("Password is a required field");
+        if(StringUtils.isBlank(password)) throw new UserValidationException("Password is a required field");      
+        if(!username.matches("[A-Za-z0-9_]+")) throw new UserValidationException("Formát Vašeho uživatelského jména není podporován!");   
+        if(!password.matches("[A-Za-z0-9_]+")) throw new UserValidationException("Formát Vašeho hesla není podporován!");   
     }
     
     

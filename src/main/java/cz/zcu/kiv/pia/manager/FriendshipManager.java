@@ -3,6 +3,7 @@ package cz.zcu.kiv.pia.manager;
 import java.util.List;
 
 import cz.zcu.kiv.pia.domain.Friendship;
+import cz.zcu.kiv.pia.domain.FriendshipValidationException;
 
 public interface FriendshipManager {
 
@@ -18,9 +19,9 @@ public interface FriendshipManager {
 	
 	Friendship areInvolved(Long id1, Long id2);
 	
-	void deleteFriendship(Long id);
+	void deleteFriendship(String id) throws FriendshipValidationException;
 	
-	void approveFriendship(Long id);
+	void approveFriendship(String id) throws FriendshipValidationException;
 	
 	
 }

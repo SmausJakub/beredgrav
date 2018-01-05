@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import cz.zcu.kiv.pia.domain.FriendshipValidationException;
 import cz.zcu.kiv.pia.manager.FriendshipManager;
 
 /**
@@ -20,6 +21,7 @@ public class FriendDelete extends HttpServlet {
 	public static final String FR_ID = "id";
 	
 	private static final String SUCCESS_ATTRIBUTE = "suc";
+	private static final String ERROR_ATTRIBUTE = "err";
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -35,11 +37,13 @@ public class FriendDelete extends HttpServlet {
 		
 		String id = request.getParameter(FR_ID);
 		
-		if (id == null) {
+		try {
+			frManager.deleteFriendship(id);
+		} catch (FriendshipValidationException e) {
+			request.setAttribute(ERROR_ATTRIBUTE, e.getMessage());
+			request.getRequestDispatcher("WEB-INF/pages/welcome.jsp").forward(request, response);
 			return;
 		}
-		
-		frManager.deleteFriendship(Long.parseLong(id));
 		
 		request.setAttribute(SUCCESS_ATTRIBUTE, "Žádost smazána!");
 		request.getRequestDispatcher("WEB-INF/pages/welcome.jsp").forward(request, response);

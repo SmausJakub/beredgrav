@@ -112,7 +112,7 @@
                      <div class="col-md-2">
                         <div class="well status-avatar">
                            <div class="status-name"><c:out value="${sessionScope.user }" /></div>
-                           <img src="${pageContext.request.contextPath}/img/avatars/default.png" class="img-circle" height="55" width="55" alt="Avatar">
+                           <img src="${pageContext.request.contextPath}${requestScope.userAvatar}" class="img-circle" height="55" width="55" alt="Avatar">
                         </div>
                      </div>
                      <div class="col-md-10">
@@ -139,7 +139,7 @@
                   <div class="panel-body">
                      <div class="col-md-2">
                         <div class="well status-avatar">
-           					<div class="status-name"><a href="#">${item.owner.username}</a></div>
+           					<div class="status-name"><a href="${pageContext.request.contextPath}/profile?username=${item.owner.username}">${item.owner.username}</a></div>
            				<img src="${pageContext.request.contextPath}${item.owner.avatar}" class="img-circle" height="55" width="55" alt="Avatar">	
              			</div>
                      </div>
@@ -149,21 +149,36 @@
                            <div class="status-date">${item.dateOfStatus}</div>
            				 </div>
                         <div class="well text-right status-buttons">
-                           <button class="btn btn-success">
+                           <a class="btn btn-success" href="${pageContext.request.contextPath}/like?id=${item.id}">
                            <i class="fa fa-thumbs-up"></i>
-                           Lajkovat</button>
-                           <button class="btn btn-danger">
+                           Lajkovat</a>
+                           <a class="btn btn-danger" href="${pageContext.request.contextPath}/hate?id=${item.id}">
                            <i class="fa fa-thumbs-down"></i>
-                           Hejtovat</button>
-                           <button class="btn btn-default">
-                           <i class="fa fa-comment-o"></i>
-                           Komentovat</button>
+                           Hejtovat</a>
+                           
                         </div>
                          <div class="status-info">
                            <strong>
-                           <span class="lajk">0</span> | <span class="hejt">0</span> | <a href="#">0 komentářů</a>
+                           <span class="lajk"><c:out value="${item.likes.size() }" /></span> | <span class="hejt"><c:out value="${item.hates.size() }" /></span> <br>
                            </strong>
+                           
+                           <c:if test="${not empty item.likes }">
+                          <strong> Líbilo se: </strong><br>
+                           	<c:forEach items="${item.likes }" var="like">
+                           	<a href="${pageContext.request.contextPath}/profile?username=${like.username}"><c:out value="${like.username }" /></a> <br>
+                           	</c:forEach>
+                           
+                           </c:if>
+                           <c:if test="${not empty item.hates }">
+                           <strong>Nelíbilo se:</strong> <br>
+                           <c:forEach items="${item.hates }" var="hate">
+                           <a href="${pageContext.request.contextPath}/profile?username=${hate.username}"><c:out value="${hate.username }" /></a> <br>
+                           </c:forEach>
+                           </c:if>
+                           
                         </div>
+                        
+                        
                      </div>
                   </div>
                </div>

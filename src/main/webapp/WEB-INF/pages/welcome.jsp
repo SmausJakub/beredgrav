@@ -105,18 +105,25 @@
          <div class="col-sm-10">
          
          <c:choose>
-         <c:when test="${empty requestScope.suc }" >
+         <c:when test="${empty requestScope.suc && empty requestScope.err }" >
          <h1>Vítejte zpět, <c:out value="${sessionScope.user}" />!</h1>
          
          <hr />
          <p> Jsme rádi, že jste tu. </p>
          
          </c:when>
-        <c:otherwise>
+        <c:when test="${not empty requestScope.suc }">
         <h1>Úspěch</h1>
         <hr />
         <p class="success">   <c:out value="${requestScope.suc }" /> </p>
-        </c:otherwise> 
+        </c:when>
+        <c:when test="${not empty requestScope.err }" >
+        
+        <h1>Chyba</h1>
+        <hr />
+        <p class="error"> <c:out value="${requestScope.err }" /> </p>
+        </c:when>
+        
          </c:choose>
          
          </div>

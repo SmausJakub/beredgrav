@@ -106,7 +106,7 @@ public class Upload extends HttpServlet {
                 }
             }
             
-            request.setAttribute(SUCCESS_ATTRIBUTE, "Nový profilový obrázek byl úspìšnì nahrán");
+            request.setAttribute(SUCCESS_ATTRIBUTE, "Nový profilový obrázek byl úspìšnì nahrán.");
             request.getRequestDispatcher("WEB-INF/pages/welcome.jsp").forward(request, response);
 
             

@@ -90,6 +90,12 @@ a:link {
 	font-size: 12px;
 }
 
+.status-comments {
+	text-align: left;
+	font-size: 12px;
+	
+}
+
 .lajk {
     color: #399E06;
 }

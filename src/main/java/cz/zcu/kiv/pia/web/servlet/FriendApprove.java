@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import cz.zcu.kiv.pia.domain.FriendshipValidationException;
 import cz.zcu.kiv.pia.manager.FriendshipManager;
 
 /**
@@ -18,6 +19,7 @@ public class FriendApprove extends HttpServlet {
 	private FriendshipManager frManager;
 	
 	private static final String SUCCESS_ATTRIBUTE = "suc";
+	private static final String ERROR_ATTRIBUTE = "err";
 	
 	public static final String FR_ID = "id";
 	
@@ -34,12 +36,15 @@ public class FriendApprove extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String id = request.getParameter(FR_ID);
+
 		
-		if (id == null) {
+		try {
+			frManager.approveFriendship(id);
+		} catch (FriendshipValidationException e) {
+			request.setAttribute(ERROR_ATTRIBUTE, e.getMessage());
+			request.getRequestDispatcher("WEB-INF/pages/welcome.jsp").forward(request, response);
 			return;
 		}
-		
-		frManager.approveFriendship(Long.parseLong(id));
 		
 		request.setAttribute(SUCCESS_ATTRIBUTE, "Žádost pøijata!");
 		request.getRequestDispatcher("WEB-INF/pages/welcome.jsp").forward(request, response);
