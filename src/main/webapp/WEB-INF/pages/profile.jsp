@@ -114,7 +114,7 @@
         			
         			<div class="panel panel-info">
         			<div class="panel panel-heading">Profilový obrázek</div>
-        			<div class="panel panel-body"><img src="${pageContext.request.contextPath}${requestScope.editAvatar}" alt="avatar" class="img-circle" height="45" width="45"></div>
+        			<div class="panel panel-body"><img src="${pageContext.request.contextPath}${requestScope.editAvatar}" alt="avatar" class="img-circle" height="95" width="95"></div>
         			</div>		
         			
         			<form class="form-horizontal" action="${pageContext.request.contextPath}/upload" method="post" enctype="multipart/form-data">
@@ -162,7 +162,6 @@
         			<div class="form-group">
                   <div class="col-sm-offset-2 col-sm-10">
                      <button type="submit" class="btn btn-default">Uložit změny</button>
-                     <a class="btn btn-danger">Opustit sociální síť</a>
                   </div>
                </div>
         			</form>

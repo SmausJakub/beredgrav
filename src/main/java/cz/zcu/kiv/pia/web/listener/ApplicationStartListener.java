@@ -53,7 +53,6 @@ public class ApplicationStartListener implements ServletContextListener {
         
         sce.getServletContext().addFilter("authFilter", new AuthenticationGuard(ctx.getAuthenticationService())).addMappingForUrlPatterns(null, false, "/wall/*", "/welcome/*", "/friend/*", "/friendDelete/*", "/friendApprove/*", "/friends/*", "/upload/*", "/hate/*", "/like/*");
         
-        System.out.println("Ahoj");
         
     }
 

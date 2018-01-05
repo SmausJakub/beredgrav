@@ -40,9 +40,6 @@ public class DefaultStatusManager implements StatusManager {
 
 	@Override
 	public List<Status> findByIds(List<Long> ids) {
-		if (ids.isEmpty()) {
-			return null;
-		}
 		return statusDao.findByIds(ids);
 	}
 

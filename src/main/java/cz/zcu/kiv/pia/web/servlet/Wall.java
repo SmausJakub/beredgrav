@@ -34,6 +34,9 @@ public class Wall extends HttpServlet {
 	private static final String STATUS_PARAMETER = "statusList";
 	private static final String FRIENDSHIP_PARAMETER = "friendshipList";
 	
+	private static final String STREAM_PARAMETER = "stream";
+	private static final String STREAM = "streamValue";
+	
 	private static final String USER_AVATAR = "userAvatar";
 	
 	private static final String USER = "user";
@@ -52,7 +55,7 @@ public class Wall extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		
+		String stream = request.getParameter(STREAM_PARAMETER);
 		String username = (String) request.getSession().getAttribute(USER);
 		
 		User loggedUser = userManager.findUserByUsername(username);
@@ -65,7 +68,6 @@ public class Wall extends HttpServlet {
 		
 		// states
 		List<Friendship> statusFrindshipList = frManager.findApproved(loggedUser.getId());
-		System.out.println(statusFrindshipList);
 		List<Long> userIds = new ArrayList<>();
 		userIds.add(loggedUser.getId());
 		
@@ -80,13 +82,52 @@ public class Wall extends HttpServlet {
 			
 		}
 
-		System.out.println(userIds);
 		List<Status> statusList = statusManager.findByIds(userIds);
 		
-		if (statusList != null) {
+		if (!statusList.isEmpty()) {
+			
 			Collections.sort(statusList);
-			System.out.println(statusList);
-			request.setAttribute(STATUS_PARAMETER, statusList);
+			
+			int str = 0;
+			// what is the value of stream ?
+			if (stream == null) {
+				str = 0;
+			} else {
+				try {
+					str = Integer.parseInt(stream);
+					
+					if (!(str == 0 || str % 10 == 0)) {
+						str = 0;
+					}
+					
+				} catch (Exception e) {
+					str = 0;
+				}
+			}
+			
+
+			request.setAttribute(STREAM, str);
+			
+			if (str == 0) {
+				// first 10 states
+				int endIndex = 10;
+				if (statusList.size() < endIndex) {
+					endIndex = statusList.size();
+				}
+				request.setAttribute(STATUS_PARAMETER, statusList.subList(0, endIndex));
+			} else {
+				int startIndex = str;
+				int endIndex = str+10;
+				if (statusList.size() < startIndex) {
+					while (statusList.size() < startIndex) {
+						startIndex -= 10;
+					}
+				}
+				if (statusList.size() < endIndex) {
+					endIndex = statusList.size();
+				}
+				request.setAttribute(STATUS_PARAMETER, statusList.subList(startIndex, endIndex));
+			}
 		}
 		
 		request.setAttribute(USER_AVATAR, loggedUser.getAvatar());

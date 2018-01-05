@@ -56,7 +56,7 @@ public class User extends BaseEntity {
         if(StringUtils.isBlank(username)) throw new UserValidationException("Username is a required field");
         if(StringUtils.isBlank(password)) throw new UserValidationException("Password is a required field");      
         if(!username.matches("[A-Za-z0-9_]+")) throw new UserValidationException("Formát Vašeho uživatelského jména není podporován!");   
-        if(!password.matches("[A-Za-z0-9_]+")) throw new UserValidationException("Formát Vašeho hesla není podporován!");   
+     //   if(!password.matches("[A-Za-z0-9_]+")) throw new UserValidationException("Formát Vašeho hesla není podporován!");   
     }
     
     

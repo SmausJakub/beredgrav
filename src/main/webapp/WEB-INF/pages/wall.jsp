@@ -184,6 +184,34 @@
                </div>
             </div>
            </c:forEach>
+           
+           <c:if test="${not empty requestScope.streamValue }" >
+           
+           		<c:choose>
+           		
+           		<c:when test="${requestScope.streamValue == 0 }">
+           		
+           		<c:if test="${requestScope.statusList.size() ge 10 }" >
+           		<p class="text-center"><a href="${pageContext.request.contextPath}/wall?stream=10">Další</a>  </p>
+           		</c:if>
+           		</c:when>
+           		<c:otherwise>
+           		<c:choose>
+           		<c:when test="${requestScope.statusList.size() ge 10 }" >
+           		<p class="text-center"><a href="${pageContext.request.contextPath}/wall?stream=${requestScope.streamValue - 10}">Předchozí</a> | <a href="${pageContext.request.contextPath}/wall?stream=${requestScope.streamValue + 10}">Další</a> </p>
+           		</c:when>
+           		<c:otherwise>
+           		<p class="text-center"><a href="${pageContext.request.contextPath}/wall?stream=${requestScope.streamValue - 10}">Předchozí</a>
+           		</c:otherwise>
+           		</c:choose>
+           		</c:otherwise>
+           		
+           		</c:choose>
+           
+           
+           </c:if>
+           
+           
             </c:if>
             
             
