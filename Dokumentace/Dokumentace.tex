@@ -645,12 +645,61 @@ Databáze je důležitá vzhledem k tomu, že při chybě by celý server spadl 
 \item \textbf{password} - pia
 \end{itemize}
 
+Pokud k této databázi nemáte přístup, aplikace nepojede. Lze jej změnit v souboru \textit{persistence.xml} na vámi požadované hodnoty.
+
+Pokud k ní máte přístup, měla by aplikace bez problému běžet.
+
 \section{Instalace}
 
+Instalace předpokládá, že jste splnili prerekvizity. Nyní stačí vzít přiložený WAR soubor \textit{kruzej-kivbook.war} a dát jej do vaší složky s Tomcat Serverem do podsložky \textit{webapps}. Zde jej nechte.
+
+Ujistěte se, že databáze běží. Pro využití testovacích dat doporučuji nahrát do vaší databáze přiložený SQL skript, abyste ji naplnili nějakými daty. Následně spusťte Tomcat přes \textit{bin\\startup.bat}. 
+
+Pokud Tomcat Server nyní běží, měli byste na zadání URL 
+\begin{itemize}
+\item \textbf{localhost:8080/kruzej-kivbook/}
+\end{itemize}
+vidět spuštěnou aplikaci. Pokud máte jinak nadefinovaný port Tomcat serveru, hledejte spuštěnou aplikaci na tom portu. Pokud si přejmenujete daný soubor WAR, změní se i cesta k němu.
 
 
 \chapter{Závěr}
 
+Aplikace měla za úkol splnit základní zadání, tedy:
+\begin{itemize}
+\item \textbf{nepřihlášený uživatel}
+\begin{itemize}
+\item může se registrovat, včetně nahrání fotografie profilu (možno vynechat, pokud bude nahrávání obrázků součástí přidávání příspěvků)
+\item může se přihlásit
+\item může na webu něco (co, závisí na vašem konkrétním zadání) prohlížet v read-only režimu
+\end{itemize}
+\item \textbf{přihlášený uživatel}
+\begin{itemize}
+\item může zobrazit svůj profil (včetně zobrazení fotografie)
+\item může se odhlásit
+\item může přidávat textové příspěvky (statusy/tweety)
+\item může zobrazit zeď/hlavní stránku/stream příspěvků jako samostatnou stránku (zobrazují se příspěvky vlastní a přátel/sledovaných)
+\begin{itemize}
+\item včetně stránkování streamu příspěvků po 10
+\end{itemize}
+\item může na webu editovat, měnit, přidávat nebo lajkovat něco (co z toho, závisí na vašem konkrétním zadání)
+\item může navazovat vztah k jiným uživatelům (follow/friend request) - pozor na to, že k tomu je nutný i výpis všech registrovaných uživatelů
+\end{itemize}
+
+\end{itemize}
+
+Toto všechno aplikace splňuje. Navíc obsahuje:
+
+\begin{itemize}
+\item uživatel může svůj profil upravovat (zde také může nahrát profilový obrázek)
+\item uživatel si může prohlédnout profily ostatních uživatelů
+\item uživatel má k dispozici seznam svých přátel
+\item aplikace obsahuje vztah vyžadující potvrzení
+\item tento vztah se dá přijmout či zrušit
+\item po přijetí vztahu se dá tento vztah stále zrušit
+\item aplikace obsahuje základní verzi určitých notifikací, kdy má uživatel zobrazeny jednotlivé žádosti o přátelství a může s nimi manipulovat
+\item Příspěvky je možno lajkovat či hejtovat
+\item Příspěvky zobrazují čas kdy byly přidány
+\end{itemize}
 
 
 \end{document}
