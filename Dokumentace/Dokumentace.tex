@@ -157,7 +157,7 @@ Po přihlášení do systému je uživateli zpřístupněn zbytek aplikace. Dost
 
 \section{Prohlížení stránek}
 
-Aplikace podporuje nepřihlášenému uživateli prohlédnout si některé stránky. Může se podívat na názory některých uživatelů či informace o aplikaci. Je mu dovoleno zhlédnout seznam registrovaných uživatelů a může si prohlížet jejich profily. Sám nikde nenajde nikdy odkaz, který by ho zavedl do privilegované části aplikace, ale chytrý uživatel může samozřejmě měnit URL. Proto je v aplikaci AuthenticationGuard, který nepřihlášeného uživatele nikam dál nepustí a vybídne ho k přihlášení.
+Aplikace dovoluje nepřihlášenému uživateli prohlédnout si některé stránky. Může se podívat na názory některých uživatelů či informace o aplikaci. Je mu dovoleno zhlédnout seznam registrovaných uživatelů a může si prohlížet jejich profily. Sám nikde nenajde nikdy odkaz, který by ho zavedl do privilegované části aplikace, ale chytrý uživatel může samozřejmě měnit URL. Proto je v aplikaci AuthenticationGuard, který nepřihlášeného uživatele nikam dál nepustí a vybídne ho k přihlášení.
 
 \section{Registrace}
 
@@ -179,6 +179,155 @@ Povinné položky formulář nepovolí odeslat, dokud nejsou vyplněny. Uživate
 Při přihlášení uživatel vyplňuje svoje uživatelské jméno a heslo. V případě neshody je uživatel nepřihlášen. Po úspěšném přihlášení se schovávají položky pro přihlášení/registraci a jsou nahrazeny profilem a odhlášením. Nyní je uživatel volný kamkoliv do aplikace. Žádný odkaz nevede zpátky do statických stránek, ale chytrý uživatel si samozřejmě poradí. Pokud se přihlášený uživatel dostane zpět na stránky registrace a přihlášení, jednoduše mu nebude dovoleno žádnou z forem vyplňovat, dokud bude přihlášen.
 
 \section{Prohlížení uživatelů}
+
+Přihlášený uživatel si také může prohlédnout ostatní uživatele. Po kliknutí na jejich uživatelská jména vidí jejich profily. Může si také prohlédnout své přátele, pokud nějaké má, v záložce \textit{přátelé}. U profilů na rozdíl od nepřihlášených uživatelů vidí další tlačítka. Jde o:
+\begin{itemize}
+\item Pokud není s uživatelem přítel, uvidí \textit{Poslat žádost o přátelství}
+\item Pokud jsou přátelé, uvidí \textit{Zrušit přátelství}
+\item Pokud jeden z nich zažádal o přátelství, neuvidí nic
+\end{itemize}
+
+Detaily k přátelství budou popsány v dalších kapitolách.
+
+\section{Úprava profilu}
+
+Pokud se uživatel dostane k prohlížení svého profilu, nebude si prohlížet ale má možnost ho změnit. Z klasických je podpora pro: heslo, email, pohlaví. Uživatel zde má možnost také nahrát nový profilový obrázek. Stačí jej vybrat a kliknout na \textit{Nahrát}. 
+
+\section{Přátelství}
+
+Uživatelé mohou mezi sebou vytvářet přátelství. Jde o oboustrannou dohodu. Jeden z uživatelů musí vždy požádat o přátelství - přes profily, jak bylo řečeno. Druhý musí tuto žádost potvrdit. Všechny žádosti jsou zobrazeny na Zdi. Zde uživatel vidí odchozí žádosti, které podal a příchozí žádost, které mu ostatní posílají. U svých žádostí má možnost je stáhnout, čímž je zruší. U příchozích je buď přijme, čímž vzniká přátelství, nebo bude ignorovat, čímž se zruší.
+
+Přátelství zajišťuje přidání uživatele do záložky \textit{Přátelé} a jeho statusy se budou zobrazovat na zdi uživatele. Přátelství se dá kdykoliv zrušit - stačí jít na profil přítele a stisknout \textit{Zrušit přátelství}. Uživatel je odebrán ze seznamu přátel a jeho statusy se již nebudou zobrazovat.
+
+\section{Statusy}
+
+Uživatel může vytvářet statusy. Na stránce Zeď je možnost vyplnit text statusu a poté kliknout na \textit{Statusovat}, čímž se vytvoří nový status. Automaticky je zobrazen čas, kdy byl status napsán. Tento status je viditelný pro samotného uživatele a jeho přátele.
+
+Každý status lze lajkovat či hejtovat. Stačí kliknout na tlačítko \textit{Lajkovat} či \textit{Hejtovat}. Seznam těch, kteří určitý status lajkovali/hejtovali je umístěn pod statusem stejně jako celkový počet těchto lajků/hejtů. Uživatel může jeden status:
+\begin{itemize}
+\item Lajkovat
+\item Hejtovate
+\item Lajkovat poté, co lajkoval, tím zruší lajk
+\item Hejtovat poté, co hejtoval, tím zruší hejt
+\item Pokud se pokusí mixovat, tedy lajkovat poté co hejtoval, aplikace mu vynadá
+\end{itemize}
+
+Lajky a Hejty nezanikají se zánikem přátelství.
+
+\section{Zeď}
+Zeď je hlavní středisko aplikace. V pravé části jsou notifikace - příchozí a odchozí žádosti a lze s nimi manipulovat. Uprostřed je možnost psát statusy. Pod tím jsou zobrazeny statusy přátel a uživatele. Vždy se zobrazují po deseti a je možno mezi nimi procházet, pokud jich je hodně. Platí:
+\begin{itemize}
+\item Pokud je statusů méně než 10, žádné tlačítko pro stránkování není zobrazeno
+\item Pokdud je statusů více než 10, objeví se tlačítko \textit{Další}. To zobrazí statusy 10+ (obecně x+)
+\item Při zobrazení statusů x aplikace řeší, jestli existuje více statusů než x+10. Pokud ne, není uvedeno tlačítko \textit{Další} (vzhledem k tomu že není kam dál jít). Pokud jich je víc, tlačítko \textit{Další} bude přítomno. 
+\item Pokud se zobrazují statusy x, kde x je aspoň 10, vždy je tlačítko \textit{Předchozí}. To zobrazí statusy x - 10
+\end{itemize}
+
+\chapter{Moduly}
+
+\section{Servlety}
+
+Každý servlet má dvě hlavní metody - doGet a doPost. Ne každý servlet je definován pro práci s oběma těmito metodami, ale i nepodporovaná metoda neshodí server. Existují následující servlety:
+
+\subsection{Index}
+
+Úvodní index. Dokud nebude řečeno jinak, následující servlety nejsou chráněny AuthenticationGuard, tedy jsou přístupné nepřihlášeným uživatelům. Úkolem tohoto servletu je vrátit uživateli \textit{index.jsp}.
+
+Metody:
+\begin{itemize}
+\item \textbf{doPost} - předává \textbf{doGet}
+\item \textbf{doGet} - vrací \textit{index.jsp}
+\end{itemize}
+
+\subsection{Information}
+
+Tento servlet vrací statickou stránku o informacích o aplikaci.
+
+Metody:
+\begin{itemize}
+\item \textbf{doPost} - předává \textbf{doGet}
+\item \textbf{doGet} - vrací \textit{information.jsp}
+\end{itemize}
+
+\subsection{Reaction}
+
+Tento servlet vrací statickou stránku o reakcích uživatelů na aplikaci.
+
+Metody:
+\begin{itemize}
+\item \textbf{doPost} - předává \textbf{doGet}
+\item \textbf{doGet} - vrací \textit{reaction.jsp}
+\end{itemize}
+
+\subsection{Users}
+
+Tento servlet vypisuje stránku se všemi registrovanými uživateli. K tomu využívá \textit{UserManager}.
+
+Metody:
+\begin{itemize}
+\item \textbf{doPost} - předává \textbf{doGet}
+\item \textbf{doGet} - připraví seznam všech registrovaných uživatelů a vrací \textit{users.jsp}
+\end{itemize}
+
+\subsection{Profile}
+
+Tento servlet mění chování dle metod a přihlášenosti uživatele. Pokud je uživatel nepřihlášen, zobrazuje profil zadaného uživatele (přes parametr \textit{username}). Pokud je přihlášen, zobrazuje také profil uživatele a dodává tlačítka podle toho, jaký je vztah mezi uživateli. Pokud je člověk přihlášen a klikl na sebe, tento servlet umožňuje úpravu profilu. Výše popsáno je vše \textbf{doGet}, kde \textbf{doPost} slouží právě pro úpravu profilu uživatele.
+
+Pro svou práci vyžaduje servlet jak \textit{UserManager} tak \textit{FriendshipManager}.
+
+Metody:
+\begin{itemize}
+\item \textbf{doGet} - vyžaduje parametr \textit{username}. Když:
+\begin{itemize}
+\item parametr není zadán nebo je špatně - vrací \textit{profile.jsp} s chybovou hláškou
+\item parametr značí uživatele, jenž je zároveň přihlášený - vrací \textit{profile.jsp} jako úpravu profilu
+\item parametr značí nějakého uživatele - vrací \textit{profile.jsp} a nabízí tlačítka podle toho, jaký je mezi uživateli vztah
+\end{itemize}
+\item \textbf{doPost} - obsluha úpravy profilu. Samotnou úpravu řeší \textit{UserManager}. Vrací \textit{welcome.jsp} s hláškou o úpravě profilu
+\end{itemize}
+
+\subsection{Welcome}
+
+Následující servlety jsou chráněni AuthenticationGuard.
+
+Tento servlet vrací statickou stránku s textem.
+
+Metody:
+\begin{itemize}
+
+\end{itemize}
+
+\chapter{Testovací data}
+
+K aplikaci je připojen SQL skript, jenž načte do databáze testovací data. Tato data poskytují ukázku toho, co lze v aplikaci dělat. Jsou k dispozici tři testovací uživatelé:
+
+\begin{center}
+\begin{tabular}{| c | c | }
+\hline
+	\textbf{Uživatelské jméno} & \textbf{Heslo} \\
+	\hline
+  user1 & User@1234  \\
+  \hline
+  user2 & User@1234  \\
+  \hline
+  user3 & User@1234  \\
+  \hline
+\end{tabular}
+\end{center}
+
+Navíc platí, že:
+\begin{itemize}
+\item \textbf{user1} byl narozen 29.6.1987, je muž a jeho email je user1@ăexample.com
+\item \textbf{user2} byl narozen 8.3.1981, je žena a nemá uvedený email
+\item \textbf{user3} nemá uvedené žádné z těchto vlastností
+\end{itemize}
+
+Co se týče přátelství, tak platí, že \textbf{user1} je přítelem s \textbf{user2}, \textbf{user1} požádal o přátelství \textbf{user3} a \textbf{user3} požádal o přátelství \textbf{user2}. Tato přátelství ještě nebyl potvrzena. \textbf{user3} má napsané dva statusy, \textbf{user1} a \textbf{user2} společně 11, aby byla ukázáno stránkování po 10. Některé statusy byly lajkovány/hejtovány.
+
+Po nahrání těchto dat by měla být viditelná funkčnost aplikace a co obsahuje a umožňuje.
+
+\chapter{Uživatelská dokumentace}
+
 
 
 

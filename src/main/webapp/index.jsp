@@ -114,9 +114,9 @@
             </h2>
             <hr />
             <p>
-               Pokud potřebujete více informací, přečtěte si <a href="#">informace</a> o naší soicální síti. Pokud snad potřebujete znát názory našich uživatelů, 
-               neváhejte se na ně podívat na stránkách <a href="#">Reakce uživatelů!</a>. Pokud vás ani to nepřesvědčí, můžete si prohlédnout naše stránky i 
-               jako nepřihlášený uživatel na stránce <a href="#">Prohlížení</a>.
+               Pokud potřebujete více informací, přečtěte si <a href="${pageContext.request.contextPath}/information">informace</a> o naší soicální síti. Pokud snad potřebujete znát názory našich uživatelů, 
+               neváhejte se na ně podívat na stránkách <a href="${pageContext.request.contextPath}/reaction">Reakce uživatelů!</a>. Pokud vás ani to nepřesvědčí, můžete si prohlédnout naše stránky i 
+               jako nepřihlášený uživatel na stránce <a href="${pageContext.request.contextPath}/users">Prohlížení</a>.
             </p>
          </div>
       </div>

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9.6100 64-bit) (preloaded format=pdflatex 2016.12.15)  6 JAN 2018 12:14
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9.6100 64-bit) (preloaded format=pdflatex 2016.12.15)  6 JAN 2018 13:56
 entering extended mode
 **./Dokumentace.tex
 (Dokumentace.tex
@@ -874,7 +874,7 @@ LaTeX Info: Redefining \nameref on input line 37.
 \openout3 = `Dokumentace.out'.
 
 
-<FAV_logo.pdf, id=47, 154.24326pt x 98.31068pt>
+<FAV_logo.pdf, id=103, 154.24326pt x 98.31068pt>
 File: FAV_logo.pdf Graphic file (type pdf)
  <use FAV_logo.pdf>
 Package pdftex.def Info: FAV_logo.pdf used on input line 41.
@@ -942,14 +942,14 @@ l.75 \chapter
 
 ]
 Kapitola 2.
-<general.png, id=95, 452.69125pt x 563.10374pt>
+<general.png, id=165, 452.69125pt x 563.10374pt>
 File: general.png Graphic file (type png)
  <use general.png>
 Package pdftex.def Info: general.png used on input line 84.
 (pdftex.def)             Requested size: 390.0pt x 485.119pt.
  [2
 
-] [3 <./general.png>] <servlety.png, id=108, 603.25375pt x 430.60875pt>
+] [3 <./general.png>] <servlety.png, id=178, 603.25375pt x 430.60875pt>
 File: servlety.png Graphic file (type png)
 
 <use servlety.png>
@@ -962,44 +962,67 @@ LaTeX Font Info:    Try loading font information for TS1+lmr on input line 104.
 ("C:\Program Files\MiKTeX 2.9\tex\latex\lm\ts1lmr.fd"
 File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-<entity.png, id=117, 462.72874pt x 282.05376pt>
+<entity.png, id=187, 462.72874pt x 282.05376pt>
 File: entity.png Graphic file (type png)
  <use entity.png>
 Package pdftex.def Info: entity.png used on input line 114.
 (pdftex.def)             Requested size: 390.0pt x 237.72403pt.
 
-<manazeri.png, id=119, 543.02875pt x 282.05376pt>
+<manazeri.png, id=189, 543.02875pt x 282.05376pt>
 File: manazeri.png Graphic file (type png)
  <use manazeri.png>
 Package pdftex.def Info: manazeri.png used on input line 125.
 (pdftex.def)             Requested size: 390.0pt x 202.5793pt.
- [5 <./entity.png>] <dao.png, id=130, 733.74126pt x 618.31pt>
+ [5 <./entity.png>] <dao.png, id=200, 733.74126pt x 618.31pt>
 File: dao.png Graphic file (type png)
  <use dao.png>
 Package pdftex.def Info: dao.png used on input line 140.
 (pdftex.def)             Requested size: 390.0pt x 328.6462pt.
  [6 <./manazeri.png>] [7 <./dao.png>]
 Kapitola 3.
-<use_case.png, id=143, 697.60625pt x 597.23125pt>
+<use_case.png, id=213, 697.60625pt x 597.23125pt>
 File: use_case.png Graphic file (type png)
  <use use_case.png>
 Package pdftex.def Info: use_case.png used on input line 155.
 (pdftex.def)             Requested size: 390.0pt x 333.8822pt.
 
-Overfull \hbox (12.95625pt too wide) in paragraph at lines 160--161
-[]\T1/lmr/m/n/12 Aplikace pod-po-ruje ne-p°i-hlá-²e-nému uºi-va-teli pro-hléd-n
-out si n¥-které stránky.
+Overfull \hbox (3.16449pt too wide) in paragraph at lines 160--161
+[]\T1/lmr/m/n/12 Aplikace do-vo-luje ne-p°i-hlá-²e-nému uºi-va-teli pro-hléd-no
+ut si n¥-které stránky.
  []
 
 [8
 
- <./use_case.png>] [9]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 181.
- [10]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 181.
+ <./use_case.png>] [9] [10] [11]
+Kapitola 4.
+[12
+
+]
+Overfull \hbox (3.39163pt too wide) in paragraph at lines 269--270
+[]\T1/lmr/bx/n/12 doGet \T1/lmr/m/n/12 - p°i-praví se-znam v²ech re-gis-tro-va-
+ných uºi-va-tel· a vrací \T1/lmr/m/it/12 users.jsp 
+ []
+
+[13]
+Kapitola 5.
+
+Overfull \hbox (4.58508pt too wide) in paragraph at lines 309--310
+[]\T1/lmr/bx/n/12 user1 \T1/lmr/m/n/12 byl na-ro-zen 29.6.1987, je muº a jeho e
+mail je user1@ example.com 
+ []
+
+[14
+
+]
+Kapitola 6.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 323.
+[15
+
+]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 323.
  (Dokumentace.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 181.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 181.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 323.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 323.
 
 
 Package rerunfilecheck Warning: File `Dokumentace.out' has changed.
@@ -1007,26 +1030,26 @@ Package rerunfilecheck Warning: File `Dokumentace.out' has changed.
 (rerunfilecheck)                or use package `bookmark'.
 
 Package rerunfilecheck Info: Checksums for `Dokumentace.out':
-(rerunfilecheck)             Before: 601387926AD70098D4FEB362DE48AE40;1458
-(rerunfilecheck)             After:  7EEFE24AD89EE4833CB312DBC1EF8171;1576.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 181.
+(rerunfilecheck)             Before: 21DEED7DEF9A5ADD3B346E34F4930E39;3020
+(rerunfilecheck)             After:  215A9CDF48D47776CC6728931460D45D;3118.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 323.
  ) 
 Here is how much of TeX's memory you used:
- 10571 strings out of 493333
- 146333 string characters out of 3139190
+ 10612 strings out of 493333
+ 146868 string characters out of 3139190
  218566 words of memory out of 3000000
- 13928 multiletter control sequences out of 15000+200000
- 45635 words of font info for 42 fonts, out of 3000000 for 9000
+ 13950 multiletter control sequences out of 15000+200000
+ 51632 words of font info for 44 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 29i,8n,31p,669b,372s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 29i,8n,31p,669b,403s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/lm/lm-ts1.enc}{C:/Program Files/
 MiKTeX 2.9/fonts/enc/dvips/lm/lm-ec.enc}<C:/Program Files/MiKTeX 2.9/fonts/type
 1/public/lm/lmbx12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmr12
 .pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/lm/lmr17.pfb><C:/Program F
 iles/MiKTeX 2.9/fonts/type1/public/lm/lmri12.pfb>
-Output written on Dokumentace.pdf (12 pages, 426210 bytes).
+Output written on Dokumentace.pdf (17 pages, 443821 bytes).
 PDF statistics:
- 184 PDF objects out of 1000 (max. 8388607)
- 30 named destinations out of 1000 (max. 500000)
- 124 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 281 PDF objects out of 1000 (max. 8388607)
+ 49 named destinations out of 1000 (max. 500000)
+ 236 words of extra memory for PDF output out of 10000 (max. 10000000)
 
