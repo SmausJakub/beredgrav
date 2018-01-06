@@ -1,0 +1,3 @@
+\select@language {czech}
+\contentsline {chapter}{\numberline {1}Zad\IeC {\'a}n\IeC {\'\i }}{1}{chapter.1}
+\contentsline {chapter}{\numberline {2}Architektura aplikace}{2}{chapter.2}

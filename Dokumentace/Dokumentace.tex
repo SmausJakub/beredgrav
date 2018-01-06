@@ -1,0 +1,78 @@
+
+\documentclass[
+12pt,
+a4paper,
+pdftex,
+czech,
+titlepage
+]{report}
+
+\usepackage{float}
+\usepackage[czech]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{textcomp}
+\usepackage[T1]{fontenc}
+\usepackage{amsfonts}
+\usepackage{titlesec}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{tabularx} 
+\usepackage[unicode]{hyperref}
+\usepackage{indentfirst}
+\hypersetup{
+    colorlinks=true,
+    citecolor=green,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=magenta
+}
+\titleformat{\chapter}
+  {\normalfont\LARGE\bfseries}{\thechapter}{1em}{}
+\titlespacing*{\chapter}{0pt}{0ex plus 1ex minus .2ex}{2.0ex plus .2ex}
+
+
+
+\begin{document}
+
+\begin{titlepage}
+	\vspace*{-2cm}
+	{\centering\includegraphics[scale=1.5]{FAV_logo.pdf}\par}
+	\centering
+	\vspace*{2cm}
+	{\Large Dokumentace k semestrální práci z KIV/PIA\par}
+	\vspace{1.0cm}
+	{\Huge\bfseries KIVBOOK\par}
+	\vspace{7cm}
+
+	\begin{flushleft} 
+	\begin{table}[ht]
+	\label{stats}
+	\begin{tabular}{ll}
+	\textbf{Student:}  & Martin Kružej   \\
+	\textbf{St. číslo:}   & A17N0079P    \\
+	\textbf{E-mail:}  & kruzej@students.zcu.cz  \\
+	\textbf{Datum:}    & \today            \\ 
+	\end{tabular}
+	\end{table}
+	\end{flushleft}
+	
+	\vfill
+
+
+\end{titlepage}
+
+\tableofcontents
+\thispagestyle{empty}
+\clearpage
+
+\chapter{Zadání}
+\setcounter{page}{1}
+
+Standardní téma KIV/PIA, viz \href{https://courseware.zcu.cz/portal/studium/courseware/kiv/pia/samostatna-prace/standardni-tema.html}{KIV/PIA courseware}.
+
+\chapter{Architektura aplikace}
+
+
+\end{document}
