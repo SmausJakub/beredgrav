@@ -286,6 +286,34 @@ Metody:
 \item \textbf{doPost} - obsluha úpravy profilu. Samotnou úpravu řeší \textit{UserManager}. Vrací \textit{welcome.jsp} s hláškou o úpravě profilu
 \end{itemize}
 
+\subsection{Register}
+
+Servlet starající se o registraci nových uživatelů. Využívá \textit{UserManager}. Ten se stará o registraci samotnou, ale kontrolu některých parametrů obstarává již servlet. 
+
+Metody:
+\begin{itemize}
+\item \textbf{doGet} - vrací \textit{register.jsp}
+\item \textbf{doPost} - kontroluje parametry, než řízení předává \textit{UserManager}
+\begin{itemize}
+\item hesla se neshodují - vrací \textit{register.jsp} a chybovou hlášku
+\item test na robota je nesprávně - vrací \textit{register.jsp} a chybovou hlášku
+\item špatně zadané datum narození - vrací \textit{register.jsp} a chybovou hlášku
+\item \textit{UserManager} vyhodí výjimku - vrací \textit{register.jsp} a zprávu výjimky
+
+\end{itemize}
+\item pokud nedojde k výjimce, vrací \textit{login.jsp} a zprávu o úspěšné registraci
+\end{itemize}
+
+\subsection{Login}
+
+Servlet starající se o přihlášení uživatelů. Využívá \textit{AuthenticationService}. Ten se stará o samotné přihlášení.
+
+Metody:
+\begin{itemize}
+\item \textbf{doGet} - vrací \textit{login.jsp}
+\item \textbf{doPost} - předá parametry AuthenticationService. Pokud vše v pořádku, vrací \textit{welcome.jsp}, jinak \textit{login.jsp} a chybovou hlášku
+\end{itemize}
+
 \subsection{Welcome}
 
 Následující servlety jsou chráněni AuthenticationGuard.
@@ -294,8 +322,147 @@ Tento servlet vrací statickou stránku s textem.
 
 Metody:
 \begin{itemize}
-
+\item \textbf{doPost} - předává \textbf{doGet}
+\item \textbf{doGet} - vrací \textit{welcome.jsp}
 \end{itemize}
+
+Za zmínku stojí, že tato stránka je často využívána pro komunikaci s uživatelem. V závislosti na parametrech vypisuje buď vítání uživatele, chybovou hlášku nebo hlášku o úspěchu.
+
+\subsection{Logout}
+
+Tento servlet řeší odhlášení z aplikace. Využívá AuthenticationService, která samotné dohlášení řeší.
+
+Metody:
+\begin{itemize}
+\item \textbf{doPost} - předává \textbf{doGet}
+\item \textbf{doGet} - požádá AuthenticationService o odhlášení, poté vrací \textit{index.jsp}
+\end{itemize}
+
+\subsection{Friends}
+
+Tento servlet vypisuje stránku s přáteli přihlášeného uživatele. Využívá \textit{UserManager} a \textit{FriendshipManager}. 
+
+Metody:
+\begin{itemize}
+\item \textbf{doPost} - předává \textbf{doGet}
+\item \textbf{doGet} - připraví seznam přátel přihlášeného uživatele, načež vrací \textit{friends.jsp}
+\end{itemize}
+
+\subsection{Friend}
+
+Tento servlet vyřizuje žádost o přátelství. Využívá \textit{UserManager} a \textit{FriendshipManager}.
+
+Metody:
+\begin{itemize}
+\item \textbf{doPost} - předává \textbf{doGet}
+\item \textbf{doGet} - vyžaduje parametr \textit{username}. Z toho získá uživatele, kterého se nové přátelství má týkat. Je kontrolováno, že existuje. Následně je zkontrolováno, že mezi uživateli již nějaký vztah není. Pokud vše proběhne správně, vrací \textit{welcome.jsp}
+\end{itemize}
+
+Za zmínku stojí, že správně by mělo proběhnout vždy, pokud se uživatel nebude do URL míchat.
+
+\subsection{FriendApprove}
+
+Tento servlet vyřizuje potvrzení žádosti o přátelství. Využívá \textit{FriendshipManager}. Samotné potvrzení provádí právě manažer.
+
+Metody:
+\begin{itemize}
+\item \textbf{doPost} - předává \textbf{doGet}
+\item \textbf{doGet} - vyžaduje parametr \textit{id}. Předává řízení manažerovi se zadaným \textit{id}. V případě chyb vrací \textit{welcome.jsp} s chybovou hláškou, jinak s úspěšnou hláškou.
+\end{itemize}
+
+K chybě v \textit{id} by nemělo dojít, pokud se uživatel nebude do URL míchat.
+
+\subsection{FriendDelete}
+
+Tento servlet vyřizuje zrušení žádosti o přátelství. Využívá \textit{FriendshipManager}. Samotné zrušení provádí právě manažer.
+
+Metody:
+\begin{itemize}
+\item \textbf{doPost} - předává \textbf{doGet}
+\item \textbf{doGet} - vyžaduje parametr \textit{id}. Předává řízení manažerovi se zadaným \textit{id}. V případě chyb vrací \textit{welcome.jsp} s chybovou hláškou, jinak s úspěšnou hláškou.
+\end{itemize}
+
+K chybě v \textit{id} by nemělo dojít, pokud se uživatel nebude do URL míchat.
+
+\subsection{Wall}
+
+Servlet obsluhující zeď aplikace. Využívá všechny tři manažery v aplikaci. Jeho účel se liší podle metody.
+
+\begin{itemize}
+\item \textbf{doPost} - obstarává vytvoření statusu. Pokud není žádný text poslán, předává \textbf{doGet}. Pokud je text prázdný, předává \textbf{doGet}. Jinak předává \textit{StatusManager} a poté předá nakonec opět \textbf{doGet}
+\item \textbf{doGet} - očekává parametr \textit{stream}. Má několik úkolů:
+\begin{itemize}
+\item \textbf{Notifikace} - připraví seznam všech nepotvrzených žádostí o přátelství, kde je nějak zainteresován přihlášený uživatel a předává je JSP
+\item \textbf{Statusy} - připraví seznam všech statusů uživatele a jeho přátel, seřadí je podle data a předává je JSP
+\item \textbf{Stream} - daný seznam statusů, pokud není nulový, je měněn v závislosti na \textit{streamu}
+\begin{itemize}
+\item \textit{stream} nebyl zadán - přiřadí se 0
+\item \textbf{stream} byl zadán a nelze parsovat do Long - přiřadí se 0
+\item \textbf{stream} byl zadán a není dělitelný deseti - přiřadí se 0
+\item \textbf{stream} byl zadán a je dělitelný deseti - nechá se být
+\end{itemize}
+\item V této chvíli se \textit{stream} nastaví dle těchto pravidel a následuje kontrola dalších parametrů:
+\item \textit{stream} je 0
+\begin{itemize}
+\item \textbf{endIndex} se nastaví na 10
+\item pokud je \textbf{endIndex} větší než velikost seznamu, přiřadí se mu velikost seznamu
+\item vezme se subList (0,\textbf{endIndex}) a ten se předá JSP
+\end{itemize}
+\item \textit{stream} není 0
+\begin{itemize}
+\item \textbf{startIndex} je \textit{stream}
+\item \textbf{endIndex} je \textit{stream} + 10
+\item dokud je \textbf{startIndex} větší než velikost seznamu, ubereme o 10
+\item pokud je \textbf{endIndex} větší než velikost seznamu, přiřadíme velikost seznamu
+\item vezmeme subList (\textbf{startIndex}, \textbf{endIndex}) a ten se předá JSP
+\end{itemize}
+Tímto dosáhneme správného sub-seznamu a předejdeme chybnému parametru \textit{stream}, který by tam nezbedný uživatel mohl zadat
+\end{itemize}
+\end{itemize}
+
+\subsection{Like}
+
+Servlet řešící lajkování statusu. Využívá \textit{StatusManager} a \textit{UserManager}. Samotné lajkování provádí \textit{StatusManager}.
+
+Metody:
+\begin{itemize}
+\item \textbf{doPost} - předává \textbf{doGet}
+\item \textbf{doGet} - předává řízení \textit{StatusManager} s parametrem \textit{id}. V případě chyb vrací \textit{welcome.jsp} s chybovou hláškou, jinak s úspěšnou hláškou
+\end{itemize}
+
+K chybě v \textit{id} by nemělo dojít, pokud se uživatel nebude do URL míchat.
+
+\subsection{Hate}
+
+Servlet řešící hejtování statusu. Využívá \textit{StatusManager} a \textit{UserManager}. Samotné hejtování provádí \textit{StatusManager}.
+
+Metody:
+\begin{itemize}
+\item \textbf{doPost} - předává \textbf{doGet}
+\item \textbf{doGet} - předává řízení \textit{StatusManager} s parametrem \textit{id}. V případě chyb vrací \textit{welcome.jsp} s chybovou hláškou, jinak s úspěšnou hláškou
+\end{itemize}
+
+K chybě v \textit{id} by nemělo dojít, pokud se uživatel nebude do URL míchat.
+
+\subsection{Upload}
+
+Servlet řešící nahrání souboru na server. V aplikaci výhradně použito pro profilový obrázek. Využivá \textit{UserManager}.
+
+Metody:
+\begin{itemize}
+\item \textbf{doGet} - nemá příliš smysl volat nahrání serveru jako GET, servlet vrátí \textit{index.jsp}
+\item \textbf{doPost} - pokud nebyl obrázek vybrán, servlet vrací \textit{welcome.jsp} s chybovou hláškou, jinak nahraje soubor na server a upraví uživatelovo položku \textit{avatar}
+\end{itemize}
+
+\section{Manažeři}
+
+
+
+\section{Dao}
+
+\section{Entity}
+
+\section{Ostatní}
 
 \chapter{Testovací data}
 
@@ -328,6 +495,8 @@ Po nahrání těchto dat by měla být viditelná funkčnost aplikace a co obsah
 
 \chapter{Uživatelská dokumentace}
 
+
+\chapter{Závěr}
 
 
 
