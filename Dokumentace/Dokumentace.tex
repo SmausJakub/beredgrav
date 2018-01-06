@@ -504,7 +504,7 @@ Rozhraní pro práci se statusy. V aplikace je použitá implementace třída De
 
 \section{Dao}
 
-Dao rozhraní poskytují metody velice podobné těm v manažerech, jelikož ti z nich vycházejí. Za zmínku zde stojí pouze to, že JPA je implementováno pomocí Criteria API. 
+Dao rozhraní poskytují metody velice podobné těm v manažerech, jelikož ti z nich vycházejí. Pro samotnou komunikaci s databází je použit EntityManager. Za zmínku zde stojí to, že JPA je implementováno pomocí Criteria API. 
 
 \section{Entity}
 
@@ -558,6 +558,46 @@ Atribut \textit{owner} je uživatel ve vztahu OneToOne. Atributy \textit{likes} 
 
 \section{Ostatní}
 
+\subsection{ApplicationContext}
+
+Třída, která drží reference na všechny části aplikace. Tato třída určuje, které z implementací z rozhraní se v aplikaci používají. V konstruktoru všechny tyto tříd vytváří.
+
+\subsection{ApplicationStartListener}
+
+Hlavní injektor v aplikaci. Používá kontext aplikace a injekčně dodává třídy kontextu do servletů při startu serveru. Určuje tak mapování různých servletů a startuje také AuthenticationGuard a jeho mapované URL. 
+
+\subsection{EncodingFilter}
+
+Obaluje všechny požadavky a mění jejich kódování na UTF-8.
+
+\subsection{AuthenticationGuard}
+
+Filtruje požadavky dané dle URL mapingu - kontroluje, že do těchto URL se podívají pouze autentizovaní uživatelé. Využívá k tomu třídu AuthenticationService. Pokud je uživatel autentizován, je vpuštěn dále, jinak tato třída vyhodí uživatele na \textit{login.jsp} a pobídne ho k přihlášení.
+
+\subsection{AuthenticationService}
+
+Třída rozhodující, jestli požadavek má přístup do další části serveru. Kromě toho ještě obsahuje metodu pro autentizování přihlašujícího se uživatele. V případě odhlášení se také volá tato třída, kdy v případě potřeby invaliduje session.
+
+\subsection{Encoder}
+
+Rozhraní pro kryptovací třídu, jež hashuje zadaný text. Poskytuje dvě metody:
+\begin{itemize}
+\item hashování zadaného textu
+\item validace zadaného textu a jeho hasha
+\end{itemize}
+
+V aplikaci je používáno na hashování hesla.
+
+\subsection{PasswordHash}
+
+Třída pro hashování textu. 
+
+\subsection{PasswordHashEncoder}
+
+Implementace rozhraní Encoder. Využívá třídu PasswordHash.
+
+
+
 \chapter{Testovací data}
 
 K aplikaci je připojen SQL skript, jenž načte do databáze testovací data. Tato data poskytují ukázku toho, co lze v aplikaci dělat. Jsou k dispozici tři testovací uživatelé:
@@ -588,6 +628,25 @@ Co se týče přátelství, tak platí, že \textbf{user1} je přítelem s \text
 Po nahrání těchto dat by měla být viditelná funkčnost aplikace a co obsahuje a umožňuje.
 
 \chapter{Uživatelská dokumentace}
+
+\section{Prerekvizity}
+
+Pro správný chod aplikace jsou zapotřebí dvě věci:
+\begin{itemize}
+\item \textbf{Apache Tomcat Server} - vytvářeno bylo ve verzi 8.5.24
+\item \textbf{MySQL databáze} - postačil by např. phpMyAdmin. Je nutné mít k této databázi přístup!
+\end{itemize}
+
+Databáze je důležitá vzhledem k tomu, že při chybě by celý server spadl a aplikace by se nespustila. Aplikace je automaticky nastavena na:
+
+\begin{itemize}
+\item \textbf{url} - //students.kiv.zcu.cz/pia:3306
+\item \textbf{user} - pia
+\item \textbf{password} - pia
+\end{itemize}
+
+\section{Instalace}
+
 
 
 \chapter{Závěr}
