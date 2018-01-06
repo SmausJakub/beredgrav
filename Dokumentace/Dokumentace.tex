@@ -456,11 +456,105 @@ Metody:
 
 \section{Manažeři}
 
+Manažeři jsou využívány servlety jako prostředník mezi databázovými třídami (Dao) a samotnými servlety. Při inicializaci serveru jsou injektovány do jednotlivých servletů.
 
+\subsection{UserManager}
+
+Rozhraní pro práci s uživatelem. V aplikaci je použitá implementace třída DefaultUserManager. Pracuje s UserDao rozhraním a Encoder rozhraním. Poskytuje metody pro:
+
+\begin{itemize}
+\item autentikace uživatelova jména a hesla
+\item registrace nového uživatele
+\item uživatele dle jména
+\item seznam všech uživatelů
+\item aktualizace uživatelových vlastností
+\item aktualizace uživatelova avataru
+\item přidání lajku/hejtu
+\item odebrání lajku/hejtu
+\end{itemize}
+
+
+\subsection{FriendshipManager}
+
+Rozhraní pro práci s přátelstvími. V aplikaci je použitá implementace třída DefaultFriendshipManager. Pracuje s FriendshipDao rozhraním. Poskytuje metody pro:
+
+\begin{itemize}
+\item vytvoření nové přátelství
+\item seznam všech přátelství
+\item seznam neakceptovaných přátelství dle id uživatele
+\item seznam akceptovaných přátelství dle id uživatele
+\item zjištění, jestli jsou dva uživatelé dle id nějak interesováni
+\item zjištění, jestli jsou dva uživatelé dle id přátelé
+\item smazání přátelství dle id přátelství
+\item potvrzení přátelství dle id přátelství
+\end{itemize}
+
+\subsection{StatusManager}
+
+Rozhraní pro práci se statusy. V aplikace je použitá implementace třída DefaultStatusManager. Pracuje s StatusDao rozhraním. Poskytuje metody pro:
+
+\begin{itemize}
+\item vytvoření nového statusu
+\item seznam všech statusů
+\item seznam všech statusů dle seznamu id uživatelů
+\item status dle id statusu
+\item lajkování statusu
+\item hejtování statusu
+\end{itemize}
 
 \section{Dao}
 
+Dao rozhraní poskytují metody velice podobné těm v manažerech, jelikož ti z nich vycházejí. Za zmínku zde stojí pouze to, že JPA je implementováno pomocí Criteria API. 
+
 \section{Entity}
+
+Jednotlivé entity představují tabulky v aplikaci. Základními dvěma entitami je rozhraní IEntity a abstraktní třída BaseEntity, které poskytují jednotnou identifikaci všem entitám, které tuto třídu posléze dědí.
+
+\subsection{User}
+
+Reprezentace uživatele v databázi. Má následující atributy:
+\begin{itemize}
+\item \textbf{username} - uživatelské jméno, unikátní a musí být zadáno
+\item \textbf{password} - hashované heslo, musí být zadáno
+\item \textbf{dateOfBirth} - datum narození, může být nulové
+\item \textbf{dateOfRegistration} - datum registrace
+\item \textbf{email} - email uživatele, může být nulový
+\item \textbf{gender} - pohlaví uživatele, může být nulové
+\item \textbf{avatar} - avatar uživatele, buď je defaultní nebo definované uživatelem
+\item \textbf{likes} - množina lajků tohoto uživatele
+\item \textbf{hates} - množina hejtů tohoto uživatele
+\end{itemize}
+
+Kromě klasických getrů a setrů obsahuje také metodu pro validaci, kdy je provedena kontrola uživatelského jména a hesla. 
+
+Za zmínku jistě stojí, že \textit{likes} a \textit{hates} jsou množiny statusů, jež uživatel lajkoval/hejtoval. Jde o vztah ManyToMany a vyžaduje vznik další tabulky, kam se budou cizí klíče obou entit ukládat.
+
+\subsection{Friendship}
+
+Reprezentace přátelství v databázi. Má následující atributy:
+
+\begin{itemize}
+\item \textbf{approved} - jestli bylo přátelství schváleno
+\item \textbf{initiator} - iniciátor přátelství
+\item \textbf{target} - cíl přátelství
+\end{itemize}
+
+Atribut \textit{approved} začíná na 0, jakožto nepotvrzené přátelství, v případě potvrzení nabývá hodnoty 1. Další dva atributy jsou uživatelé ve vztahu OneToOne.
+
+
+\subsection{Status}
+
+Reprezentace statusu v databázi. Má následující atributy:
+
+\begin{itemize}
+\item \textbf{text} - text statusu, nemůže být prázdný
+\item \textbf{dateOfStatus} - datum pořízení statusu
+\item \textbf{likes} - lajky statusu
+\item \textbf{hates} - hejty statusu
+\item \textbf{owner} - kdo status napsal
+\end{itemize}
+
+Atribut \textit{owner} je uživatel ve vztahu OneToOne. Atributy \textit{likes} a \textit{hates} jsou uživatelé ve ztahu ManyToMany a dávají vznik novým tabulkám pro uložení cizích klíčů.
 
 \section{Ostatní}
 
