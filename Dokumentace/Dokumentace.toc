@@ -8,3 +8,6 @@
 \contentsline {section}{\numberline {2.5}Architektura Dao}{6}{section.2.5}
 \contentsline {chapter}{\numberline {3}Aplikace}{8}{chapter.3}
 \contentsline {section}{\numberline {3.1}Use case}{8}{section.3.1}
+\contentsline {section}{\numberline {3.2}Prohl\IeC {\'\i }\IeC {\v z}en\IeC {\'\i } str\IeC {\'a}nek}{9}{section.3.2}
+\contentsline {section}{\numberline {3.3}Registrace}{9}{section.3.3}
+\contentsline {section}{\numberline {3.4}P\IeC {\v r}ihl\IeC {\'a}\IeC {\v s}en\IeC {\'\i }}{9}{section.3.4}

@@ -144,5 +144,42 @@ Vyobrazeno na obrázku \ref{dao}.
 
 \section{Use case}
 
+Aplikace imituje některé známé sociální sítě. Use case aplikace je vyobrazen na obrázku \ref{use_case}.
+Horní část diagramu ve světlé žluté je ta část, která je přístupná nepřihlášenému uživateli. Tento uživatel si může prohlížet některé statické stránky, seznam registrovaných uživatelů a profily těchto uživatelů. Přístup ke zbytku aplikace mu bude zamítnut dokud se nezaregistruje/nepřihlásí.
+
+Po přihlášení do systému je uživateli zpřístupněn zbytek aplikace. Dostává nyní vlastní zeď, může upravovat svůj profil, dívat se na své přátele, žádat o přátelství, zamítat přátelství a také vytvářet statusy a lajkovat/hejtovat je. 
+
+\begin{figure}[H]
+\caption{Use case}
+\label{use_case}
+\includegraphics[width=\textwidth]{use_case.png}
+\end{figure}
+
+\section{Prohlížení stránek}
+
+Aplikace podporuje nepřihlášenému uživateli prohlédnout si některé stránky. Může se podívat na názory některých uživatelů či informace o aplikaci. Je mu dovoleno zhlédnout seznam registrovaných uživatelů a může si prohlížet jejich profily. Sám nikde nenajde nikdy odkaz, který by ho zavedl do privilegované části aplikace, ale chytrý uživatel může samozřejmě měnit URL. Proto je v aplikaci AuthenticationGuard, který nepřihlášeného uživatele nikam dál nepustí a vybídne ho k přihlášení.
+
+\section{Registrace}
+
+Uživatel má možnost se zaregistrovat. Bude mu nabídnut registrační formulář s následujícími položkami:
+\begin{itemize}
+\item \textbf{Uživatelské jméno} - uživatelovo jméno, kterým se bude přihlašovat - \textbf{povinné}
+\item \textbf{Heslo} - heslo k uživatelskému účtu - \textbf{povinné}
+\item \textbf{Kontrola hesla} - znovu zadání hesla - \textbf{povinné}
+\item \textbf{Pohlaví} - jestli je uživatel muž, či žena - \textbf{nepovinné}
+\item \textbf{Datum narození} - kdy se uživatel narodil - \textbf{nepovinné}
+\item \textbf{Souhlas s podmínkami} - uživatel souhlasí s podmínkami - \textbf{povinné}
+\item \textbf{Kontrola robotů} - uživatel je nucen napsat číslici 4 - \textbf{povinné}
+\end{itemize}
+
+Povinné položky formulář nepovolí odeslat, dokud nejsou vyplněny. Uživatelské jméno je povoleno pouze písmena a číslice. Hesla se musejí shodovat. Datum narození nemusí být vyplněn vůbec ale pokud uživatel vyplní pouze část data, je mu vynadáno. Heslo je dále hashováno, než je uloženo do databáze. V případě chybných údajů, například že se neshodují hesla, je formulář předvyplněn některými údaji, jmenovitě uživatelské jméno, pohlaví, souhlas s podmínkami a kontrola robotů.
+
+\section{Přihlášení}
+
+Při přihlášení uživatel vyplňuje svoje uživatelské jméno a heslo. V případě neshody je uživatel nepřihlášen. Po úspěšném přihlášení se schovávají položky pro přihlášení/registraci a jsou nahrazeny profilem a odhlášením. Nyní je uživatel volný kamkoliv do aplikace. Žádný odkaz nevede zpátky do statických stránek, ale chytrý uživatel si samozřejmě poradí. Pokud se přihlášený uživatel dostane zpět na stránky registrace a přihlášení, jednoduše mu nebude dovoleno žádnou z forem vyplňovat, dokud bude přihlášen.
+
+\section{Prohlížení uživatelů}
+
+
 
 \end{document}
